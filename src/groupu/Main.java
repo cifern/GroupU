@@ -8,11 +8,14 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+  private static final int width = 325;
+  private static final int height = 275;
+
   @Override
   public void start(Stage primaryStage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
-    primaryStage.setTitle("Login");
-    primaryStage.setScene(new Scene(root, 325, 275));
+    Parent root = FXMLLoader.load(getClass().getResource("view/home.fxml"));
+    primaryStage.setTitle("Menu");
+    primaryStage.setScene(new Scene(root, width, height));
     primaryStage.setResizable(false);
     primaryStage.show();
   }
