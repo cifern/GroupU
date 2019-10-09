@@ -10,6 +10,9 @@ import javafx.stage.Stage;
 
 public class RegisterController {
 
+  private static final int width = 325;
+  private static final int height = 275;
+
   @FXML private Button btnBack;
 
   public void actionRegister(ActionEvent actionEvent) {
@@ -22,8 +25,8 @@ public class RegisterController {
       Stage stage = (Stage) btnBack.getScene().getWindow();
       Scene scene = new Scene(loader.load());
       stage.setTitle("Login");
-      stage.setWidth(325);
-      stage.setHeight(275);
+      stage.setWidth(width);
+      stage.setHeight(height);
       stage.setResizable(false);
       stage.setScene(scene);
     } catch (IOException io) {
