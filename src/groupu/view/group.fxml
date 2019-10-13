@@ -6,35 +6,47 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
     <Tab text="Posts">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="633.0">
                <children>
                   <Button layoutX="14.0" layoutY="22.0" mnemonicParsing="false" text="Post" />
-                  <TextArea layoutX="79.0" layoutY="14.0" prefHeight="44.0" prefWidth="287.0" text="line 1&#10;line 2" />
+                  <TextArea layoutX="79.0" layoutY="14.0" prefHeight="44.0" prefWidth="287.0" />
                   <ListView layoutX="14.0" layoutY="69.0" prefHeight="261.0" prefWidth="353.0" />
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Meetings">
-      <content>
-        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-      </content>
-    </Tab>
       <Tab text="Group Info">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <Label layoutX="261.0" layoutY="14.0" text="Group Name" />
+                  <Label layoutX="244.0" layoutY="84.0" text="Group Description" />
+                  <Button layoutX="14.0" layoutY="326.0" mnemonicParsing="false" text="Report Group" />
+               </children></AnchorPane>
         </content>
       </Tab>
       <Tab text="Admin">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="137.0" layoutY="106.0" text="tab shown only if user is an admin of the group" />
+                  <ListView layoutX="14.0" layoutY="44.0" prefHeight="269.0" prefWidth="146.0" />
+                  <Label layoutX="49.0" layoutY="23.0" text="Member List" />
+                  <Button layoutX="38.0" layoutY="320.0" mnemonicParsing="false" text="Kick Member" />
+                  <ListView layoutX="181.0" layoutY="44.0" prefHeight="269.0" prefWidth="168.0" />
+                  <Label layoutX="252.0" layoutY="23.0" text="Reports" />
+                  <Button layoutX="209.0" layoutY="320.0" mnemonicParsing="false" text="Remove Report" />
+                  <Label layoutX="401.0" layoutY="23.0" text="Edit Group Description" />
+                  <TextArea layoutX="371.0" layoutY="44.0" prefHeight="89.0" prefWidth="200.0" />
+                  <Button layoutX="419.0" layoutY="211.0" mnemonicParsing="false" text="Save Changes" />
+                  <Button layoutX="486.0" layoutY="320.0" mnemonicParsing="false" text="Delete Group" />
+                  <Label layoutX="422.0" layoutY="147.0" text="Edit Group Tags" />
+                  <TextField layoutX="371.0" layoutY="170.0" prefHeight="27.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
         </content>
