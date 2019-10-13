@@ -77,7 +77,7 @@
                         </ScrollPane>
                      </children>
                   </GridPane>
-                  <Button alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="41.0" layoutY="285.0" mnemonicParsing="false" text="Open" />
+                  <Button fx:id = "btnOpen" onAction="#actionOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="41.0" layoutY="285.0" mnemonicParsing="false" text="Open" />
                   <Button alignment="CENTER_RIGHT" layoutX="156.0" layoutY="285.0" mnemonicParsing="false" text="Leave Group" />
                </children>
             </AnchorPane>

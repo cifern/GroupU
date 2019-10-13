@@ -33,4 +33,21 @@ public class HomeController {
     }
 
   }
+
+  public void actionOpen(ActionEvent actionEvent) {
+    System.out.println("view group pressed");
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
+      Stage stage = (Stage) btnInfo.getScene().getWindow();
+      Scene scene = new Scene(loader.load());
+      stage.setTitle("Group");
+      //stage.setWidth(width);
+      //stage.setHeight(height);
+      stage.setResizable(true);
+      stage.setScene(scene);
+    } catch (IOException io) {
+      io.printStackTrace();
+    }
+
+  }
 }
