@@ -17,6 +17,19 @@ public class LoginController {
 
   public void actionLogin(ActionEvent actionEvent) {
     System.out.println("login pressed");
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/home.fxml"));
+      Stage stage = (Stage) btnRegister.getScene().getWindow();
+      Scene scene = new Scene(loader.load());
+      stage.setTitle("Home");
+      //stage.setWidth(width);
+      //stage.setHeight(height);
+      stage.setResizable(true);
+      stage.setScene(scene);
+    } catch (IOException io) {
+      io.printStackTrace();
+    }
+
   }
 
   public void actionRegister(ActionEvent actionEvent) {
