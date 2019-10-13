@@ -50,4 +50,8 @@ public class HomeController {
     }
 
   }
+
+  public void actionSearch(ActionEvent actionEvent) {
+    System.out.println("search pressed");
+  }
 }

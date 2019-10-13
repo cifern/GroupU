@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="416.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="416.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
   <tabs>
     <Tab text="Search">
       <content>
@@ -34,17 +34,12 @@
                               <Insets left="66.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button alignment="CENTER_RIGHT" mnemonicParsing="false" text="Join Group" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button fx:id="btnInfo" mnemonicParsing="false" onAction="#actionInfo" text="Group Info" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
                         </Button>
-                        <Button fx:id = "btnInfo" onAction="#actionInfo" mnemonicParsing="false" text="Group Info" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets left="90.0" />
-                           </GridPane.margin>
-                        </Button>
-                        <Button alignment="CENTER_RIGHT" minWidth="-Infinity" mnemonicParsing="false" text="Search" />
+                        <Button fx:id="btnSearch" alignment="CENTER_RIGHT" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionSearch" text="Search" />
                         <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <content>
                               <ListView prefHeight="268.0" prefWidth="379.0" />
@@ -70,15 +65,14 @@
                       <RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="38.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="1">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="310.0" prefWidth="375.0" GridPane.columnIndex="1">
                            <content>
-                              <ListView prefHeight="246.0" prefWidth="375.0" />
+                              <ListView prefHeight="310.0" prefWidth="375.0" />
                            </content>
                         </ScrollPane>
                      </children>
                   </GridPane>
-                  <Button fx:id = "btnOpen" onAction="#actionOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="41.0" layoutY="285.0" mnemonicParsing="false" text="Open" />
-                  <Button alignment="CENTER_RIGHT" layoutX="156.0" layoutY="285.0" mnemonicParsing="false" text="Leave Group" />
+                  <Button fx:id="btnOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#actionOpen" text="Open" />
                </children>
             </AnchorPane>
          </content>
