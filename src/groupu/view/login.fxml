@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -8,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" prefHeight="296.0" prefWidth="331.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.LoginController">
+<GridPane alignment="center" hgap="10" prefHeight="296.0" prefWidth="331.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.LoginController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -21,7 +24,7 @@
    <children>
       <Pane prefHeight="277.0" prefWidth="302.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <children>
-            <GridPane layoutX="14.0" layoutY="14.0" prefHeight="206.0" prefWidth="276.0">
+            <GridPane layoutX="13.0" layoutY="14.0" prefHeight="206.0" prefWidth="276.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="134.0" minWidth="10.0" prefWidth="82.0" />
                 <ColumnConstraints hgrow="SOMETIMES" maxWidth="194.0" minWidth="10.0" prefWidth="194.0" />
@@ -32,12 +35,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#actionRegister" text="Register" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#actionRegister" text="Register" translateX="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                   <TextField fx:id="txtUsername" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" />
                   <Label text="Username:" />
                   <Label text="Password:" GridPane.rowIndex="1" />
                   <TextField fx:id="txtPassword" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                  <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#actionLogin" text="Login" GridPane.rowIndex="2" />
+                  <Button fx:id="btnLogin" mnemonicParsing="false" onAction="#actionLogin" text="Login" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children>
