@@ -40,7 +40,7 @@ public class UserStorage {
     }
   }
 
-  public boolean checkUserExists(String username) throws SQLException {
+  public boolean checkUserExists(String username) {
     boolean exists = false;
     try {
       Class.forName(JdbcDriver);

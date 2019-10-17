@@ -32,11 +32,7 @@ public class RegisterController {
     UserStorage userStorage = new UserStorage();
     boolean exists = false;
 
-    try {
-      exists = userStorage.checkUserExists(txtUsername.getText());
-    } catch (SQLException e) {
-      e.printStackTrace();
-    }
+    exists = userStorage.checkUserExists(txtUsername.getText());
 
     if (!exists && txtFirstname.getLength() > 0 && txtLastname.getLength() > 0 &&
         txtUsername.getLength() >= minUsernameSize && txtPassword.getLength() > minPassSize) {
