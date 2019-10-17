@@ -1,11 +1,16 @@
 package groupu.controller;
 
+import groupu.model.User;
 import java.io.IOException;
+import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class RegisterController {
@@ -13,10 +18,39 @@ public class RegisterController {
   private static final int width = 325;
   private static final int height = 275;
 
-  @FXML private Button btnBack;
+  private static final int minUsernameSize = 3;
+  private static final int minPassSize = 6;
 
+  @FXML private Button btnBack;
+  @FXML private TextField txtUsername;
+  @FXML private TextField txtFirstname;
+  @FXML private TextField txtLastname;
+  @FXML private TextField txtPassword;
+
+  // TODO: Go to home view after user registers
   public void actionRegister(ActionEvent actionEvent) {
-    System.out.println("registered");
+    UserStorage userStorage = new UserStorage();
+    boolean exists = false;
+
+    try {
+      exists = userStorage.checkUserExists(txtUsername.getText());
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
+    if (!exists && txtFirstname.getLength() > 0 && txtLastname.getLength() > 0 &&
+        txtUsername.getLength() >= minUsernameSize && txtPassword.getLength() > minPassSize) {
+
+      User tempUser = new User(txtFirstname.getText(), txtLastname.getText(),
+          txtUsername.getText(), txtPassword.getText());
+      userStorage = new UserStorage();
+      userStorage.createUser(tempUser.getFirstname(), tempUser.getLastname(),
+          tempUser.getUsername(), tempUser.getPassword());
+    } else {
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Username already exists or invalid information!");
+      alert.show();
+    }
   }
 
   public void actionBack(ActionEvent actionEvent) {

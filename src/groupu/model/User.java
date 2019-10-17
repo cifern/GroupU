@@ -1,24 +1,40 @@
 package groupu.model;
 
-    public final class User {
-        private final String name;
-        private final long info;
+public class User {
 
-        public User(String name, long info) {
-            this.name = name;
-            this.info = info;
-        }
+    private String firstname;
+    private String lastname;
+    private String username;
+    private String password;
 
-        // how you're supposed to implement equals
-        public boolean equals(Object other) {
-            if (other == this) return true;
-            if (other == null) return false;
-            if (other.getClass() != this.getClass()) return false;
-            User that = (User) other;
-            return (this.name.equals(that.name)) && (this.info == that.info);
-        }
+    public User(String firstname, String lastname, String username, String password) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.username = username;
+        this.password = password;
+    }
 
-        public String toString() {
-            return name + " " + info;
-        }
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String toString() {
+        return "First name: " + this.firstname + "\n" +
+            "Last name: " + this.lastname + "\n" +
+            "Username: " + this.username + "\n" +
+            "Password: " + this.password;
+    }
 }
