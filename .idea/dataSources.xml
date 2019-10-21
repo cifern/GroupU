@@ -7,11 +7,5 @@
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:$PROJECT_DIR$/res/UserDB</jdbc-url>
     </data-source>
-    <data-source source="LOCAL" name="H2 - default@localhost" uuid="dfe88610-7dc9-40b9-abad-4c6c1f1d1821">
-      <driver-ref>h2.unified</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.h2.Driver</jdbc-driver>
-      <jdbc-url>jdbc:h2:tcp://localhost:9092/default</jdbc-url>
-    </data-source>
   </component>
 </project>

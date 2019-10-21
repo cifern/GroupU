@@ -37,6 +37,20 @@ public class LoginController {
       alert = new Alert(AlertType.CONFIRMATION);
       alert.setContentText("CORRECT -- LOGGED IN");
       alert.show();
+
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/home.fxml"));
+        Stage stage = (Stage) btnRegister.getScene().getWindow();
+        Scene scene = new Scene(loader.load());
+        stage.setTitle("Home");
+
+        stage.setResizable(true);
+        stage.setScene(scene);
+      } catch (IOException io) {
+        io.printStackTrace();
+      }
+
+
     } else {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Invalid login!");

@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="center" hgap="10" prefHeight="296.0" prefWidth="331.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.RegisterController">
+<GridPane alignment="center" hgap="10" prefHeight="296.0" prefWidth="331.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.999-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.RegisterController">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -37,13 +37,13 @@
                   <TextField fx:id="txtUsername" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" />
                   <Label text="Username:" />
                   <Label text="Last name:" GridPane.rowIndex="2" />
-                  <TextField fx:id="txtLastname" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                  <Label text="First name:" GridPane.rowIndex="1" />
                   <TextField fx:id="txtFirstname" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtLastname" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <TextField fx:id="txtPassword" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                  <Label text="First name:" GridPane.rowIndex="1" />
                   <Button fx:id="btnRegister" mnemonicParsing="false" onAction="#actionRegister" text="Register" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <Button fx:id="btnBack" mnemonicParsing="false" onAction="#actionBack" text="Back" GridPane.rowIndex="4" />
                   <Label text="Password:" GridPane.rowIndex="3" />
-                  <TextField fx:id="txtPassword" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                </children>
             </GridPane>
          </children>
