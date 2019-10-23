@@ -2,11 +2,11 @@ package groupu.model;
 
 public final class Group {
     private final String name;
-    private final long info;
+    private String description;
 
-    public Group(String name, long info) {
+    public Group(String name, String description) {
         this.name = name;
-        this.info = info;
+        this.description = description;
     }
 
     // how you're supposed to implement equals
@@ -15,10 +15,10 @@ public final class Group {
         if (other == null) return false;
         if (other.getClass() != this.getClass()) return false;
         Group that = (Group) other;
-        return (this.name.equals(that.name)) && (this.info == that.info);
+        return (this.name.equals(that.name)) && (this.description == that.description);
     }
 
     public String toString() {
-        return name + " " + info;
+        return name + " " + description;
     }
 }

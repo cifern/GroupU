@@ -42,6 +42,7 @@ public class RegisterController {
       userStorage = new UserStorage();
       userStorage.createUser(tempUser.getFirstname(), tempUser.getLastname(),
           tempUser.getUsername(), tempUser.getPassword());
+      actionBack(actionEvent);
     } else {
       Alert alert = new Alert(AlertType.ERROR);
       alert.setContentText("Username already exists or invalid information!");

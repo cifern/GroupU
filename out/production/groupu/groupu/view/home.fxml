@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
@@ -12,7 +16,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="416.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="416.0" prefWidth="416.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
   <tabs>
     <Tab text="Search">
       <content>
@@ -40,11 +44,16 @@
                            </GridPane.margin>
                         </Button>
                         <Button fx:id="btnSearch" alignment="CENTER_RIGHT" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionSearch" text="Search" />
-                        <ScrollPane hbarPolicy="NEVER" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                           <content>
-                              <ListView prefHeight="268.0" prefWidth="379.0" />
-                           </content>
-                        </ScrollPane>
+                        <StackPane prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <children>
+                              <TableView fx:id="tableview" prefHeight="200.0" prefWidth="200.0">
+                                <columns>
+                                  <TableColumn fx:id="colName" prefWidth="113.0" text="Name" />
+                                  <TableColumn fx:id="colDescription" prefWidth="265.0" text="Description" />
+                                </columns>
+                              </TableView>
+                           </children>
+                        </StackPane>
                      </children>
                   </GridPane>
                </children></AnchorPane>
@@ -73,6 +82,7 @@
                      </children>
                   </GridPane>
                   <Button fx:id="btnOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#actionOpen" text="Open" />
+                  <Button fx:id="btnCreateGroup" layoutX="168.0" layoutY="342.0" mnemonicParsing="false" onAction="#actionCreateGroup" text="Create group" />
                </children>
             </AnchorPane>
          </content>
