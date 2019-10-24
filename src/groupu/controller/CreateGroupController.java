@@ -16,6 +16,8 @@ import java.io.IOException;
 
 public class CreateGroupController {
 
+    private static final int maxNameLength = 50;
+    private static final int maxDescriptionLength = 80;
 
     @FXML private Button btnCancel;
     @FXML private TextField txtGroupName;
@@ -25,21 +27,20 @@ public class CreateGroupController {
 
     public void actionCreateGroup(ActionEvent actionEvent) {
         GroupStorage groupStorage;
-        //boolean exists = false;
 
-       // exists = groupStorage.checkUserExists(txtUsername.getText());
-
-        if ( txtGroupName.getLength() > 0 && txtDescription.getLength() > 0 ) {
+        if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)
+                && (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength )) {
 
             groupStorage = new GroupStorage();
-            groupStorage.createGroup(txtGroupName.getText(), txtDescription.getText());
+            groupStorage.createGroup(txtGroupName.getText(), txtDescription.getText(), LoginController.currentUser);
 
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("GROUP CREATED");
             alert.show();
+            actionCancel(actionEvent);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Username already exists or invalid information!");
+            alert.setContentText("Too many characters!");
             alert.show();
         }
     }

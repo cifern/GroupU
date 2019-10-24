@@ -16,14 +16,14 @@ public class GroupStorage {
     private Connection conn = null;
     private PreparedStatement ps = null;
 
-    public void createGroup(String name, String description) {
+    public void createGroup(String name, String description, String user_admin) {
         try {
             Class.forName(JdbcDriver);
             conn = DriverManager.getConnection(DatabaseUrl, user, pass);
-            ps = conn.prepareStatement("INSERT INTO Groups(name, DESCRIPTION) VALUES(?, ?)");
+            ps = conn.prepareStatement("INSERT INTO Groups(name, DESCRIPTION, USER_ADMIN) VALUES(?, ?, ?)");
             ps.setString(1, name);
             ps.setString(2, description);
-
+            ps.setString(3, user_admin);
 
 
             ps.execute();

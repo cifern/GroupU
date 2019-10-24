@@ -1,155 +1,183 @@
 package groupu.controller;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import javafx.scene.control.TableColumn;
-import javafx.util.Callback;
 
+import javafx.util.Callback;
 
 public class HomeController {
 
-  private static final int width = 416;
-  private static final int height = 391;
+    static String GroupSelect;
 
-  @FXML
-  private Button btnInfo;
-  @FXML
-  private Button btnCreateGroup;
-  @FXML
-  private TableView tableview;
-  @FXML private TableColumn colName;
-  @FXML private TableColumn colDescription;
+    @FXML private Button btnInfo;
+    @FXML private Button btnCreateGroup;
+    @FXML private TableView tableview;
+    @FXML private TableColumn colName;
+    @FXML private TableColumn colDescription;
+    @FXML private Text txtUser;
+    @FXML private ListView listview;
 
-    private ObservableList<ObservableList> data;
+    private ObservableList<ObservableList> TableViewData;
+    private Object select;
     private static final String JdbcDriver = "org.h2.Driver";
     private static final String DatabaseUrl = "jdbc:h2:./res/UserDB";
 
     private final String user = "";
     private final String pass = "";
 
-    private Connection c = null;
-    private PreparedStatement ps = null;
 
     @FXML
-    void initialize()
-    {
+    void initialize() throws SQLException {
       buildData();
+
+      /*** Tableview listener**/
+      ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
+      selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
+        if (selectedCells.size() > 0) {
+          TablePosition selectedCell = selectedCells.get(0);
+          int rowIndex = selectedCell.getRow();
+          select = colName.getCellObservableValue(rowIndex).getValue();
+        }
+      });
+
+      /*** Listview listener**/
+      listview.getSelectionModel().getSelectedItem() ;
+      listview.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+          System.out.println("ListView selection changed from oldValue = "
+                  + oldValue + " to newValue = " + newValue);
+          select = newValue;
+        }
+      });
     }
 
-    public void buildData() {
-        Connection c;
-        data = FXCollections.observableArrayList();
-      try{
-        c = DriverManager.getConnection(DatabaseUrl, user, pass);
-       
+    public void buildData() throws SQLException {
+      txtUser.setText(LoginController.currentUser);
+
+      Connection c;
+      c = DriverManager.getConnection(DatabaseUrl, user, pass);
+
+      /** Populate group search tableview*/
+      TableViewData = FXCollections.observableArrayList();
+      try {
         String SQL = "SELECT NAME , DESCRIPTION from GROUPS";
         ResultSet rs = c.createStatement().executeQuery(SQL);
 
-          colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList,String>, ObservableValue<String>>(){
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-              return new SimpleStringProperty(param.getValue().get(0).toString());
-            }
-          });
+        colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+          public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+            return new SimpleStringProperty(param.getValue().get(0).toString());
+          }
+        });
 
-          colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList,String>, ObservableValue<String>>(){
-            public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-              return new SimpleStringProperty(param.getValue().get(1).toString());
-            }
-          });
-
+        colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+          public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+            return new SimpleStringProperty(param.getValue().get(1).toString());
+          }
+        });
         /********************************
          * Data added to ObservableList *
          ********************************/
-        while(rs.next()){
+        while (rs.next()) {
           //Iterate Row
           ObservableList<String> row = FXCollections.observableArrayList();
-          for(int i=1 ; i<=rs.getMetaData().getColumnCount(); i++){
+          for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
             //Iterate Column
             row.add(rs.getString(i));
-            System.out.println("Row [1] added "+rs.getString(i) );
           }
-
-          data.add(row);
+          TableViewData.add(row);
         }
-
         //ADDED TO TableView
-        tableview.setItems(data);
-
-      }catch(Exception e){
+        tableview.setItems(TableViewData);
+      } catch (Exception e) {
         e.printStackTrace();
         System.out.println("Error on Building Data");
       }
+
+      /********************************
+       * Data added to users group list *
+       ********************************/
+      try {
+        String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + LoginController.currentUser +"'";
+        ResultSet rs = c.createStatement().executeQuery(SQL);
+        while (rs.next()) {
+          String current = rs.getString("name");
+          ObservableList<String> list = FXCollections.observableArrayList(current);
+          listview.getItems().addAll(list);
+        }
+
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
 
-  public void actionCreateGroup(ActionEvent actionEvent)
-  {
+  public void actionCreateGroup(ActionEvent actionEvent) {
     try {
       FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/creategroup.fxml"));
       Stage stage = (Stage) btnCreateGroup.getScene().getWindow();
       Scene scene = new Scene(loader.load());
       stage.setTitle("Create New Group");
-      //stage.setWidth(width);
-     // stage.setHeight(height);
       stage.setResizable(true);
       stage.setScene(scene);
     } catch (IOException io) {
       io.printStackTrace();
     }
   }
-  public void actionInfo(ActionEvent actionEvent) {
-    System.out.println("view group pressed");
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
-      Stage stage = (Stage) btnInfo.getScene().getWindow();
-      Scene scene = new Scene(loader.load());
-      stage.setTitle("Group");
-      //stage.setWidth(width);
-      //stage.setHeight(height);
-      stage.setResizable(true);
-      stage.setScene(scene);
-    } catch (IOException io) {
-      io.printStackTrace();
-    }
 
+  public void actionInfo(ActionEvent actionEvent) {
+
+    if(!tableview.getSelectionModel().isEmpty()) {
+      GroupSelect = select.toString();
+      System.out.println("view group pressed" + GroupSelect);
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
+        Stage stage = (Stage) btnInfo.getScene().getWindow();
+        Scene scene = new Scene(loader.load());
+        stage.setTitle(GroupSelect);
+        stage.setResizable(true);
+        stage.setScene(scene);
+      } catch (IOException io) {
+        io.printStackTrace();
+      }
+    }
   }
 
   public void actionOpen(ActionEvent actionEvent) {
     System.out.println("view group pressed");
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
-      Stage stage = (Stage) btnInfo.getScene().getWindow();
-      Scene scene = new Scene(loader.load());
-      stage.setTitle("Group");
-      //stage.setWidth(width);
-      //stage.setHeight(height);
-      stage.setResizable(true);
-      stage.setScene(scene);
-    } catch (IOException io) {
-      io.printStackTrace();
+    if(!listview.getSelectionModel().isEmpty()) {
+      GroupSelect = select.toString();
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
+        Stage stage = (Stage) btnInfo.getScene().getWindow();
+        Scene scene = new Scene(loader.load());
+        stage.setTitle(GroupSelect);
+        stage.setResizable(true);
+        stage.setScene(scene);
+      } catch (IOException io) {
+        io.printStackTrace();
+      }
     }
-
   }
 
   public void actionSearch(ActionEvent actionEvent) {
     System.out.println("search pressed");
   }
 
-
-  public void start(Stage stage) throws Exception {
-
-  }
 
 }

@@ -11,12 +11,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class LoginController {
 
+
+public class LoginController {
+  static String currentUser;
   private UserStorage userStorage;
 
   private static final int width = 325;
   private static final int height = 275;
+
 
   @FXML private Button btnRegister;
   @FXML private TextField txtUsername;
@@ -33,16 +36,14 @@ public class LoginController {
     boolean passMatches = userStorage.comparePassword(user, pass);
 
     if (exists && passMatches) {
-      // TODO: Go to 'home' when logged in instead of an alert
-      alert = new Alert(AlertType.CONFIRMATION);
-      alert.setContentText("CORRECT -- LOGGED IN");
-      alert.show();
+      currentUser = user;
+
 
       try {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/home.fxml"));
         Stage stage = (Stage) btnRegister.getScene().getWindow();
         Scene scene = new Scene(loader.load());
-        stage.setTitle("Home");
+        stage.setTitle("Home - " + currentUser);
 
         stage.setResizable(true);
         stage.setScene(scene);
