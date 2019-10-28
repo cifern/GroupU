@@ -128,16 +128,7 @@ public class HomeController {
     }
 
   public void actionCreateGroup(ActionEvent actionEvent) {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/creategroup.fxml"));
-      Stage stage = (Stage) btnCreateGroup.getScene().getWindow();
-      Scene scene = new Scene(loader.load());
-      stage.setTitle("Create New Group");
-      stage.setResizable(true);
-      stage.setScene(scene);
-    } catch (IOException io) {
-      io.printStackTrace();
-    }
+    Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }
 
   public void actionInfo(ActionEvent actionEvent) {
@@ -145,16 +136,7 @@ public class HomeController {
     if(!tableview.getSelectionModel().isEmpty()) {
       GroupSelect = select.toString();
       System.out.println("view group pressed" + GroupSelect);
-      try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
-        Stage stage = (Stage) btnInfo.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setTitle(GroupSelect);
-        stage.setResizable(true);
-        stage.setScene(scene);
-      } catch (IOException io) {
-        io.printStackTrace();
-      }
+      Utilities.nextScene(btnInfo, "group", GroupSelect);
     }
   }
 
@@ -162,22 +144,12 @@ public class HomeController {
     System.out.println("view group pressed");
     if(!listview.getSelectionModel().isEmpty()) {
       GroupSelect = select.toString();
-      try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
-        Stage stage = (Stage) btnInfo.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setTitle(GroupSelect);
-        stage.setResizable(true);
-        stage.setScene(scene);
-      } catch (IOException io) {
-        io.printStackTrace();
-      }
+      Utilities.nextScene(btnInfo, "group", GroupSelect);
     }
   }
 
   public void actionSearch(ActionEvent actionEvent) {
     System.out.println("search pressed");
   }
-
 
 }
