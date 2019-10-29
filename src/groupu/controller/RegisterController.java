@@ -1,17 +1,12 @@
 package groupu.controller;
 
 import groupu.model.User;
-import java.io.IOException;
-import java.sql.SQLException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class RegisterController {
 
@@ -51,17 +46,6 @@ public class RegisterController {
   }
 
   public void actionBack(ActionEvent actionEvent) {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login.fxml"));
-      Stage stage = (Stage) btnBack.getScene().getWindow();
-      Scene scene = new Scene(loader.load());
-      stage.setTitle("Login");
-      stage.setWidth(width);
-      stage.setHeight(height);
-      stage.setResizable(false);
-      stage.setScene(scene);
-    } catch (IOException io) {
-      io.printStackTrace();
-    }
+    Utilities.nextScene(btnBack, "login", "Login");
   }
 }

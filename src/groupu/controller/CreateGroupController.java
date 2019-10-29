@@ -46,17 +46,7 @@ public class CreateGroupController {
     }
 
     public void actionCancel(ActionEvent actionEvent) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/home.fxml"));
-            Stage stage = (Stage) btnCancel.getScene().getWindow();
-            Scene scene = new Scene(loader.load());
-            stage.setTitle("Home");
-
-            stage.setResizable(true);
-            stage.setScene(scene);
-        } catch (IOException io) {
-            io.printStackTrace();
-        }
+        Utilities.nextScene(btnCancel, "home", "Home");
     }
 }
 

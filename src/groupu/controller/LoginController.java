@@ -1,17 +1,11 @@
 package groupu.controller;
 
-import java.io.IOException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
-
 
 public class LoginController {
   static String currentUser;
@@ -20,8 +14,8 @@ public class LoginController {
   private static final int width = 325;
   private static final int height = 275;
 
-
   @FXML private Button btnRegister;
+  @FXML private Button btnLogin;
   @FXML private TextField txtUsername;
   @FXML private TextField txtPassword;
 
@@ -37,21 +31,7 @@ public class LoginController {
 
     if (exists && passMatches) {
       currentUser = user;
-
-
-      try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/home.fxml"));
-        Stage stage = (Stage) btnRegister.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setTitle("Home - " + currentUser);
-
-        stage.setResizable(true);
-        stage.setScene(scene);
-      } catch (IOException io) {
-        io.printStackTrace();
-      }
-
-
+      Utilities.nextScene(btnLogin, "home", "Home - " + currentUser);
     } else {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Invalid login!");
@@ -61,17 +41,6 @@ public class LoginController {
   }
 
   public void actionRegister(ActionEvent actionEvent) {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/register.fxml"));
-      Stage stage = (Stage) btnRegister.getScene().getWindow();
-      Scene scene = new Scene(loader.load());
-      stage.setTitle("Register");
-      stage.setWidth(width);
-      stage.setHeight(height);
-      stage.setResizable(false);
-      stage.setScene(scene);
-    } catch (IOException io) {
-      io.printStackTrace();
-    }
+    Utilities.nextScene(btnRegister, "register", "Register");
   }
 }
