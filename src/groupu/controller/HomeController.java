@@ -1,5 +1,6 @@
 package groupu.controller;
 
+import groupu.model.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -9,7 +10,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
@@ -21,7 +21,7 @@ import java.sql.ResultSet;
 
 import javafx.util.Callback;
 
-public class HomeController {
+public class HomeController{
 
     static String GroupSelect;
 
@@ -69,7 +69,7 @@ public class HomeController {
     }
 
     public void buildData() throws SQLException {
-      txtUser.setText(LoginController.currentUser);
+
 
       Connection c;
       c = DriverManager.getConnection(DatabaseUrl, user, pass);
@@ -114,7 +114,7 @@ public class HomeController {
        * Data added to users group list *
        ********************************/
       try {
-        String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + LoginController.currentUser +"'";
+        String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
         ResultSet rs = c.createStatement().executeQuery(SQL);
         while (rs.next()) {
           String current = rs.getString("name");
@@ -128,7 +128,16 @@ public class HomeController {
     }
 
   public void actionCreateGroup(ActionEvent actionEvent) {
-    Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
+    try {
+      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/creategroup.fxml"));
+      Stage stage = (Stage) btnCreateGroup.getScene().getWindow();
+      Scene scene = new Scene(loader.load());
+      stage.setTitle("Create New Group");
+      stage.setResizable(true);
+      stage.setScene(scene);
+    } catch (IOException io) {
+      io.printStackTrace();
+    }
   }
 
   public void actionInfo(ActionEvent actionEvent) {
@@ -136,7 +145,16 @@ public class HomeController {
     if(!tableview.getSelectionModel().isEmpty()) {
       GroupSelect = select.toString();
       System.out.println("view group pressed" + GroupSelect);
-      Utilities.nextScene(btnInfo, "group", GroupSelect);
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
+        Stage stage = (Stage) btnInfo.getScene().getWindow();
+        Scene scene = new Scene(loader.load());
+        stage.setTitle(GroupSelect);
+        stage.setResizable(true);
+        stage.setScene(scene);
+      } catch (IOException io) {
+        io.printStackTrace();
+      }
     }
   }
 
@@ -144,12 +162,22 @@ public class HomeController {
     System.out.println("view group pressed");
     if(!listview.getSelectionModel().isEmpty()) {
       GroupSelect = select.toString();
-      Utilities.nextScene(btnInfo, "group", GroupSelect);
+      try {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/group.fxml"));
+        Stage stage = (Stage) btnInfo.getScene().getWindow();
+        Scene scene = new Scene(loader.load());
+        stage.setTitle(GroupSelect);
+        stage.setResizable(true);
+        stage.setScene(scene);
+      } catch (IOException io) {
+        io.printStackTrace();
+      }
     }
   }
 
   public void actionSearch(ActionEvent actionEvent) {
     System.out.println("search pressed");
   }
+
 
 }

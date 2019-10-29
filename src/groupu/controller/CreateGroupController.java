@@ -1,6 +1,5 @@
 package groupu.controller;
 
-import groupu.model.Group;
 import groupu.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CreateGroupController {
+public class CreateGroupController{
 
     private static final int maxNameLength = 50;
     private static final int maxDescriptionLength = 80;
@@ -31,8 +30,10 @@ public class CreateGroupController {
         if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)
                 && (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength )) {
 
+            User user = new User();
             groupStorage = new GroupStorage();
-            groupStorage.createGroup(txtGroupName.getText(), txtDescription.getText(), LoginController.currentUser);
+            groupStorage.createGroup(txtGroupName.getText(), txtDescription.getText(),  user.getUser());
+            System.out.println(user.getUser());
 
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("GROUP CREATED");
@@ -46,7 +47,17 @@ public class CreateGroupController {
     }
 
     public void actionCancel(ActionEvent actionEvent) {
-        Utilities.nextScene(btnCancel, "home", "Home");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/home.fxml"));
+            Stage stage = (Stage) btnCancel.getScene().getWindow();
+            Scene scene = new Scene(loader.load());
+            stage.setTitle("Home");
+
+            stage.setResizable(true);
+            stage.setScene(scene);
+        } catch (IOException io) {
+            io.printStackTrace();
+        }
     }
 }
 

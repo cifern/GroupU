@@ -25,7 +25,6 @@ public class GroupStorage {
             ps.setString(2, description);
             ps.setString(3, user_admin);
 
-
             ps.execute();
 
             ps.close();
@@ -36,6 +35,4 @@ public class GroupStorage {
             e.printStackTrace();
         }
     }
-
-
 }
