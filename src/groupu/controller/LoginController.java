@@ -26,6 +26,7 @@ public class LoginController {
 
 
   @FXML private Button btnRegister;
+  @FXML private Button btnLogin;
   @FXML private TextField txtUsername;
   @FXML private TextField txtPassword;
 
@@ -44,17 +45,7 @@ public class LoginController {
 
     if (exists && passMatches) {
       Session session = Session.getInstance(username);
-      try {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/home.fxml"));
-        Stage stage = (Stage) btnRegister.getScene().getWindow();
-        Scene scene = new Scene(loader.load());
-        stage.setTitle("Home - " + username);
-
-        stage.setResizable(true);
-        stage.setScene(scene);
-      } catch (IOException io) {
-        io.printStackTrace();
-      }
+      Utilities.nextScene(btnLogin, "home", "Home - " + username);
 
 
     } else {
@@ -66,18 +57,7 @@ public class LoginController {
   }
 
   public void actionRegister(ActionEvent actionEvent) {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/register.fxml"));
-      Stage stage = (Stage) btnRegister.getScene().getWindow();
-      Scene scene = new Scene(loader.load());
-      stage.setTitle("Register");
-      stage.setWidth(width);
-      stage.setHeight(height);
-      stage.setResizable(false);
-      stage.setScene(scene);
-    } catch (IOException io) {
-      io.printStackTrace();
-    }
+    Utilities.nextScene(btnRegister, "register", "Register");
   }
 
 

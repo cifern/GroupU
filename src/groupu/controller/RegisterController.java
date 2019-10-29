@@ -49,17 +49,6 @@ public class RegisterController {
   }
 
   public void actionBack(ActionEvent actionEvent) {
-    try {
-      FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/login.fxml"));
-      Stage stage = (Stage) btnBack.getScene().getWindow();
-      Scene scene = new Scene(loader.load());
-      stage.setTitle("Login");
-      stage.setWidth(width);
-      stage.setHeight(height);
-      stage.setResizable(false);
-      stage.setScene(scene);
-    } catch (IOException io) {
-      io.printStackTrace();
-    }
+    Utilities.nextScene(btnBack, "login", "Login");
   }
 }
