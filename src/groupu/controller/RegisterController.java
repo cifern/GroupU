@@ -5,13 +5,10 @@ import java.io.IOException;
 import groupu.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 
 public class RegisterController {
 
@@ -29,15 +26,16 @@ public class RegisterController {
 
 
   public void actionRegister(ActionEvent actionEvent) {
-    User user = new User(txtUsername.getText());
+
+    UserStorage userStore = new UserStorage();
     boolean exists = false;
 
-    exists = user.checkUserExists(txtUsername.getText());
+    exists = userStore.checkUserExists(txtUsername.getText());
 
     if (!exists && txtFirstname.getLength() > 0 && txtLastname.getLength() > 0 &&
         txtUsername.getLength() >= minUsernameSize && txtPassword.getLength() > minPassSize) {
 
-      user.createUser(txtFirstname.getText(), txtLastname.getText(),
+      userStore.createUser(txtFirstname.getText(), txtLastname.getText(),
          txtUsername.getText(), txtPassword.getText());
 
       actionBack(actionEvent);

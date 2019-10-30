@@ -41,12 +41,12 @@ public class HomeController{
     private final String user = "";
     private final String pass = "";
 
-
     @FXML
-    void initialize() throws SQLException {
+    void initialize() throws SQLException
+    {
       buildData();
 
-      /*** Tableview listener**/
+      /*** Tableview listener, Selects the entire row instead of 1 cell**/
       ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
       selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
         if (selectedCells.size() > 0) {
@@ -69,8 +69,6 @@ public class HomeController{
     }
 
     public void buildData() throws SQLException {
-
-
       Connection c;
       c = DriverManager.getConnection(DatabaseUrl, user, pass);
 
@@ -91,9 +89,9 @@ public class HomeController{
             return new SimpleStringProperty(param.getValue().get(1).toString());
           }
         });
-        /********************************
-         * Data added to ObservableList *
-         ********************************/
+
+        /*** Data added to ObservableList ***/
+
         while (rs.next()) {
           //Iterate Row
           ObservableList<String> row = FXCollections.observableArrayList();
@@ -110,9 +108,8 @@ public class HomeController{
         System.out.println("Error on Building Data");
       }
 
-      /********************************
-       * Data added to users group list *
-       ********************************/
+      /** Data added to users group list **/
+
       try {
         String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
         ResultSet rs = c.createStatement().executeQuery(SQL);
@@ -127,11 +124,13 @@ public class HomeController{
       }
     }
 
+    /** open creategroup.fxml**/
   public void actionCreateGroup(ActionEvent actionEvent) {
     Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }
 
-  public void actionInfo(ActionEvent actionEvent) {
+
+  public void actionOpenGroup(ActionEvent actionEvent) {
 
     if(!tableview.getSelectionModel().isEmpty()) {
       GroupSelect = select.toString();
@@ -140,7 +139,7 @@ public class HomeController{
     }
   }
 
-  public void actionOpen(ActionEvent actionEvent) {
+  public void actionOpenUserGroups(ActionEvent actionEvent) {
     System.out.println("view group pressed");
     if(!listview.getSelectionModel().isEmpty()) {
       GroupSelect = select.toString();

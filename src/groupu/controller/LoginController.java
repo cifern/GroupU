@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 public class LoginController {
 
 
-  private User user;
+  private UserStorage userStore;
 
   private static final int width = 325;
   private static final int height = 275;
@@ -36,19 +36,16 @@ public class LoginController {
     String username = txtUsername.getText();
     String pass = txtPassword.getText();
 
+    userStore = new UserStorage();
 
-
-    user = new User(username);
-
-    boolean exists = user.checkUserExists(username);
-    boolean passMatches = user.comparePassword(username, pass);
+    boolean exists = userStore.checkUserExists(username);
+    boolean passMatches = userStore.comparePassword(username, pass);
 
     if (exists && passMatches) {
       Session session = Session.getInstance(username);
       Utilities.nextScene(btnLogin, "home", "Home - " + username);
-
-
-    } else {
+    }
+    else {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Invalid login!");
       alert.show();

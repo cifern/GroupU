@@ -39,7 +39,7 @@
                               <Insets left="66.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btnInfo" mnemonicParsing="false" onAction="#actionInfo" text="Group Info" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                        <Button fx:id="btnInfo" mnemonicParsing="false" onAction="#actionOpenGroup" text="Group Info" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -86,7 +86,7 @@
                         </ScrollPane>
                      </children>
                   </GridPane>
-                  <Button fx:id="btnOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#actionOpen" text="Open" />
+                  <Button fx:id="btnOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" layoutX="14.0" layoutY="342.0" mnemonicParsing="false" onAction="#actionOpenUserGroups" text="Open" />
                   <Button fx:id="btnCreateGroup" layoutX="168.0" layoutY="342.0" mnemonicParsing="false" onAction="#actionCreateGroup" text="Create group" />
                </children>
             </AnchorPane>
