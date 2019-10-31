@@ -1,5 +1,6 @@
 package groupu.controller;
 
+import groupu.model.Group;
 import groupu.model.Session;
 import groupu.model.User;
 import javafx.event.ActionEvent;
@@ -8,6 +9,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 
 public class CreateGroupController {
@@ -17,6 +19,8 @@ public class CreateGroupController {
 
     private String[] tags = new String[10];
     private int tagCount = 0;
+
+    private Group group;
 
     @FXML private Button btnCancel;
     @FXML private TextField txtGroupName;
@@ -31,6 +35,14 @@ public class CreateGroupController {
         txtGroupName.setPromptText("Group Name");
         txtDescription.setPromptText("200 character description of your group");
 
+        txtTag.setOnKeyPressed(event -> {
+                    if (event.getCode() == KeyCode.ENTER) {
+                        ActionEvent a = null;
+                        actionAddTag(a);
+                        txtTag.clear();
+                    }
+        });
+
         /*** block spaces in tag field***/
         txtTag.textProperty().addListener(
                 (observable, old_value, new_value) -> {
@@ -41,8 +53,10 @@ public class CreateGroupController {
     }
 
 
+
     public void actionCreateGroup(ActionEvent actionEvent) {
         GroupStorage groupStorage = new GroupStorage();
+
 
         if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)
                 && (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength )) {

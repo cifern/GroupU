@@ -3,6 +3,8 @@ package groupu.model;
 public final class Group {
     private final String name;
     private String description;
+    private String admin;
+    private String tags;
 
     public Group(String name, String description) {
         this.name = name;
