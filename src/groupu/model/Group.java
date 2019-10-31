@@ -18,7 +18,7 @@ public final class Group {
     public Group(){}
 
     public Group(String groupName){
-        this.name = name;
+        this.name = groupName;
     }
 
     public Group(String name, String description, String admin,String[] tags)
@@ -108,6 +108,7 @@ public final class Group {
         }
         return exists;
     }
+
     public ResultSet getUserGroups(){
         try {
             conn  = dao.getConnection();
@@ -132,6 +133,6 @@ public final class Group {
     }
 
     public String toString() {
-        return name + " " + description;
+        return name;
     }
 }

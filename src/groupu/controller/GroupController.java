@@ -1,8 +1,11 @@
 package groupu.controller;
 
+import groupu.model.Group;
 import groupu.model.Post;
 import groupu.model.Session;
 import java.util.ArrayList;
+
+import groupu.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -54,6 +57,10 @@ public class GroupController {
   }
 
   public void actionJoinGroup(ActionEvent actionEvent) {
+    User user = new User();
+    Group group = new Group(HomeController.GroupSelect);
+
+    user.joinGroup(group);
   }
 
   public void actionReportGroup(ActionEvent actionEvent) {
