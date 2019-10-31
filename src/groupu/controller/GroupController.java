@@ -1,21 +1,56 @@
 package groupu.controller;
 
-import java.io.IOException;
+import groupu.model.Post;
+import groupu.model.Session;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
 
 public class GroupController {
 
+  @FXML private Button btnBack;
+  @FXML private Button btnPost;
+  @FXML private TextArea txtPostBody;
+  @FXML private ListView listPosts;
+
+  private String groupName;
+  private ArrayList<String> postList;
+  private ObservableList<String> posts;
+
   @FXML
-  private Button btnBack;
+  public void initialize() {
+    groupName = HomeController.GroupSelect;
+    System.out.println("XXXXX - INITIALIZED GROUP VIEW");
+    updateListOfPosts();
+  }
+
+  public void updateListOfPosts() {
+    Post p = new Post();
+    postList = p.getPostsByGroupName(groupName);
+    posts = FXCollections.observableArrayList();
+    for (String s : postList) {
+      posts.add(s);
+    }
+    listPosts.setItems(posts);
+  }
 
   public void actionPost(ActionEvent actionEvent) {
-    
+    if (txtPostBody.getText().length() > 0 && txtPostBody.getText().length() <= 300) {
+      Post p = new Post();
+      String poster = Session.getInstance("").getUserName();
+      String data = txtPostBody.getText();
 
+      p.createPost(data, poster, groupName);
+
+      posts.add(poster + ": " + data);
+      listPosts.refresh();
+      txtPostBody.clear();
+    }
   }
 
   public void actionJoinGroup(ActionEvent actionEvent) {
