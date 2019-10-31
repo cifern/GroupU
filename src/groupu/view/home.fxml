@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
+<?import java.net.URL?>
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="642.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
   <tabs>
     <Tab text="Search">
@@ -40,7 +41,7 @@
                               <Insets left="66.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btnInfo" mnemonicParsing="false" onAction="#actionOpenGroup" text="Group Info" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <Button fx:id="btnInfo" mnemonicParsing="false" onAction="#actionOpenGroup" text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets />
                            </GridPane.margin>
@@ -108,4 +109,7 @@
          </content>
       </Tab>
   </tabs>
+    <stylesheets>
+        <URL value ="@Background.css"/>
+    </stylesheets>
 </TabPane>
