@@ -11,7 +11,7 @@
 
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.GroupController">
   <tabs>
-    <Tab text="Posts">
+    <Tab fx:id="tabPosts" text="Posts">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="633.0">
                <children>
@@ -21,7 +21,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab text="Group Info">
+      <Tab fx:id="tabGroupInfo" text="Group Info">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -33,7 +33,7 @@
                </children></AnchorPane>
         </content>
       </Tab>
-      <Tab text="Admin">
+      <Tab fx:id="tabAdmin" text="Admin">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
