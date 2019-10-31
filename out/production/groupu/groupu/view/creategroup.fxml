@@ -23,13 +23,13 @@
         </rowConstraints>
          <children>
             <TextField fx:id="txtGroupName" prefHeight="73.0" prefWidth="398.0" GridPane.columnIndex="1" />
-            <TextArea fx:id="txtDescription" prefHeight="249.0" prefWidth="398.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label prefHeight="25.0" prefWidth="137.0" text="Group Name:" />
             <Label text="Description" GridPane.rowIndex="1" />
             <Button mnemonicParsing="false" onAction="#actionCreateGroup" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#actionCancel" text="Cancel" GridPane.rowIndex="3" />
             <TextField fx:id="txtTag" promptText="Add up to 10 search tags. (no spaces) " GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button mnemonicParsing="false" text="Add Tag" GridPane.rowIndex="2" />
+            <Button fx:id="btnTag" onAction="#actionAddTag" mnemonicParsing="false" text="Add Tag" GridPane.rowIndex="2" />
+            <TextField fx:id="txtDescription" prefHeight="139.0" prefWidth="398.0" promptText="Enter a short description (200 char). " GridPane.columnIndex="1" GridPane.rowIndex="1" />
            
          </children>
       </GridPane>

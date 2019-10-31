@@ -1,9 +1,8 @@
 package groupu.controller;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import groupu.model.Session;
+
+import java.sql.*;
 
 public class GroupStorage {
 
@@ -16,7 +15,7 @@ public class GroupStorage {
     private Connection conn = null;
     private PreparedStatement ps = null;
 
-    public void createGroup(String name, String description, String user_admin) {
+    public void createGroup(String name, String description, String user_admin, String[] tags) {
         try {
             Class.forName(JdbcDriver);
             conn = DriverManager.getConnection(DatabaseUrl, user, pass);
@@ -27,6 +26,13 @@ public class GroupStorage {
 
             ps.execute();
 
+            for(int i = 0; i < tags.length; i++){
+                ps = conn.prepareStatement("INSERT INTO TAGS(GROUP_NAME, TAG) VALUES(?, ?)");
+                ps.setString(1, name);
+                ps.setString(2, tags[i]);
+                ps.execute();
+            }
+
             ps.close();
             conn.close();
         } catch (ClassNotFoundException e) {
@@ -35,4 +41,30 @@ public class GroupStorage {
             e.printStackTrace();
         }
     }
+
+    public ResultSet getGroups(){
+        try {
+            conn = DriverManager.getConnection(DatabaseUrl, user, pass);
+            String SQL = "SELECT NAME , DESCRIPTION from GROUPS";
+            ResultSet rs = conn .createStatement().executeQuery(SQL);
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ResultSet getUserGroups(){
+        try {
+            conn = DriverManager.getConnection(DatabaseUrl, user, pass);
+            String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
+            ResultSet rs = conn .createStatement().executeQuery(SQL);
+            return rs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
+

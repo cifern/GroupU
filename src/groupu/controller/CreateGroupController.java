@@ -1,5 +1,6 @@
 package groupu.controller;
 
+import groupu.model.Session;
 import groupu.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,11 +13,14 @@ import javafx.scene.control.TextField;
 public class CreateGroupController {
 
     private static final int maxNameLength = 50;
-    private static final int maxDescriptionLength = 80;
+    private static final int maxDescriptionLength = 200;
+
+    private String[] tags = new String[10];
+    private int tagCount = 0;
 
     @FXML private Button btnCancel;
     @FXML private TextField txtGroupName;
-    @FXML private TextArea txtDescription;
+    @FXML private TextField txtDescription;
     @FXML private TextField txtTag;
 
 
@@ -34,24 +38,16 @@ public class CreateGroupController {
                         txtTag.setText(old_value);
                 }
         );
-
-
-
-
-
     }
 
 
     public void actionCreateGroup(ActionEvent actionEvent) {
-        GroupStorage groupStorage;
+        GroupStorage groupStorage = new GroupStorage();
 
         if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)
                 && (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength )) {
 
-            User user = new User();
-            groupStorage = new GroupStorage();
-            groupStorage.createGroup(txtGroupName.getText(), txtDescription.getText(),  user.getUser());
-            System.out.println(user.getUser());
+            groupStorage.createGroup(txtGroupName.getText(), txtDescription.getText(), Session.getInstance("").getUserName(), tags);
 
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("GROUP CREATED");
@@ -66,6 +62,34 @@ public class CreateGroupController {
 
     public void actionCancel(ActionEvent actionEvent) {
         Utilities.nextScene(btnCancel, "home", "Home");
+    }
+
+
+    public void actionAddTag(ActionEvent actionEvent) {
+        for(int i = 0; i < tagCount; i++)
+            if(tags[i].equals(txtTag.getText())){
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Duplicate tag!");
+                alert.show();
+                return;
+        }
+
+        if(txtTag.getLength() > 0 && txtTag.getLength() < 30 && tagCount<10) {
+            tags[tagCount] = txtTag.getText();
+            tagCount++;
+            txtTag.clear();
+        }
+        else if (tagCount >= 10){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Tag limit reached!");
+            alert.show();
+        }
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Tag is too long! (30 characters)");
+            alert.show();
+        }
+
     }
 }
 

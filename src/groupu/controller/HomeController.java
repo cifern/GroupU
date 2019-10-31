@@ -1,5 +1,6 @@
 package groupu.controller;
 
+import groupu.model.Group;
 import groupu.model.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -35,14 +36,9 @@ public class HomeController{
 
     private ObservableList<ObservableList> TableViewData;
     private Object select;
-    private static final String JdbcDriver = "org.h2.Driver";
-    private static final String DatabaseUrl = "jdbc:h2:./res/UserDB";
-
-    private final String user = "";
-    private final String pass = "";
 
     @FXML
-    void initialize() throws SQLException
+    void initialize()
     {
       buildData();
 
@@ -68,36 +64,30 @@ public class HomeController{
       });
     }
 
-    public void buildData() throws SQLException {
-      Connection c;
-      c = DriverManager.getConnection(DatabaseUrl, user, pass);
-
+    public void buildData(){
       /** Populate group search tableview*/
       TableViewData = FXCollections.observableArrayList();
-      try {
-        String SQL = "SELECT NAME , DESCRIPTION from GROUPS";
-        ResultSet rs = c.createStatement().executeQuery(SQL);
+      GroupStorage groupStore = new GroupStorage();
+      ResultSet rsGroups = groupStore.getGroups();
 
+      /*** Data added to ObservableList ***/
+      try {
         colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
           public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
             return new SimpleStringProperty(param.getValue().get(0).toString());
           }
         });
-
         colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
           public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
             return new SimpleStringProperty(param.getValue().get(1).toString());
           }
         });
-
-        /*** Data added to ObservableList ***/
-
-        while (rs.next()) {
+        while (rsGroups.next()) {
           //Iterate Row
           ObservableList<String> row = FXCollections.observableArrayList();
-          for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+          for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
             //Iterate Column
-            row.add(rs.getString(i));
+            row.add(rsGroups.getString(i));
           }
           TableViewData.add(row);
         }
@@ -105,22 +95,20 @@ public class HomeController{
         tableview.setItems(TableViewData);
       } catch (Exception e) {
         e.printStackTrace();
-        System.out.println("Error on Building Data");
+        System.out.println("Error on Building group table");
       }
 
       /** Data added to users group list **/
-
       try {
-        String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
-        ResultSet rs = c.createStatement().executeQuery(SQL);
-        while (rs.next()) {
-          String current = rs.getString("name");
+        ResultSet rsUserGroups = groupStore.getUserGroups();
+        while (rsUserGroups.next()) {
+          String current = rsUserGroups.getString("name");
           ObservableList<String> list = FXCollections.observableArrayList(current);
           listview.getItems().addAll(list);
         }
-
       } catch (SQLException e) {
         e.printStackTrace();
+          System.out.println("Error on Building user groups table");
       }
     }
 
