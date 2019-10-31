@@ -1,6 +1,7 @@
 package groupu.controller;
 
 import groupu.model.Session;
+import groupu.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;

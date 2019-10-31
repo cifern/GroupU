@@ -53,12 +53,11 @@ public class CreateGroupController {
 
 
     public void actionCreateGroup(ActionEvent actionEvent) {
-        Group group = new Group();
-        
+
         if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)
                 && (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength )) {
 
-            group.createGroup(txtGroupName.getText(), txtDescription.getText(), Session.getInstance("").getUserName(), tags);
+            Group group = new Group(txtGroupName.getText(), txtDescription.getText(), Session.getInstance("").getUserName(), tags);
 
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("GROUP CREATED");

@@ -13,12 +13,18 @@ public final class Group {
 
     public Group(){}
 
-
-    public Group(String name, String description, String[] tags, String admin) {
+    public Group(String groupName){
         this.name = name;
         this.description = description;
         this.tags = tags;
         this.admin = admin;
+
+    }
+
+    public Group(String name, String description, String admin,String[] tags) {
+
+        if(!checkGroupExists(name))
+        createGroup(name, description,admin,tags);
     }
 
     public String[] getTags(){
@@ -30,7 +36,7 @@ public final class Group {
     private Connection conn = null;
     private PreparedStatement ps = null;
 
-    public void createGroup(String name, String description, String user_admin, String[] tags) {
+    private void createGroup(String name, String description, String user_admin, String[] tags) {
         try {
             conn =  dao.getConnection();
             ps = conn.prepareStatement("INSERT INTO Groups(name, DESCRIPTION, USER_ADMIN) VALUES(?, ?, ?)");
@@ -70,6 +76,28 @@ public final class Group {
         return null;
     }
 
+    private boolean checkGroupExists(String group) {
+        boolean exists = false;
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM GROU WHERE NAME=?");
+            ps.setString(1, group);
+
+            ResultSet rs = ps.executeQuery();
+
+            // rs.next() is false if the set is empty
+            exists = rs.next();
+
+            // close stuff
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return exists;
+    }
     public ResultSet getUserGroups(){
         try {
             conn  = dao.getConnection();

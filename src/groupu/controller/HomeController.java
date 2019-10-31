@@ -1,5 +1,6 @@
 package groupu.controller;
 
+import groupu.model.Group;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
