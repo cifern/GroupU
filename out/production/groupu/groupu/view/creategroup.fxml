@@ -8,6 +8,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.CreateGroupController">
    <children>
@@ -24,8 +25,14 @@
         </rowConstraints>
          <children>
             <TextField fx:id="txtGroupName" prefHeight="73.0" prefWidth="398.0" GridPane.columnIndex="1" />
-            <Label prefHeight="25.0" prefWidth="137.0" text="Group Name:" textFill="WHITE" />
-            <Label text="Description" textFill="WHITE" GridPane.rowIndex="1" />
+            <Label prefHeight="25.0" prefWidth="137.0" text="Group Name:" textFill="WHITE">
+               <font>
+                  <Font size="21.0" />
+               </font></Label>
+            <Label prefHeight="88.0" prefWidth="136.0" text="Description:" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
             <Button mnemonicParsing="false" onAction="#actionCreateGroup" text="Submit" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#actionCancel" text="Cancel" GridPane.rowIndex="3" />
             <TextField fx:id="txtTag" promptText="Add up to 10 search tags. (no spaces) " GridPane.columnIndex="1" GridPane.rowIndex="2" />
