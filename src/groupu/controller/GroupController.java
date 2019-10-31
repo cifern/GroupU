@@ -10,10 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 
 public class GroupController {
 
@@ -21,6 +18,7 @@ public class GroupController {
   @FXML private Button btnPost;
   @FXML private TextArea txtPostBody;
   @FXML private ListView listPosts;
+  @FXML private TabPane tabPane;
   @FXML private Tab tabAdmin;
   @FXML private Tab tabGroupInfo;
   @FXML private Tab tabPosts;
@@ -39,7 +37,7 @@ public class GroupController {
     Group g = new Group();
     String admin = g.getGroupAdmin(groupName);
     if (!Session.getInstance("").getUserName().equals(admin)) {
-      tabAdmin.setDisable(true);
+      tabPane.getTabs().remove(tabAdmin);
     }
   }
 

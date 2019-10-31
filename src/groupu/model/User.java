@@ -122,12 +122,12 @@ final public class User {
             if(rs.next())
                 return;
 
-            if(!rs.next()) {
+
                 ps = conn.prepareStatement("INSERT INTO USERS_GROUPS(USER_ID, GROUP_ID) VALUES(?, ?)");
                 ps.setString(1, Session.getInstance("").getUserName());
                 ps.setString(2, group.toString());
                 ps.execute();
-            }
+
             ps.close();
             conn.close();
         } catch (ClassNotFoundException e) {

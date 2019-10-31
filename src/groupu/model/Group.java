@@ -33,6 +33,7 @@ public final class Group {
     }
 
     private void createGroup(String name, String description, String user_admin, String[] tags) {
+        if(!checkGroupExists(name))
         try {
             conn =  dao.getConnection();
             ps = conn.prepareStatement("INSERT INTO Groups(name, DESCRIPTION, USER_ADMIN) VALUES(?, ?, ?)");
@@ -48,6 +49,9 @@ public final class Group {
                 ps.setString(2, tags[i]);
                 ps.execute();
             }
+            /** add admin to group**/
+            User user = new User();
+            user.joinGroup(this);
 
             ps.close();
             conn.close();
