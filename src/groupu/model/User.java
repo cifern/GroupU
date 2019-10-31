@@ -112,6 +112,23 @@ final public class User {
         return matchedPass;
     }
 
+    public void joinGroup(String groupName){
+        try {
+            conn = dao.getConnection();
+
+            ps = conn.prepareStatement("INSERT INTO USERS_GROUPS(USER_ID, GROUP_ID) VALUES(?, ?)");
+            ps.setString(1, Session.getInstance("").getUserName());
+            ps.setString(2, groupName);
+            ps.execute();
+
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     final public String getUser(){
         return username;

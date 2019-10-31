@@ -50,8 +50,6 @@ public class CreateGroupController {
         );
     }
 
-
-
     public void actionCreateGroup(ActionEvent actionEvent) {
 
         if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)

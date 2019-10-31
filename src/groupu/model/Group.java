@@ -11,18 +11,18 @@ public final class Group {
     private String admin;
     private String tags[];
 
+    private DAO dao = new DAO();
+    private Connection conn = null;
+    private PreparedStatement ps = null;
+
     public Group(){}
 
     public Group(String groupName){
         this.name = name;
-        this.description = description;
-        this.tags = tags;
-        this.admin = admin;
-
     }
 
-    public Group(String name, String description, String admin,String[] tags) {
-
+    public Group(String name, String description, String admin,String[] tags)
+    {
         if(!checkGroupExists(name))
         createGroup(name, description,admin,tags);
     }
@@ -31,10 +31,6 @@ public final class Group {
         String[] tags = new String[10];
                 return tags;
     }
-
-    private DAO dao = new DAO();
-    private Connection conn = null;
-    private PreparedStatement ps = null;
 
     private void createGroup(String name, String description, String user_admin, String[] tags) {
         try {
@@ -66,7 +62,7 @@ public final class Group {
         try {
             conn = dao.getConnection();
             String SQL = "SELECT NAME , DESCRIPTION from GROUPS";
-            ResultSet rs = conn .createStatement().executeQuery(SQL);
+            ResultSet rs = conn.createStatement().executeQuery(SQL);
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,6 +72,23 @@ public final class Group {
         return null;
     }
 
+    public ResultSet getUsers(String groupName){
+            try {
+                conn = dao.getConnection();
+                String SQL = "select users.USERNAME, groups.name\n" +
+                        "from USERS_GROUPS, USERS, GROUPS\n" +
+                        "where users.USERNAME=users_groups.USER_ID AND groups.NAME = users_groups.group_ID";
+                ResultSet rs = conn.createStatement().executeQuery(SQL);
+                return rs;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+    }
+
+
     private boolean checkGroupExists(String group) {
         boolean exists = false;
         try {
@@ -84,11 +97,8 @@ public final class Group {
             ps.setString(1, group);
 
             ResultSet rs = ps.executeQuery();
-
-            // rs.next() is false if the set is empty
             exists = rs.next();
 
-            // close stuff
             ps.close();
             conn.close();
         } catch (ClassNotFoundException e) {

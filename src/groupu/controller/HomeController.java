@@ -26,7 +26,6 @@ public class HomeController{
     @FXML private TableView tableview;
     @FXML private TableColumn colName;
     @FXML private TableColumn colDescription;
-    @FXML private Text txtUser;
     @FXML private ListView listview;
 
     private ObservableList<ObservableList> TableViewData;
