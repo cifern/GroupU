@@ -93,7 +93,7 @@ public final class Group {
         boolean exists = false;
         try {
             conn = dao.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM GROU WHERE NAME=?");
+            ps = conn.prepareStatement("SELECT * FROM GROUPS WHERE NAME=?");
             ps.setString(1, group);
 
             ResultSet rs = ps.executeQuery();
@@ -113,7 +113,7 @@ public final class Group {
         try {
             conn  = dao.getConnection();
             String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
-            ResultSet rs = conn .createStatement().executeQuery(SQL);
+            ResultSet rs = conn.createStatement().executeQuery(SQL);
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -130,6 +130,27 @@ public final class Group {
         if (other.getClass() != this.getClass()) return false;
         Group that = (Group) other;
         return (this.name.equals(that.name)) && (this.description == that.description);
+    }
+
+    public String getGroupAdmin(String name) {
+        String admin = "";
+        ResultSet rs = null;
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT USER_ADMIN FROM GROUPS WHERE NAME=?");
+            ps.setString(1, name);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                admin = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return admin;
     }
 
     public String toString() {
