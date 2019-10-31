@@ -1,15 +1,16 @@
 package groupu.controller;
 
+import groupu.model.Group;
 import groupu.model.Post;
 import groupu.model.Session;
 import java.util.ArrayList;
+
+import groupu.model.User;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 
 public class GroupController {
 
@@ -17,6 +18,10 @@ public class GroupController {
   @FXML private Button btnPost;
   @FXML private TextArea txtPostBody;
   @FXML private ListView listPosts;
+  @FXML private TabPane tabPane;
+  @FXML private Tab tabAdmin;
+  @FXML private Tab tabGroupInfo;
+  @FXML private Tab tabPosts;
 
   private String groupName;
   private ArrayList<String> postList;
@@ -25,8 +30,15 @@ public class GroupController {
   @FXML
   public void initialize() {
     groupName = HomeController.GroupSelect;
-    System.out.println("XXXXX - INITIALIZED GROUP VIEW");
+    System.out.println("XXXXX - INITIALIZED GROUP VIEW FOR GROUP: " + groupName);
     updateListOfPosts();
+
+    // check if user is admin and hide admin tab if not
+    Group g = new Group();
+    String admin = g.getGroupAdmin(groupName);
+    if (!Session.getInstance("").getUserName().equals(admin)) {
+      tabPane.getTabs().remove(tabAdmin);
+    }
   }
 
   public void updateListOfPosts() {
@@ -54,6 +66,10 @@ public class GroupController {
   }
 
   public void actionJoinGroup(ActionEvent actionEvent) {
+    User user = new User();
+    Group group = new Group(HomeController.GroupSelect);
+
+    user.joinGroup(group);
   }
 
   public void actionReportGroup(ActionEvent actionEvent) {

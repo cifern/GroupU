@@ -14,12 +14,7 @@ public final class Post {
   private String poster;
   private String group;
 
-  private static final String JdbcDriver = "org.h2.Driver";
-  private static final String DatabaseUrl = "jdbc:h2:./res/UserDB";
-
-  private final String user = "";
-  private final String pass = "";
-
+  private DAO dao = new DAO();
   private Connection conn = null;
   private PreparedStatement ps = null;
 
@@ -29,8 +24,7 @@ public final class Post {
 
   public void createPost(String data, String poster, String group) {
     try {
-      Class.forName(JdbcDriver);
-      conn = DriverManager.getConnection(DatabaseUrl, user, pass);
+      conn = dao.getConnection();
       ps = conn.prepareStatement("INSERT INTO POSTS(data, poster, groupname) VALUES(?, ?, ?)");
       ps.setString(1, data);
       ps.setString(2, poster);
@@ -52,8 +46,7 @@ public final class Post {
     ArrayList<String> postList = new ArrayList<>();
 
     try {
-      Class.forName(JdbcDriver);
-      conn = DriverManager.getConnection(DatabaseUrl, user, pass);
+      conn = dao.getConnection();
       ps = conn.prepareStatement("SELECT * FROM POSTS WHERE GROUPNAME=?");
       ps.setString(1, groupname);
 

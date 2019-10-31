@@ -11,18 +11,18 @@ public final class Group {
     private String admin;
     private String tags[];
 
+    private DAO dao = new DAO();
+    private Connection conn = null;
+    private PreparedStatement ps = null;
+
     public Group(){}
 
     public Group(String groupName){
-        this.name = name;
-        this.description = description;
-        this.tags = tags;
-        this.admin = admin;
-
+        this.name = groupName;
     }
 
-    public Group(String name, String description, String admin,String[] tags) {
-
+    public Group(String name, String description, String admin,String[] tags)
+    {
         if(!checkGroupExists(name))
         createGroup(name, description,admin,tags);
     }
@@ -32,11 +32,8 @@ public final class Group {
                 return tags;
     }
 
-    private DAO dao = new DAO();
-    private Connection conn = null;
-    private PreparedStatement ps = null;
-
     private void createGroup(String name, String description, String user_admin, String[] tags) {
+        if(!checkGroupExists(name))
         try {
             conn =  dao.getConnection();
             ps = conn.prepareStatement("INSERT INTO Groups(name, DESCRIPTION, USER_ADMIN) VALUES(?, ?, ?)");
@@ -52,6 +49,9 @@ public final class Group {
                 ps.setString(2, tags[i]);
                 ps.execute();
             }
+            /** add admin to group**/
+            User user = new User();
+            user.joinGroup(this);
 
             ps.close();
             conn.close();
@@ -66,7 +66,7 @@ public final class Group {
         try {
             conn = dao.getConnection();
             String SQL = "SELECT NAME , DESCRIPTION from GROUPS";
-            ResultSet rs = conn .createStatement().executeQuery(SQL);
+            ResultSet rs = conn.createStatement().executeQuery(SQL);
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,19 +76,33 @@ public final class Group {
         return null;
     }
 
+    public ResultSet getUsers(String groupName){
+            try {
+                conn = dao.getConnection();
+                String SQL = "select users.USERNAME, groups.name\n" +
+                        "from USERS_GROUPS, USERS, GROUPS\n" +
+                        "where users.USERNAME=users_groups.USER_ID AND groups.NAME = users_groups.group_ID";
+                ResultSet rs = conn.createStatement().executeQuery(SQL);
+                return rs;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+    }
+
+
     private boolean checkGroupExists(String group) {
         boolean exists = false;
         try {
             conn = dao.getConnection();
-            ps = conn.prepareStatement("SELECT * FROM GROU WHERE NAME=?");
+            ps = conn.prepareStatement("SELECT * FROM GROUPS WHERE NAME=?");
             ps.setString(1, group);
 
             ResultSet rs = ps.executeQuery();
-
-            // rs.next() is false if the set is empty
             exists = rs.next();
 
-            // close stuff
             ps.close();
             conn.close();
         } catch (ClassNotFoundException e) {
@@ -98,11 +112,12 @@ public final class Group {
         }
         return exists;
     }
+
     public ResultSet getUserGroups(){
         try {
             conn  = dao.getConnection();
             String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
-            ResultSet rs = conn .createStatement().executeQuery(SQL);
+            ResultSet rs = conn.createStatement().executeQuery(SQL);
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -121,7 +136,28 @@ public final class Group {
         return (this.name.equals(that.name)) && (this.description == that.description);
     }
 
+    public String getGroupAdmin(String name) {
+        String admin = "";
+        ResultSet rs = null;
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT USER_ADMIN FROM GROUPS WHERE NAME=?");
+            ps.setString(1, name);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                admin = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return admin;
+    }
+
     public String toString() {
-        return name + " " + description;
+        return name;
     }
 }

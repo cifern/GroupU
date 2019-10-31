@@ -112,6 +112,30 @@ final public class User {
         return matchedPass;
     }
 
+    public void joinGroup(Group group){
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM USERS_GROUPS WHERE USER_ID=? AND GROUP_ID=?");
+            ps.setString(1, Session.getInstance("").getUserName());
+            ps.setString(2, group.toString());
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+                return;
+
+
+                ps = conn.prepareStatement("INSERT INTO USERS_GROUPS(USER_ID, GROUP_ID) VALUES(?, ?)");
+                ps.setString(1, Session.getInstance("").getUserName());
+                ps.setString(2, group.toString());
+                ps.execute();
+
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     final public String getUser(){
         return username;
