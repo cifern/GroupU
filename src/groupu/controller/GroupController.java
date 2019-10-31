@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 
 public class GroupController {
@@ -20,6 +21,9 @@ public class GroupController {
   @FXML private Button btnPost;
   @FXML private TextArea txtPostBody;
   @FXML private ListView listPosts;
+  @FXML private Tab tabAdmin;
+  @FXML private Tab tabGroupInfo;
+  @FXML private Tab tabPosts;
 
   private String groupName;
   private ArrayList<String> postList;
@@ -28,8 +32,15 @@ public class GroupController {
   @FXML
   public void initialize() {
     groupName = HomeController.GroupSelect;
-    System.out.println("XXXXX - INITIALIZED GROUP VIEW");
+    System.out.println("XXXXX - INITIALIZED GROUP VIEW FOR GROUP: " + groupName);
     updateListOfPosts();
+
+    // check if user is admin and hide admin tab if not
+    Group g = new Group();
+    String admin = g.getGroupAdmin(groupName);
+    if (!Session.getInstance("").getUserName().equals(admin)) {
+      tabAdmin.setDisable(true);
+    }
   }
 
   public void updateListOfPosts() {
