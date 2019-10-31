@@ -1,25 +1,18 @@
 package groupu.controller;
 
-import java.io.IOException;
-
 import groupu.model.Session;
-import groupu.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
-
 
 
 public class LoginController {
 
 
-  private UserStorage userStore;
+  private User userStore;
 
   private static final int width = 325;
   private static final int height = 275;
@@ -36,7 +29,7 @@ public class LoginController {
     String username = txtUsername.getText();
     String pass = txtPassword.getText();
 
-    userStore = new UserStorage();
+    userStore = new User();
 
     boolean exists = userStore.checkUserExists(username);
     boolean passMatches = userStore.comparePassword(username, pass);

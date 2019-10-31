@@ -2,12 +2,10 @@ package groupu.controller;
 
 import groupu.model.Group;
 import groupu.model.Session;
-import groupu.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
@@ -55,13 +53,12 @@ public class CreateGroupController {
 
 
     public void actionCreateGroup(ActionEvent actionEvent) {
-        GroupStorage groupStorage = new GroupStorage();
-
-
+        Group group = new Group();
+        
         if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)
                 && (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength )) {
 
-            groupStorage.createGroup(txtGroupName.getText(), txtDescription.getText(), Session.getInstance("").getUserName(), tags);
+            group.createGroup(txtGroupName.getText(), txtDescription.getText(), Session.getInstance("").getUserName(), tags);
 
             alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setContentText("GROUP CREATED");

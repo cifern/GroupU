@@ -1,8 +1,7 @@
 package groupu.controller;
 
-import java.io.IOException;
+import  groupu.model.User;
 
-import groupu.model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -27,7 +26,7 @@ public class RegisterController {
 
   public void actionRegister(ActionEvent actionEvent) {
 
-    UserStorage userStore = new UserStorage();
+    User userStore = new User();
     boolean exists = false;
 
     exists = userStore.checkUserExists(txtUsername.getText());

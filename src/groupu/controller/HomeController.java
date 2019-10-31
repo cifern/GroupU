@@ -1,7 +1,5 @@
 package groupu.controller;
 
-import groupu.model.Group;
-import groupu.model.Session;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,14 +8,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
-import java.io.IOException;
+
 import java.sql.*;
-import java.sql.Connection;
 import java.sql.ResultSet;
 
 import javafx.util.Callback;
@@ -67,7 +61,7 @@ public class HomeController{
     public void buildData(){
       /** Populate group search tableview*/
       TableViewData = FXCollections.observableArrayList();
-      GroupStorage groupStore = new GroupStorage();
+      Group groupStore = new Group();
       ResultSet rsGroups = groupStore.getGroups();
 
       /*** Data added to ObservableList ***/
