@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
@@ -16,8 +17,8 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-
 <?import java.net.URL?>
+
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="642.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
   <tabs>
     <Tab text="Search">
@@ -80,28 +81,36 @@
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="454.0" prefWidth="642.0">
                <children>
-                  <GridPane layoutX="14.0" layoutY="16.0" prefHeight="515.0" prefWidth="599.0">
+                  <GridPane layoutX="14.0" layoutY="14.0" prefHeight="515.0" prefWidth="599.0">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="0.0" prefWidth="0.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.0" minWidth="10.0" prefWidth="468.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="93.0" minWidth="0.0" prefWidth="0.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="281.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="201.0" minWidth="0.0" prefWidth="26.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.0" minWidth="0.0" prefWidth="7.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="344.0" minWidth="0.0" prefWidth="285.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="414.0" minHeight="10.0" prefHeight="215.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="287.0" minHeight="0.0" prefHeight="199.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="414.0" minHeight="10.0" prefHeight="331.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="287.0" minHeight="0.0" prefHeight="184.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="333.0" prefWidth="468.0" GridPane.columnIndex="1">
+                        <ScrollPane hbarPolicy="NEVER" prefHeight="333.0" prefWidth="468.0">
                            <content>
-                              <ListView fx:id="listview" prefHeight="261.0" prefWidth="466.0" />
+                              <ListView fx:id="listviewAdmin" prefHeight="329.0" prefWidth="292.0" />
                            </content>
                         </ScrollPane>
-                        <Button fx:id="btnCreateGroup" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#actionCreateGroup" text="Create group" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="BOTTOM">
+                        <Button fx:id="btnCreateGroup" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#actionCreateGroup" text="Create group" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </Button>
-                        <Button fx:id="btnOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#actionOpenUserGroups" text="Open" GridPane.rowIndex="1" />
+                        <Button fx:id="btnOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#actionOpenUserGroups" text="Open" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <ScrollPane prefHeight="266.0" prefWidth="257.0" GridPane.columnIndex="3">
+                           <content>
+                              <ListView fx:id="listviewJoined" prefHeight="329.0" prefWidth="282.0" />
+                           </content>
+                        </ScrollPane>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Created Groups" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joined Groups" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
                </children>
@@ -110,6 +119,6 @@
       </Tab>
   </tabs>
     <stylesheets>
-        <URL value ="@Background.css"/>
+
     </stylesheets>
 </TabPane>

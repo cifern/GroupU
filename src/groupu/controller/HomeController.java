@@ -1,6 +1,7 @@
 package groupu.controller;
 
 import groupu.model.Group;
+import groupu.model.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,7 +11,6 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.text.Text;
 
 import java.sql.*;
 import java.sql.ResultSet;
@@ -26,7 +26,8 @@ public class HomeController{
     @FXML private TableView tableview;
     @FXML private TableColumn colName;
     @FXML private TableColumn colDescription;
-    @FXML private ListView listview;
+    @FXML private ListView listviewAdmin;
+    @FXML private ListView listviewJoined;
 
     private ObservableList<ObservableList> TableViewData;
     private Object select;
@@ -46,14 +47,21 @@ public class HomeController{
         }
       });
 
-      /*** Listview listener**/
-      listview.getSelectionModel().getSelectedItem() ;
-      listview.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+      /*** owned groups listener**/
+      listviewAdmin.getSelectionModel().getSelectedItem() ;
+      listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-          System.out.println("ListView selection changed from oldValue = "
-                  + oldValue + " to newValue = " + newValue);
           select = newValue;
+        }
+      });
+
+      /*** joined groups listener**/
+      listviewJoined.getSelectionModel().getSelectedItem() ;
+      listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable2, String oldValue2, String newValue2) {
+          select = newValue2;
         }
       });
     }
@@ -62,9 +70,10 @@ public class HomeController{
       /** Populate group search tableview*/
       TableViewData = FXCollections.observableArrayList();
       Group groupStore = new Group();
+      User user = new User();
       ResultSet rsGroups = groupStore.getGroups();
 
-      /*** Data added to ObservableList ***/
+      /*** Data table added to searchlist ***/
       try {
         colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
           public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
@@ -98,11 +107,24 @@ public class HomeController{
         while (rsUserGroups.next()) {
           String current = rsUserGroups.getString("name");
           ObservableList<String> list = FXCollections.observableArrayList(current);
-          listview.getItems().addAll(list);
+          listviewAdmin.getItems().addAll(list);
         }
       } catch (SQLException e) {
         e.printStackTrace();
           System.out.println("Error on Building user groups table");
+      }
+
+      /** Data added to joined group list **/
+      try {
+        ResultSet rUserGroups = user.getJoinedGroups();
+        while (rUserGroups.next()) {
+          String current2 = rUserGroups.getString("name");
+          ObservableList<String> list2 = FXCollections.observableArrayList(current2);
+          listviewJoined.getItems().addAll(list2);
+        }
+      } catch (SQLException e) {
+        e.printStackTrace();
+        System.out.println("Error on Building user groups table");
       }
     }
 
@@ -123,7 +145,7 @@ public class HomeController{
 
   public void actionOpenUserGroups(ActionEvent actionEvent) {
     System.out.println("view group pressed");
-    if(!listview.getSelectionModel().isEmpty()) {
+    if(!listviewAdmin.getSelectionModel().isEmpty()) {
       GroupSelect = select.toString();
       Utilities.nextScene(btnInfo, "group", GroupSelect);
     }

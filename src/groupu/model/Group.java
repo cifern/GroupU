@@ -118,6 +118,7 @@ public final class Group {
             conn  = dao.getConnection();
             String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
             ResultSet rs = conn.createStatement().executeQuery(SQL);
+
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();

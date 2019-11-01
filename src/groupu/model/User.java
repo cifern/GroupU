@@ -137,6 +137,24 @@ final public class User {
         }
     }
 
+    public ResultSet getJoinedGroups(){
+        try {
+            conn = dao.getConnection();
+            String SQL = "select groups.name from USERS_GROUPS, GROUPS where users_groups.USER_ID =? AND groups.NAME = users_groups.group_ID";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, Session.getInstance("").getUserName());
+
+            ResultSet rs = ps.executeQuery();
+
+            return rs;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
     final public String getUser(){
         return username;
     }
