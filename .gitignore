@@ -15,3 +15,7 @@
 *.zip
 *.tar.gz
 *.rar
+
+# Directories #
+/out/*
+out/*
