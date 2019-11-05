@@ -11,11 +11,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.sql.*;
 import java.sql.ResultSet;
-
-import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 public class HomeController{

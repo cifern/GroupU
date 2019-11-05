@@ -11,7 +11,6 @@ public class Session {
 
     private Session(String userName) {
         this.userName = userName;
-
     }
 
     public static Session getInstance(String userName) {

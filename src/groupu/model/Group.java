@@ -66,7 +66,8 @@ public final class Group {
         try {
             conn = dao.getConnection();
             String SQL = "SELECT NAME , DESCRIPTION from GROUPS";
-            ResultSet rs = conn.createStatement().executeQuery(SQL);
+            ps= conn.prepareStatement(SQL);
+            ResultSet rs = ps.executeQuery();
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -82,7 +83,8 @@ public final class Group {
                 String SQL = "select users.USERNAME, groups.name\n" +
                         "from USERS_GROUPS, USERS, GROUPS\n" +
                         "where users.USERNAME=users_groups.USER_ID AND groups.NAME = users_groups.group_ID";
-                ResultSet rs = conn.createStatement().executeQuery(SQL);
+                ps= conn.prepareStatement(SQL);
+                ResultSet rs = ps.executeQuery();
                 return rs;
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -117,7 +119,8 @@ public final class Group {
         try {
             conn  = dao.getConnection();
             String SQL = "SELECT NAME  from GROUPS where USER_ADMIN = '" + Session.getInstance("").getUserName() +"'";
-            ResultSet rs = conn.createStatement().executeQuery(SQL);
+            ps= conn.prepareStatement(SQL);
+            ResultSet rs = ps.executeQuery();
 
             return rs;
         } catch (SQLException e) {

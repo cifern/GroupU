@@ -111,6 +111,7 @@
                         </ScrollPane>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Created Groups" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joined Groups" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Text fx:id="txtTest" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="BOTTOM" />
                      </children>
                   </GridPane>
                </children>
