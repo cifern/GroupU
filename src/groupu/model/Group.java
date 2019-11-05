@@ -161,6 +161,27 @@ public final class Group {
         return admin;
     }
 
+    public String getGroupDescription(String groupName) {
+        String desc = "";
+        ResultSet rs = null;
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT DESCRIPTION FROM GROUPS WHERE NAME=?");
+            ps.setString(1, groupName);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                desc = rs.getString(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return desc;
+    }
+
     public String toString() {
         return name;
     }

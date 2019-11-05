@@ -22,6 +22,8 @@ public class GroupController {
   @FXML private Tab tabAdmin;
   @FXML private Tab tabGroupInfo;
   @FXML private Tab tabPosts;
+  @FXML private Label labelGroupName;
+  @FXML private Label labelGroupDescription;
 
   private String groupName;
   private ArrayList<String> postList;
@@ -29,12 +31,15 @@ public class GroupController {
 
   @FXML
   public void initialize() {
+    Group g = new Group();
+
     groupName = HomeController.GroupSelect;
     System.out.println("XXXXX - INITIALIZED GROUP VIEW FOR GROUP: " + groupName);
+    labelGroupName.setText(groupName);
+    labelGroupDescription.setText(g.getGroupDescription(groupName));
     updateListOfPosts();
 
     // check if user is admin and hide admin tab if not
-    Group g = new Group();
     String admin = g.getGroupAdmin(groupName);
     if (!Session.getInstance("").getUserName().equals(admin)) {
       tabPane.getTabs().remove(tabAdmin);
