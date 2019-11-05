@@ -29,7 +29,7 @@ public class CreateGroupController {
     Alert alert;
 
     @FXML
-    void initialize(){
+    void initialize() {
         txtGroupName.setPromptText("Group Name");
         txtDescription.setPromptText("200 character description of your group");
 

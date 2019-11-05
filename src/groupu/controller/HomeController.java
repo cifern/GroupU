@@ -15,6 +15,7 @@ import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
 
+import javafx.scene.text.Text;
 import javafx.util.Callback;
 
 public class HomeController{
@@ -48,11 +49,14 @@ public class HomeController{
       });
 
       /*** owned groups listener**/
-      listviewAdmin.getSelectionModel().getSelectedItem() ;
+      listviewAdmin.getSelectionModel().getSelectedItem();
       listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-          select = newValue;
+          if(newValue!=null) {
+            select = newValue;
+            listviewJoined.getSelectionModel().select(null);
+          }
         }
       });
 
@@ -60,8 +64,11 @@ public class HomeController{
       listviewJoined.getSelectionModel().getSelectedItem() ;
       listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
-        public void changed(ObservableValue<? extends String> observable2, String oldValue2, String newValue2) {
-          select = newValue2;
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+          if(newValue!=null) {
+            select = newValue;
+            listviewAdmin.getSelectionModel().clearSelection();
+          }
         }
       });
     }
@@ -136,7 +143,7 @@ public class HomeController{
 
   public void actionOpenGroup(ActionEvent actionEvent) {
 
-    if(!tableview.getSelectionModel().isEmpty()) {
+    if(select != null) {
       GroupSelect = select.toString();
       System.out.println("view group pressed" + GroupSelect);
       Utilities.nextScene(btnInfo, "group", GroupSelect);
@@ -145,7 +152,7 @@ public class HomeController{
 
   public void actionOpenUserGroups(ActionEvent actionEvent) {
     System.out.println("view group pressed");
-    if(!listviewAdmin.getSelectionModel().isEmpty()) {
+    if(select != null) {
       GroupSelect = select.toString();
       Utilities.nextScene(btnInfo, "group", GroupSelect);
     }

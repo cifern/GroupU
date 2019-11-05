@@ -12,18 +12,14 @@ import javafx.scene.input.KeyCode;
 
 
 public class LoginController {
-
-
   private User userStore;
-
-  private static final int width = 325;
-  private static final int height = 275;
 
 
   @FXML private Button btnRegister;
   @FXML private Button btnLogin;
   @FXML private TextField txtUsername;
   @FXML private TextField txtPassword;
+
   @FXML
   void initialize(){
     txtPassword.setOnKeyPressed(event -> {
@@ -34,7 +30,6 @@ public class LoginController {
       }
     });
   }
-
 
   public void actionLogin(ActionEvent actionEvent) {
     Alert alert;
@@ -62,6 +57,4 @@ public class LoginController {
   public void actionRegister(ActionEvent actionEvent) {
     Utilities.nextScene(btnRegister, "register", "Register");
   }
-
-
 }
