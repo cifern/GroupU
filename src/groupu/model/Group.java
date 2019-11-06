@@ -1,5 +1,6 @@
 package groupu.model;
 
+import groupu.controller.HomeController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,7 +14,6 @@ public final class Group {
     private String description;
     private String admin;
     private String tags[];
-    private boolean unique = false;
 
     private DAO dao = new DAO();
     private Connection conn = null;
@@ -27,11 +27,8 @@ public final class Group {
 
     public Group(String name, String description, String admin,String[] tags)
     {
-
-        if(!checkGroupExists(name)) {
-            createGroup(name, description, admin, tags);
-            this.unique = true;
-        }
+        if(!checkGroupExists(name))
+          createGroup(name, description, admin, tags);
     }
 
     public void setDescription(String description, String groupName) {
@@ -58,33 +55,32 @@ public final class Group {
     }
 
     private void createGroup(String name, String description, String user_admin, String[] tags) {
-        if(!checkGroupExists(name)) {
-            try {
-                conn = dao.getConnection();
-                ps = conn.prepareStatement("INSERT INTO Groups(name, DESCRIPTION, USER_ADMIN) VALUES(?, ?, ?)");
+        if(!checkGroupExists(name))
+        try {
+            conn =  dao.getConnection();
+            ps = conn.prepareStatement("INSERT INTO Groups(name, DESCRIPTION, USER_ADMIN) VALUES(?, ?, ?)");
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setString(3, user_admin);
+
+            ps.execute();
+
+            for(int i = 0; i < tags.length; i++){
+                ps = conn.prepareStatement("INSERT INTO TAGS(GROUP_NAME, TAG) VALUES(?, ?)");
                 ps.setString(1, name);
-                ps.setString(2, description);
-                ps.setString(3, user_admin);
-
+                ps.setString(2, tags[i]);
                 ps.execute();
-
-                for (int i = 0; i < tags.length; i++) {
-                    ps = conn.prepareStatement("INSERT INTO TAGS(GROUP_NAME, TAG) VALUES(?, ?)");
-                    ps.setString(1, name);
-                    ps.setString(2, tags[i]);
-                    ps.execute();
-                }
-                /** add admin to group
-                User user = new User();
-                user.joinGroup(name, user_admin);
-                **/
-                ps.close();
-                conn.close();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
+            /** add admin to group**/
+            User user = new User();
+            user.joinGroup(this);
+
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
@@ -101,6 +97,23 @@ public final class Group {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public ResultSet getUsers(String groupName){
+            try {
+                conn = dao.getConnection();
+                String SQL = "select users.USERNAME, groups.name\n" +
+                        "from USERS_GROUPS, USERS, GROUPS\n" +
+                        "where users.USERNAME=users_groups.USER_ID AND groups.NAME = users_groups.group_ID";
+                ps= conn.prepareStatement(SQL);
+                ResultSet rs = ps.executeQuery();
+                return rs;
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
     }
 
 
@@ -216,9 +229,5 @@ public final class Group {
 
     public String toString() {
         return name;
-    }
-
-    public boolean isUnique(){
-        return unique;
     }
 }

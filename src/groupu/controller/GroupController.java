@@ -2,10 +2,12 @@ package groupu.controller;
 
 import groupu.model.Group;
 import groupu.model.Post;
+import groupu.model.Report;
 import groupu.model.Session;
 import java.util.ArrayList;
 
 import groupu.model.User;
+import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -27,6 +29,7 @@ public class GroupController {
   @FXML private Label labelGroupDescription;
   @FXML private ListView listMemberList;
   @FXML private TextArea txtGroupDescription;
+  @FXML private ListView listReportList;
 
   private String groupName;
   private ArrayList<String> postList;
@@ -44,6 +47,12 @@ public class GroupController {
     updateGroupInfo();
     updateListOfPosts();
     updateListOfUsers();
+    updateListOfReports();
+  }
+
+  public void updateListOfReports() {
+    ObservableList<String> reportList = Report.getAllGroupReports(groupName);
+    listReportList.setItems(reportList);
   }
 
   public void updateTabs() {
@@ -87,14 +96,35 @@ public class GroupController {
   public void actionJoinGroup(ActionEvent actionEvent) {
     User user = new User();
     Group group = new Group(HomeController.GroupSelect);
-    
-    /**admin cannot join group**/
-    if(!group.getGroupAdmin(group.toString()).equals(Session.getInstance("").getUserName()))
-    user.joinGroup(HomeController.GroupSelect, Session.getInstance("").getUserName());
 
+    user.joinGroup(group);
   }
 
   public void actionReportGroup(ActionEvent actionEvent) {
+    Alert alert;
+    Report r;
+
+    TextInputDialog input = new TextInputDialog();
+    input.setTitle("Report Group");
+    input.setHeaderText("Please enter your report");
+
+    Optional<String> report = input.showAndWait();
+    if (report.isPresent()) {
+      if (report.get().length() > 0 && report.get().length() <= 200) {
+        r = new Report(groupName, report.get());
+        r.reportGroup();
+
+        alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText("Successfully reported!");
+        alert.show();
+
+        updateListOfReports();
+      } else {
+        alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Report length must be between 1 and 200!");
+        alert.show();
+      }
+    }
   }
 
   public void actionBack(ActionEvent actionEvent) {

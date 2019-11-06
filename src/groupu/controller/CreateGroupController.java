@@ -57,18 +57,10 @@ public class CreateGroupController {
 
             Group group = new Group(txtGroupName.getText(), txtDescription.getText(), Session.getInstance("").getUserName(), tags);
 
-            if(group.isUnique()) {
-                alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setContentText("GROUP CREATED");
-                alert.show();
-                actionCancel(actionEvent);
-            }
-            else{
-                alert = new Alert(Alert.AlertType.ERROR);
-                alert.setContentText("GROUP ALREADY EXISTS");
-                alert.show();
-            }
-
+            alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setContentText("GROUP CREATED");
+            alert.show();
+            actionCancel(actionEvent);
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Too many characters!");

@@ -21,13 +21,13 @@ public class HomeController{
 
     @FXML private Button btnInfo;
     @FXML private Button btnCreateGroup;
-    @FXML private TableView<ObservableList<String>> tableview;
+    @FXML private TableView tableview;
     @FXML private TableColumn colName;
     @FXML private TableColumn colDescription;
-    @FXML private ListView<String> listviewAdmin;
-    @FXML private ListView<String> listviewJoined;
+    @FXML private ListView listviewAdmin;
+    @FXML private ListView listviewJoined;
 
-    private ObservableList<ObservableList<String>> TableViewData;
+    private ObservableList<ObservableList> TableViewData;
     private Object select;
 
     @FXML
@@ -47,19 +47,25 @@ public class HomeController{
 
       /*** owned groups listener**/
       listviewAdmin.getSelectionModel().getSelectedItem();
-      listviewAdmin.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        if(newValue!=null) {
-          select = newValue;
-          listviewJoined.getSelectionModel().select(null);
+      listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+          if(newValue!=null) {
+            select = newValue;
+            listviewJoined.getSelectionModel().select(null);
+          }
         }
       });
 
       /*** joined groups listener**/
       listviewJoined.getSelectionModel().getSelectedItem() ;
-      listviewJoined.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-        if(newValue!=null) {
-          select = newValue;
-          listviewAdmin.getSelectionModel().clearSelection();
+      listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+          if(newValue!=null) {
+            select = newValue;
+            listviewAdmin.getSelectionModel().clearSelection();
+          }
         }
       });
     }
