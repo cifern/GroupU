@@ -99,7 +99,7 @@ public class GroupController {
 
     /**admin cannot join group**/
     if(!group.getGroupAdmin(group.toString()).equals(Session.getInstance("").getUserName()))
-    user.joinGroup(HomeController.GroupSelect, Session.getInstance("").getUserName());
+    user.joinGroup(group);
 
   }
 

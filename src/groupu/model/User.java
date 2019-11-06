@@ -164,4 +164,5 @@ final public class User {
             "Last name: " + this.lastname + "\n" +
             "Username: " + this.username + "\n" ;
     }
+
 }
