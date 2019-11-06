@@ -1,5 +1,6 @@
 package groupu.model;
 
+import groupu.controller.HomeController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,7 +28,25 @@ public final class Group {
     public Group(String name, String description, String admin,String[] tags)
     {
         if(!checkGroupExists(name))
-        createGroup(name, description,admin,tags);
+          createGroup(name, description, admin, tags);
+    }
+
+    public void setDescription(String description, String groupName) {
+      try {
+        conn = dao.getConnection();
+        ps = conn.prepareStatement("UPDATE GROUPS SET DESCRIPTION=? WHERE NAME=?");
+        ps.setString(1, description);
+        ps.setString(2, groupName);
+
+        ps.execute();
+
+        ps.close();
+        conn.close();
+      } catch (ClassNotFoundException e) {
+        e.printStackTrace();
+      } catch (SQLException e) {
+        e.printStackTrace();
+      }
     }
 
     public String[] getTags(){

@@ -51,7 +51,7 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="633.0">
                <children>
                   <Button fx:id="btnPost" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#actionPost" text="Post" />
-                  <TextArea fx:id="txtPostBody" layoutX="81.0" layoutY="14.0" prefHeight="44.0" prefWidth="508.0" />
+                  <TextArea fx:id="txtPostBody" layoutX="81.0" layoutY="14.0" prefHeight="44.0" prefWidth="508.0" wrapText="true" />
                   <ListView fx:id="listPosts" layoutX="11.0" layoutY="76.0" prefHeight="277.0" prefWidth="578.0" />
                </children></AnchorPane>
       </content>
@@ -61,29 +61,29 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="listMemberList" layoutX="14.0" layoutY="44.0" prefHeight="269.0" prefWidth="146.0" />
-                  <Label layoutX="20.0" layoutY="4.0" prefHeight="40.0" prefWidth="136.0" text="Member List" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="19.0" layoutY="5.0" prefHeight="40.0" prefWidth="136.0" text="Member List" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <Button fx:id="btnKickMember" layoutX="38.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionKickMember" text="Kick Member" />
+                  <Button fx:id="btnKickMember" layoutX="42.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionKickMember" text="Kick Member" />
                   <ListView fx:id="listReportList" layoutX="181.0" layoutY="44.0" prefHeight="269.0" prefWidth="168.0" />
-                  <Label layoutX="216.0" layoutY="4.0" prefHeight="39.0" prefWidth="99.0" text="Reports" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="211.0" layoutY="5.0" prefHeight="39.0" prefWidth="99.0" text="Reports" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font></Label>
-                  <Button fx:id="btnRemoveReport" layoutX="209.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionRemoveReport" text="Remove Report" />
-                  <Label layoutX="363.0" layoutY="6.0" prefHeight="37.0" prefWidth="217.0" text="Edit Group Description" textFill="WHITE">
+                  <Button fx:id="btnRemoveReport" layoutX="214.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionRemoveReport" text="Remove Report" />
+                  <Label alignment="CENTER" layoutX="363.0" layoutY="6.0" prefHeight="37.0" prefWidth="217.0" text="Edit Group Description" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
-                  <TextArea fx:id="txtGroupDescription" layoutX="371.0" layoutY="44.0" prefHeight="89.0" prefWidth="200.0" />
-                  <Button fx:id="btnSaveChanges" layoutX="422.0" layoutY="255.0" mnemonicParsing="false" onAction="#actionSaveChanges" text="Save Changes" />
+                  <TextArea fx:id="txtGroupDescription" layoutX="371.0" layoutY="44.0" prefHeight="89.0" prefWidth="200.0" wrapText="true" />
+                  <Button fx:id="btnSaveChanges" layoutX="423.0" layoutY="255.0" mnemonicParsing="false" onAction="#actionSaveChanges" text="Save Changes" />
                   <Button fx:id="btnDeleteGroup" layoutX="486.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionDeleteGroup" text="Delete Group" />
-                  <Label layoutX="392.0" layoutY="162.0" prefHeight="31.0" prefWidth="188.0" text="Edit Group Tags" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="377.0" layoutY="163.0" prefHeight="31.0" prefWidth="188.0" text="Edit Group Tags" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <TextField fx:id="txtGroupTags" layoutX="378.0" layoutY="207.0" prefHeight="27.0" prefWidth="200.0" />
+                  <TextField fx:id="txtGroupTags" layoutX="371.0" layoutY="206.0" prefHeight="27.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
         </content>

@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 
 public class GroupController {
 
@@ -25,32 +26,43 @@ public class GroupController {
   @FXML private Label labelGroupName;
   @FXML private Label labelGroupDescription;
   @FXML private ListView listMemberList;
+  @FXML private TextArea txtGroupDescription;
 
   private String groupName;
   private ArrayList<String> postList;
   private ObservableList<String> posts;
+  private ObservableList<String> userList;
+
+  private Group g = new Group();
+  private Post p = new Post();
 
   @FXML
   public void initialize() {
-    Group g = new Group();
-
     groupName = HomeController.GroupSelect;
-    System.out.println("XXXXX - INITIALIZED GROUP VIEW FOR GROUP: " + groupName);
-    labelGroupName.setText(groupName);
-    labelGroupDescription.setText(g.getGroupDescription(groupName));
-    ObservableList<String> userList = g.getAllUsers(groupName);
-    listMemberList.setItems(userList);
-    updateListOfPosts();
 
-    // check if user is admin and hide admin tab if not
-    String admin = g.getGroupAdmin(groupName);
-    if (!Session.getInstance("").getUserName().equals(admin)) {
+    updateTabs();
+    updateGroupInfo();
+    updateListOfPosts();
+    updateListOfUsers();
+  }
+
+  public void updateTabs() {
+    if (!Session.getInstance("").getUserName().equals(g.getGroupAdmin(groupName))) {
       tabPane.getTabs().remove(tabAdmin);
     }
   }
 
+  public void updateListOfUsers() {
+    ObservableList<String> userList = g.getAllUsers(groupName);
+    listMemberList.setItems(userList);
+  }
+
+  public void updateGroupInfo() {
+    labelGroupName.setText(groupName);
+    labelGroupDescription.setText(g.getGroupDescription(groupName));
+  }
+
   public void updateListOfPosts() {
-    Post p = new Post();
     postList = p.getPostsByGroupName(groupName);
     posts = FXCollections.observableArrayList();
     for (String s : postList) {
@@ -61,7 +73,6 @@ public class GroupController {
 
   public void actionPost(ActionEvent actionEvent) {
     if (txtPostBody.getText().length() > 0 && txtPostBody.getText().length() <= 300) {
-      Post p = new Post();
       String poster = Session.getInstance("").getUserName();
       String data = txtPostBody.getText();
 
@@ -97,5 +108,22 @@ public class GroupController {
   }
 
   public void actionSaveChanges(ActionEvent actionEvent) {
+    Alert alert;
+
+    System.out.println("pressed save changes");
+    if (txtGroupDescription.getLength() > 0 && txtGroupDescription.getLength() <= 200) {
+      g.setDescription(txtGroupDescription.getText(), groupName);
+
+      alert = new Alert(AlertType.CONFIRMATION);
+      alert.setContentText("Updated group description!");
+      alert.show();
+
+      txtGroupDescription.clear();
+      updateGroupInfo();
+    } else {
+      alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Description must be between 1 and 200 characters!");
+      alert.show();;
+    }
   }
 }
