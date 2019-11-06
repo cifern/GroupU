@@ -63,6 +63,25 @@ public class Report {
     return reportsList;
   }
 
+  public static void removeReport(String groupName, String description) {
+    try {
+      conn = dao.getConnection();
+      ps = conn.prepareStatement("DELETE FROM REPORTS WHERE GROUPNAME=? AND DESCRIPTION=?");
+      ps.setString(1, groupName);
+      ps.setString(2, description);
+
+      ps.execute();
+
+      conn.close();
+      ps.close();
+
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
+  }
+
   public void setDescription(String description) {
     this.description = description;
   }

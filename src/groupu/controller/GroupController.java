@@ -138,6 +138,9 @@ public class GroupController {
   }
 
   public void actionRemoveReport(ActionEvent actionEvent) {
+    Report.removeReport(groupName, listReportList.getSelectionModel().getSelectedItem().toString());
+
+    updateListOfReports();
   }
 
   public void actionDeleteGroup(ActionEvent actionEvent) {
