@@ -87,8 +87,11 @@ public class GroupController {
   public void actionJoinGroup(ActionEvent actionEvent) {
     User user = new User();
     Group group = new Group(HomeController.GroupSelect);
+    
+    /**admin cannot join group**/
+    if(!group.getGroupAdmin(group.toString()).equals(Session.getInstance("").getUserName()))
+    user.joinGroup(HomeController.GroupSelect, Session.getInstance("").getUserName());
 
-    user.joinGroup(group);
   }
 
   public void actionReportGroup(ActionEvent actionEvent) {
