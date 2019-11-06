@@ -24,6 +24,7 @@ public class GroupController {
   @FXML private Tab tabPosts;
   @FXML private Label labelGroupName;
   @FXML private Label labelGroupDescription;
+  @FXML private ListView listMemberList;
 
   private String groupName;
   private ArrayList<String> postList;
@@ -37,6 +38,8 @@ public class GroupController {
     System.out.println("XXXXX - INITIALIZED GROUP VIEW FOR GROUP: " + groupName);
     labelGroupName.setText(groupName);
     labelGroupDescription.setText(g.getGroupDescription(groupName));
+    ObservableList<String> userList = g.getAllUsers(groupName);
+    listMemberList.setItems(userList);
     updateListOfPosts();
 
     // check if user is admin and hide admin tab if not

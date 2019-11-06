@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public final class Group {
     private String name = "";
@@ -180,6 +183,29 @@ public final class Group {
             e.printStackTrace();
         }
         return desc;
+    }
+
+    public ObservableList<String> getAllUsers(String groupName) {
+        ObservableList<String> userList = FXCollections.observableArrayList();
+        ResultSet rs = null;
+        int count = 1;
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT USER_ID FROM USERS_GROUPS WHERE GROUP_ID=?");
+            ps.setString(1, groupName);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String username = rs.getString(1);
+                userList.add(username);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return userList;
     }
 
     public String toString() {
