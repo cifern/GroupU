@@ -8,51 +8,33 @@ import java.sql.SQLException;
 
 final public class User {
 
-    private String firstname;
-    private String lastname;
-    private final String username;
+    private String username;
+    private String password;
 
     private DAO dao = new DAO() ;
     private Connection conn = null;
     private PreparedStatement ps = null;
 
     public User(){
-            this.username = "test";
+        this.username = "test";
     }
+
     public User(String username) {
         this.username = username;
-
     }
 
-    public User(String firstname, String lastname, String username) {
-        this.firstname = firstname;
-        this.lastname = lastname;
+    public User(String username, String password) {
         this.username = username;
-
+        this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-
-    public void createUser(String firstname, String lastname, String username, String password) {
+    public void createUser() {
         try {
             conn = dao.getConnection();
 
-            ps = conn.prepareStatement("INSERT INTO Users(firstname, lastname, username, password) VALUES(?, ?, ?, ?)");
-            ps.setString(1, firstname);
-            ps.setString(2, lastname);
-            ps.setString(3, username);
-            ps.setString(4, password);
+            ps = conn.prepareStatement("INSERT INTO Users(username, password) VALUES(?, ?)");
+            ps.setString(1, this.username);
+            ps.setString(2, this.password);
 
             ps.execute();
 
@@ -158,11 +140,10 @@ final public class User {
     final public String getUser(){
         return username;
     }
+
     @Override
     public String toString() {
-        return "First name: " + this.firstname + "\n" +
-            "Last name: " + this.lastname + "\n" +
-            "Username: " + this.username + "\n" ;
+        return "Username: " + this.username + "\n" ;
     }
 
 }

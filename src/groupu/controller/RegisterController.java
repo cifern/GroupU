@@ -11,37 +11,42 @@ import javafx.scene.control.TextField;
 
 public class RegisterController {
 
-  private static final int width = 325;
-  private static final int height = 275;
-
   private static final int minUsernameSize = 3;
+  private static final int maxUsernameSize = 20;
   private static final int minPassSize = 6;
+  private static final int maxPassSize = 30;
 
   @FXML private Button btnBack;
   @FXML private TextField txtUsername;
-  @FXML private TextField txtFirstname;
-  @FXML private TextField txtLastname;
   @FXML private TextField txtPassword;
 
 
   public void actionRegister(ActionEvent actionEvent) {
+    User u = new User();
+    Alert alert;
 
-    User userStore = new User();
-    boolean exists = false;
+    boolean exists = u.checkUserExists(txtUsername.getText());
 
-    exists = userStore.checkUserExists(txtUsername.getText());
-
-    if (!exists && txtFirstname.getLength() > 0 && txtLastname.getLength() > 0 &&
-        txtUsername.getLength() >= minUsernameSize && txtPassword.getLength() > minPassSize) {
-
-      userStore.createUser(txtFirstname.getText(), txtLastname.getText(),
-         txtUsername.getText(), txtPassword.getText());
-
-      actionBack(actionEvent);
-    } else {
-      Alert alert = new Alert(AlertType.ERROR);
-      alert.setContentText("Username already exists or invalid information!");
-      alert.show();
+    if (!exists) {
+      if (txtUsername.getLength() >= minUsernameSize && txtUsername.getLength() <= maxUsernameSize) {
+        if (txtPassword.getLength() >= minPassSize && txtPassword.getLength() <= maxPassSize) {
+          User user = new User(txtUsername.getText(), txtPassword.getText());
+          user.createUser();
+          actionBack(actionEvent);
+        } else {
+          alert = new Alert(AlertType.ERROR);
+          alert.setContentText("Password must be between 6 and 30!");
+          alert.show();
+        }
+      } else {
+        alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Username must between 3 and 20!");
+        alert.show();
+        }
+      } else {
+        alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Username already exists!");
+        alert.show();
     }
   }
 
