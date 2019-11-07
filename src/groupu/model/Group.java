@@ -116,6 +116,25 @@ public final class Group {
             return null;
     }
 
+    public ResultSet getSearch(String search){
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT NAME, DESCRIPTION FROM GROUPS WHERE NAME=?");
+            ps.setString(1, search);
+
+            ResultSet rs = ps.executeQuery();
+
+            return rs;
+
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     private boolean checkGroupExists(String group) {
         boolean exists = false;

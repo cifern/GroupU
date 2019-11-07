@@ -18,7 +18,7 @@ import javafx.util.Callback;
 public class HomeController{
 
     static String GroupSelect;
-
+    @FXML private TextField searchGroupText;
     @FXML private Button btnInfo;
     @FXML private Button btnCreateGroup;
     @FXML private TableView tableview;
@@ -29,6 +29,7 @@ public class HomeController{
 
     private ObservableList<ObservableList> TableViewData;
     private Object select;
+  Group group = new Group();
 
     @FXML
     void initialize()
@@ -73,9 +74,9 @@ public class HomeController{
     public void buildData(){
       /** Populate group search tableview*/
       TableViewData = FXCollections.observableArrayList();
-      Group groupStore = new Group();
+
       User user = new User();
-      ResultSet rsGroups = groupStore.getGroups();
+      ResultSet rsGroups = group.getGroups();
 
       /*** Data table added to searchlist ***/
       try {
@@ -107,7 +108,7 @@ public class HomeController{
 
       /** Data added to users group list **/
       try {
-        ResultSet rsUserGroups = groupStore.getUserGroups();
+        ResultSet rsUserGroups = group.getUserGroups();
         while (rsUserGroups.next()) {
           String current = rsUserGroups.getString("name");
           ObservableList<String> list = FXCollections.observableArrayList(current);
@@ -157,7 +158,41 @@ public class HomeController{
 
   public void actionSearch(ActionEvent actionEvent) {
     System.out.println("search pressed");
+
+
+    System.out.println("search pressed");
+    TableViewData = FXCollections.observableArrayList();
+
+    User user = new User();
+    ResultSet rsGroups = group.getSearch(searchGroupText.getText());
+
+    /*** Data table added to searchlist ***/
+    try {
+      colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+          return new SimpleStringProperty(param.getValue().get(0).toString());
+        }
+      });
+      colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+          return new SimpleStringProperty(param.getValue().get(1).toString());
+        }
+      });
+      while (rsGroups.next()) {
+        //Iterate Row
+        ObservableList<String> row = FXCollections.observableArrayList();
+        for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
+          //Iterate Column
+          row.add(rsGroups.getString(i));
+        }
+        TableViewData.add(row);
+      }
+      //ADDED TO TableView
+      tableview.setItems(TableViewData);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Error on Building group table");
+    }
+
   }
-
-
 }
