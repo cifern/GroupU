@@ -227,6 +227,24 @@ public final class Group {
         return userList;
     }
 
+    public void removeMember(String username, String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("DELETE FROM USERS_GROUPS WHERE USER_ID=? AND GROUP_ID=?");
+            ps.setString(1, username);
+            ps.setString(2, groupName);
+
+            ps.execute();
+
+            conn.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public String toString() {
         return name;
     }

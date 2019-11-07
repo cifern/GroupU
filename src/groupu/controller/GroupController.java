@@ -135,6 +135,10 @@ public class GroupController {
   }
 
   public void actionKickMember(ActionEvent actionEvent) {
+    String username = listMemberList.getSelectionModel().getSelectedItem().toString();
+
+    g.removeMember(username, groupName);
+    updateListOfUsers();
   }
 
   public void actionRemoveReport(ActionEvent actionEvent) {
