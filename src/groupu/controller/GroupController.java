@@ -135,6 +135,10 @@ public class GroupController {
   }
 
   public void actionKickMember(ActionEvent actionEvent) {
+    String username = listMemberList.getSelectionModel().getSelectedItem().toString();
+
+    Group.removeMember(username, groupName);
+    updateListOfUsers();
   }
 
   public void actionRemoveReport(ActionEvent actionEvent) {
@@ -149,7 +153,6 @@ public class GroupController {
   public void actionSaveChanges(ActionEvent actionEvent) {
     Alert alert;
 
-    System.out.println("pressed save changes");
     if (txtGroupDescription.getLength() > 0 && txtGroupDescription.getLength() <= 200) {
       g.setDescription(txtGroupDescription.getText(), groupName);
 

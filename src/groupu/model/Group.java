@@ -15,9 +15,9 @@ public final class Group {
     private String admin;
     private String tags[];
 
-    private DAO dao = new DAO();
-    private Connection conn = null;
-    private PreparedStatement ps = null;
+    private static DAO dao = new DAO();
+    private static Connection conn = null;
+    private static PreparedStatement ps = null;
 
     public Group(){}
 
@@ -162,7 +162,7 @@ public final class Group {
         return (this.name.equals(that.name)) && (this.description == that.description);
     }
 
-    public String getGroupAdmin(String name) {
+    public static String getGroupAdmin(String name) {
         String admin = "";
         ResultSet rs = null;
         try {
@@ -225,6 +225,24 @@ public final class Group {
             e.printStackTrace();
         }
         return userList;
+    }
+
+    public static void removeMember(String username, String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("DELETE FROM USERS_GROUPS WHERE USER_ID=? AND GROUP_ID=?");
+            ps.setString(1, username);
+            ps.setString(2, groupName);
+
+            ps.execute();
+
+            conn.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     public String toString() {
