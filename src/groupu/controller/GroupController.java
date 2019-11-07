@@ -37,7 +37,6 @@ public class GroupController {
   private ObservableList<String> userList;
 
   private Group g = new Group();
-  private Post p = new Post();
 
   @FXML
   public void initialize() {
@@ -72,7 +71,7 @@ public class GroupController {
   }
 
   public void updateListOfPosts() {
-    postList = p.getPostsByGroupName(groupName);
+    postList = Post.getPostsByGroupName(groupName);
     posts = FXCollections.observableArrayList();
     for (String s : postList) {
       posts.add(s);
@@ -85,7 +84,8 @@ public class GroupController {
       String poster = Session.getInstance("").getUserName();
       String data = txtPostBody.getText();
 
-      p.createPost(data, poster, groupName);
+      Post p = new Post(data, poster, groupName);
+      p.createPost();
 
       posts.add(poster + ": " + data);
       listPosts.refresh();
