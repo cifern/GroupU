@@ -72,12 +72,38 @@ public class GroupController {
   }
 
   public void updateListOfPosts() {
+    setupPostContextMenu();
+
     postList = p.getPostsByGroupName(groupName);
     posts = FXCollections.observableArrayList();
     for (String s : postList) {
       posts.add(s);
     }
     listPosts.setItems(posts);
+  }
+
+  public void setupPostContextMenu() {
+    if (Session.getInstance("").getUserName().equals(g.getGroupAdmin(groupName))) {
+      ContextMenu cm = new ContextMenu();
+      MenuItem item = new MenuItem("Delete");
+      cm.getItems().add(item);
+
+      listPosts.setContextMenu(cm);
+
+      item.setOnAction(
+          event -> {
+            String[] selectionText =
+                listPosts.getSelectionModel().getSelectedItem().toString().split("\\: ");
+            String poster = selectionText[0];
+            String data = selectionText[1];
+
+            Post post = new Post(data, poster, groupName);
+            post.deletePost();
+
+            posts.remove(poster + ": " + data);
+            listPosts.refresh();
+          });
+    }
   }
 
   public void actionPost(ActionEvent actionEvent) {
