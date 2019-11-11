@@ -18,8 +18,12 @@ public final class Post {
   private Connection conn = null;
   private PreparedStatement ps = null;
 
-  public Post() {
+  public Post() { }
 
+  public Post(String data, String poster, String group) {
+    this.data = data;
+    this.poster = poster;
+    this.group = group;
   }
 
   public void createPost(String data, String poster, String group) {
@@ -37,6 +41,25 @@ public final class Post {
     } catch (ClassNotFoundException e) {
       e.printStackTrace();
     } catch (SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
+  public void deletePost() {
+    try {
+      conn = dao.getConnection();
+      ps = conn.prepareStatement("DELETE FROM POSTS WHERE DATA=? AND POSTER=? AND GROUPNAME=?");
+      ps.setString(1, this.data);
+      ps.setString(2, this.poster);
+      ps.setString(3, this.group);
+
+      ps.execute();
+
+      conn.close();
+      ps.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
       e.printStackTrace();
     }
   }
