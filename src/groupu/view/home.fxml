@@ -23,10 +23,10 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="520.0" prefWidth="551.0">
                <children>
-                  <GridPane layoutX="19.0" layoutY="14.0" prefHeight="538.0" prefWidth="615.0">
+                  <GridPane layoutX="19.0" layoutY="14.0" prefHeight="538.0" prefWidth="605.0">
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.0" minWidth="0.0" prefWidth="21.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="615.0" minWidth="10.0" prefWidth="594.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="269.0" minWidth="0.0" prefWidth="0.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="615.0" minWidth="10.0" prefWidth="615.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="224.0" minHeight="10.0" prefHeight="71.0" vgrow="SOMETIMES" />
@@ -48,7 +48,7 @@
                         <Button fx:id="btnSearch" alignment="CENTER_RIGHT" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionSearch" text="Search" />
                         <StackPane prefHeight="268.0" prefWidth="484.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
-                              <TableView fx:id="tableview" prefHeight="266.0" prefWidth="429.0">
+                              <TableView fx:id="tableview" prefHeight="266.0" prefWidth="618.0">
                                 <columns>
                                   <TableColumn fx:id="colName" prefWidth="113.0" text="Name" />
                                   <TableColumn fx:id="colDescription" editable="false" prefWidth="418.0" text="Description" />
@@ -69,6 +69,11 @@
                               <Insets bottom="10.0" top="40.0" />
                            </GridPane.margin>
                         </HBox>
+                        <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionLogout" prefHeight="27.0" prefWidth="85.0" text="Logout" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                           <GridPane.margin>
+                              <Insets left="100.0" />
+                           </GridPane.margin>
+                        </Button>
                      </children>
                   </GridPane>
                   <Text fx:id="txtUser" layoutX="533.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" />
