@@ -1,6 +1,7 @@
 package groupu.controller;
 
 import groupu.model.Group;
+import groupu.model.Session;
 import groupu.model.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -21,6 +22,7 @@ public class HomeController{
     @FXML private TextField searchGroupText;
     @FXML private Button btnInfo;
     @FXML private Button btnCreateGroup;
+    @FXML private Button btnLogout;
     @FXML private TableView tableview;
     @FXML private TableColumn colName;
     @FXML private TableColumn colDescription;
@@ -29,7 +31,7 @@ public class HomeController{
 
     private ObservableList<ObservableList> TableViewData;
     private Object select;
-  Group group = new Group();
+    Group group = new Group();
 
     @FXML
     void initialize()
@@ -193,6 +195,10 @@ public class HomeController{
       e.printStackTrace();
       System.out.println("Error on Building group table");
     }
+  }
 
+  public void actionLogout() {
+    Session.getInstance("").cleanUserSession();
+    Utilities.nextScene(btnLogout, "login", "Login");
   }
 }
