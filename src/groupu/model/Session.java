@@ -30,6 +30,7 @@ public class Session {
 
     public void cleanUserSession() {
         userName = "";// or null
+        instance = null;
         privileges = new HashSet<>();// or null
     }
 

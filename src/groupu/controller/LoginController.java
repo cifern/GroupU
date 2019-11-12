@@ -43,6 +43,7 @@ public class LoginController {
     boolean passMatches = userStore.comparePassword(username, pass);
 
     if (exists && passMatches) {
+      Session.getInstance("").cleanUserSession();
       Session session = Session.getInstance(username);
       Utilities.nextScene(btnLogin, "home", "Home - " + username);
     }
