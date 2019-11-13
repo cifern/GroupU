@@ -264,6 +264,30 @@ public final class Group {
         }
     }
 
+    public boolean isUserInGroup(String username, String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("SELECT * FROM USERS_GROUPS WHERE USER_ID=? AND GROUP_ID=?");
+            ps.setString(1, username);
+            ps.setString(2, groupName);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return true;
+            }
+
+            conn.close();
+            ps.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
     public String toString() {
         return name;
     }

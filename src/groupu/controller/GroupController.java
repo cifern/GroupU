@@ -19,6 +19,8 @@ public class GroupController {
 
   @FXML private Button btnBack;
   @FXML private Button btnPost;
+  @FXML private Button btnLeaveGroup;
+  @FXML private Button btnJoinGroup;
   @FXML private TextArea txtPostBody;
   @FXML private ListView listPosts;
   @FXML private TabPane tabPane;
@@ -43,7 +45,7 @@ public class GroupController {
   public void initialize() {
     groupName = HomeController.GroupSelect;
 
-    updateTabs();
+    updateTabsAndButtons();
     updateGroupInfo();
     updateListOfPosts();
     updateListOfUsers();
@@ -55,9 +57,17 @@ public class GroupController {
     listReportList.setItems(reportList);
   }
 
-  public void updateTabs() {
+  public void updateTabsAndButtons() {
     if (!Session.getInstance("").getUserName().equals(g.getGroupAdmin(groupName))) {
       tabPane.getTabs().remove(tabAdmin);
+    }
+
+    if (!g.isUserInGroup(Session.getInstance("").getUserName(), groupName)) {
+      btnLeaveGroup.setDisable(true);
+      btnJoinGroup.setDisable(false);
+    } else {
+      btnLeaveGroup.setDisable(false);
+      btnJoinGroup.setDisable(true);
     }
   }
 
@@ -121,12 +131,13 @@ public class GroupController {
 
   public void actionJoinGroup(ActionEvent actionEvent) {
     User user = new User();
-    Group group = new Group(HomeController.GroupSelect);
+    Group group = new Group(groupName);
 
     /**admin cannot join group**/
-    if(!group.getGroupAdmin(group.toString()).equals(Session.getInstance("").getUserName()))
-    user.joinGroup(group);
-
+    if (!group.getGroupAdmin(group.toString()).equals(Session.getInstance("").getUserName())) {
+      user.joinGroup(group);
+    }
+    updateTabsAndButtons();
   }
 
   public void actionReportGroup(ActionEvent actionEvent) {
@@ -157,7 +168,7 @@ public class GroupController {
   }
 
   public void actionBack(ActionEvent actionEvent) {
-    Utilities.nextScene(btnBack, "home", "Home");
+    Utilities.nextScene(btnBack, "home", "Home - " + Session.getInstance("").getUserName());
   }
 
   public void actionKickMember(ActionEvent actionEvent) {
@@ -193,6 +204,14 @@ public class GroupController {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Description must be between 1 and 200 characters!");
       alert.show();;
+    }
+  }
+
+  public void actionLeaveGroup() {
+    String username = Session.getInstance("").getUserName();
+    if (g.isUserInGroup(username, groupName)) {
+      g.removeMember(username, groupName);
+      Utilities.nextScene(btnLeaveGroup, "home", "Home - " + username);
     }
   }
 }
