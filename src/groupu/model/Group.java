@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import javax.xml.transform.Result;
+
 public final class Group {
     private String name = "";
     private String description;
@@ -48,6 +50,7 @@ public final class Group {
         e.printStackTrace();
       }
     }
+
 
     public String[] getTags(){
         String[] tags = new String[10];
@@ -119,14 +122,12 @@ public final class Group {
     public ResultSet getSearch(String search){
         try {
             conn = dao.getConnection();
-            ps = conn.prepareStatement("SELECT NAME, DESCRIPTION FROM GROUPS WHERE NAME=?");
-            ps.setString(1, search);
+            ps = conn.prepareStatement("SELECT NAME, DESCRIPTION FROM GROUPS WHERE NAME LIKE ?");
+            ps.setString(1, search.concat("%"));
 
             ResultSet rs = ps.executeQuery();
 
             return rs;
-
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException e) {
@@ -245,6 +246,30 @@ public final class Group {
         }
         return userList;
     }
+
+    public ResultSet getGroupsByTags(String tag){
+
+        ResultSet rs = null;
+            try {
+                conn = dao.getConnection();
+                ps = conn.prepareStatement("SELECT GROUP_NAME FROM TAGS WHERE TAG=?");
+                ps.setString(1, tag);
+
+                rs = ps.executeQuery();
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            return rs;
+
+        }
+
+
+
 
     public void removeMember(String username, String groupName) {
         try {
