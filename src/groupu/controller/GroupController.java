@@ -65,6 +65,10 @@ public class GroupController {
     if (!g.isUserInGroup(Session.getInstance("").getUserName(), groupName)) {
       btnLeaveGroup.setDisable(true);
       btnJoinGroup.setDisable(false);
+
+      if (Session.getInstance("").getUserName().equals(g.getGroupAdmin(groupName))) {
+        btnJoinGroup.setDisable(true);
+      }
     } else {
       btnLeaveGroup.setDisable(false);
       btnJoinGroup.setDisable(true);
