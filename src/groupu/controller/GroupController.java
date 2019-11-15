@@ -16,7 +16,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javax.swing.Action;
 
 public class GroupController {
 
@@ -248,7 +247,7 @@ public class GroupController {
     }
   }
 
-  public void actionLeaveGroup() {
+  public void actionLeaveGroup(ActionEvent actionEvent) {
     String username = Session.getInstance("").getUserName();
     if (g.isUserInGroup(username, groupName)) {
       g.removeMember(username, groupName);
