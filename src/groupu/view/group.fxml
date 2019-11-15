@@ -66,25 +66,26 @@
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <Button fx:id="btnKickMember" layoutX="42.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionKickMember" text="Kick Member" />
+                  <Button fx:id="btnKickMember" layoutX="42.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionKickMember" text="Kick Member" />
                   <ListView fx:id="listReportList" layoutX="181.0" layoutY="44.0" prefHeight="269.0" prefWidth="168.0" />
                   <Label alignment="CENTER" layoutX="211.0" layoutY="5.0" prefHeight="39.0" prefWidth="99.0" text="Reports" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font></Label>
-                  <Button fx:id="btnRemoveReport" layoutX="214.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionRemoveReport" text="Remove Report" />
+                  <Button fx:id="btnRemoveReport" layoutX="214.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionRemoveReport" text="Remove Report" />
                   <Label alignment="CENTER" layoutX="363.0" layoutY="6.0" prefHeight="37.0" prefWidth="217.0" text="Edit Group Description" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
                   <TextArea fx:id="txtGroupDescription" layoutX="371.0" layoutY="44.0" prefHeight="89.0" prefWidth="200.0" wrapText="true" />
-                  <Button fx:id="btnSaveChanges" layoutX="423.0" layoutY="255.0" mnemonicParsing="false" onAction="#actionSaveChanges" text="Save Changes" />
-                  <Button fx:id="btnDeleteGroup" layoutX="486.0" layoutY="320.0" mnemonicParsing="false" onAction="#actionDeleteGroup" text="Delete Group" />
-                  <Label alignment="CENTER" layoutX="377.0" layoutY="163.0" prefHeight="31.0" prefWidth="188.0" text="Edit Group Tags" textFill="WHITE">
+                  <Button fx:id="btnSaveTags" layoutX="434.0" layoutY="286.0" mnemonicParsing="false" onAction="#actionSaveTags" text="Save Tags" />
+                  <Button fx:id="btnDeleteGroup" layoutX="495.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionDeleteGroup" text="Delete Group" />
+                  <Label alignment="CENTER" layoutX="378.0" layoutY="201.0" prefHeight="31.0" prefWidth="188.0" text="Edit Group Tags" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <TextField fx:id="txtGroupTags" layoutX="371.0" layoutY="206.0" prefHeight="27.0" prefWidth="200.0" />
+                  <TextField fx:id="txtGroupTags" layoutX="372.0" layoutY="244.0" prefHeight="27.0" prefWidth="200.0" promptText="Enter tags separated by a comma" />
+                  <Button fx:id="btnUpdateDescription" layoutX="410.0" layoutY="152.0" mnemonicParsing="false" onAction="#actionUpdateDescription" text="Update Description" />
                </children>
             </AnchorPane>
         </content>

@@ -7,6 +7,8 @@ import groupu.model.Session;
 import java.util.ArrayList;
 
 import groupu.model.User;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,6 +16,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javax.swing.Action;
 
 public class GroupController {
 
@@ -31,6 +34,7 @@ public class GroupController {
   @FXML private Label labelGroupDescription;
   @FXML private ListView listMemberList;
   @FXML private TextArea txtGroupDescription;
+  @FXML private TextField txtGroupTags;
   @FXML private ListView listReportList;
 
   private String groupName;
@@ -191,10 +195,9 @@ public class GroupController {
   public void actionDeleteGroup(ActionEvent actionEvent) {
   }
 
-  public void actionSaveChanges(ActionEvent actionEvent) {
+  public void actionUpdateDescription(ActionEvent actionEvent) {
     Alert alert;
 
-    System.out.println("pressed save changes");
     if (txtGroupDescription.getLength() > 0 && txtGroupDescription.getLength() <= 200) {
       g.setDescription(txtGroupDescription.getText(), groupName);
 
@@ -208,6 +211,40 @@ public class GroupController {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Description must be between 1 and 200 characters!");
       alert.show();;
+    }
+  }
+
+  public void actionSaveTags(ActionEvent actionEvent) {
+    Alert alert;
+
+    // Each tag is up to 30 characters, up to maybe 5? at a time? Minus commas
+    if (txtGroupTags.getLength() > 0 && txtGroupTags.getLength() <= 146) {
+      boolean tagsAreRightLength = true;
+
+      String userInput = txtGroupTags.getText().trim().replaceAll("\\s", "");
+      List<String> separatedInput = Arrays.asList(userInput.split("\\s*,\\s*"));
+
+      for (String s : separatedInput) {
+        if (s.length() > 30) {
+          tagsAreRightLength = false;
+          alert = new Alert(AlertType.ERROR);
+          alert.setContentText("Tags can only be 30 characters max! (" + s + ")");
+          alert.show();
+        }
+      }
+
+      if (tagsAreRightLength) {
+        g.updateGroupTags(groupName, separatedInput);
+        alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText("Updated group tags!");
+        alert.show();
+
+        txtGroupTags.clear();
+      }
+    } else {
+      alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Tag length total must be less than 146 characters!");
+      alert.show();
     }
   }
 

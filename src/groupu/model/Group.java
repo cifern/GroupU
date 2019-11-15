@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -268,9 +269,7 @@ public final class Group {
 
         }
 
-
-
-
+        
     public void removeMember(String username, String groupName) {
         try {
             conn = dao.getConnection();
@@ -310,6 +309,42 @@ public final class Group {
             e.printStackTrace();
         }
         return false;
+    }
+
+  public void updateGroupTags(String groupName, List<String> tags) {
+      // remove all tags before adding new ones
+      this.removeAllTags(groupName);
+
+      for (String s : tags) {
+          try {
+              conn = dao.getConnection();
+              ps = conn.prepareStatement("INSERT INTO TAGS(GROUP_NAME, TAG) VALUES(?, ?)");
+              ps.setString(1, groupName);
+              ps.setString(2, s);
+
+              ps.execute();
+
+              conn.close();
+              ps.close();
+          } catch (SQLException | ClassNotFoundException e) {
+              e.printStackTrace();
+          }
+      }
+  }
+
+    public void removeAllTags(String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("DELETE FROM TAGS WHERE GROUP_NAME=?");
+            ps.setString(1, groupName);
+
+            ps.execute();
+
+            conn.close();
+            ps.close();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
