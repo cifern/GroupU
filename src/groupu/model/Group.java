@@ -1,16 +1,13 @@
 package groupu.model;
 
-import groupu.controller.HomeController;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import javax.xml.transform.Result;
 
 public final class Group {
     private String name = "";
