@@ -198,14 +198,20 @@ public class GroupController {
     Alert alert;
 
     if (txtGroupDescription.getLength() > 0 && txtGroupDescription.getLength() <= 200) {
-      g.setDescription(txtGroupDescription.getText(), groupName);
+      if (!(txtGroupDescription.getText().startsWith(" ") || txtGroupDescription.getText().endsWith(" "))) {
+        g.setDescription(txtGroupDescription.getText(), groupName);
 
-      alert = new Alert(AlertType.CONFIRMATION);
-      alert.setContentText("Updated group description!");
-      alert.show();
+        alert = new Alert(AlertType.CONFIRMATION);
+        alert.setContentText("Updated group description!");
+        alert.show();
 
-      txtGroupDescription.clear();
-      updateGroupInfo();
+        txtGroupDescription.clear();
+        updateGroupInfo();
+      } else {
+        alert = new Alert(AlertType.ERROR);
+        alert.setContentText("Description cannot start or end with a space!");
+        alert.show();
+      }
     } else {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Description must be between 1 and 200 characters!");

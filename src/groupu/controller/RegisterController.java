@@ -30,9 +30,21 @@ public class RegisterController {
     if (!exists) {
       if (txtUsername.getLength() >= minUsernameSize && txtUsername.getLength() <= maxUsernameSize) {
         if (txtPassword.getLength() >= minPassSize && txtPassword.getLength() <= maxPassSize) {
-          User user = new User(txtUsername.getText(), txtPassword.getText());
-          user.createUser();
-          actionBack(actionEvent);
+          if (!txtUsername.getText().contains(" ")) {
+            if (!txtPassword.getText().contains(" ")) {
+              User user = new User(txtUsername.getText(), txtPassword.getText());
+              user.createUser();
+              actionBack(actionEvent);
+            } else {
+              alert = new Alert(AlertType.ERROR);
+              alert.setContentText("Password cannot have spaces!");
+              alert.show();
+            }
+          } else {
+            alert = new Alert(AlertType.ERROR);
+            alert.setContentText("Username cannot have spaces!");
+            alert.show();
+          }
         } else {
           alert = new Alert(AlertType.ERROR);
           alert.setContentText("Password must be between 6 and 30!");

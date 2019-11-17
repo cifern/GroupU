@@ -5,6 +5,7 @@ import groupu.model.Session;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -49,23 +50,41 @@ public class CreateGroupController {
                 }
         );
     }
-
     public void actionCreateGroup(ActionEvent actionEvent) {
-
-        if ( (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength)
-                && (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength )) {
-
-            Group group = new Group(txtGroupName.getText(), txtDescription.getText(), Session.getInstance("").getUserName(), tags);
-
-            alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setContentText("GROUP CREATED");
-            alert.show();
-            actionCancel(actionEvent);
+        if (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength) {
+            if (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength) {
+                if (!(txtGroupName.getText().startsWith(" ") || txtGroupName.getText().endsWith(" "))) {
+                    if (!(txtDescription.getText().startsWith(" ") || txtDescription.getText().endsWith(" "))) {
+                        Group group = new Group(
+                            txtGroupName.getText(), txtDescription.getText(),
+                            Session.getInstance("").getUserName(), tags);
+                        Alert alert = new Alert(AlertType.CONFIRMATION);
+                        alert.setContentText("Successfully created group!");
+                        alert.showAndWait();
+                        actionCancel(null);
+                    } else {
+                        Alert alert = new Alert(AlertType.ERROR);
+                        alert.setContentText("Description cannot start or end with a space!");
+                        alert.show();
+                    }
+                } else {
+                    Alert alert = new Alert(AlertType.ERROR);
+                    alert.setContentText("Group name cannot start or end with a space!");
+                    alert.show();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Group description must be between 1 and " + maxDescriptionLength + "!");
+                alert.show();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Too many characters!");
+            alert.setContentText("Group name must be between 1 and " + maxNameLength + "!");
             alert.show();
+            //actionCancel(actionEvent);
         }
+
+
     }
 
     public void actionCancel(ActionEvent actionEvent) {
