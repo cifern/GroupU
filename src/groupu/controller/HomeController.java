@@ -26,9 +26,6 @@ public class HomeController{
     @FXML private Button btnLogout;
     @FXML private Button btnSendMessage;
     @FXML private Button btnDeleteMessage;
-    @FXML private TableView tvMessages;
-    @FXML private TableColumn colFrom;
-    @FXML private TableColumn colPreview;
     @FXML private TextField txtMessageTo;
     @FXML private TextArea txtMessageBody;
     @FXML private TableView tableview;
@@ -216,5 +213,13 @@ public class HomeController{
 
   public void actionDeleteMessage() {
     System.out.println("delete message");
+  }
+
+  public void actionReply() {
+    System.out.println("reply");
+  }
+
+  public void actionRemoveFriend() {
+    System.out.println("remove friend");
   }
 }

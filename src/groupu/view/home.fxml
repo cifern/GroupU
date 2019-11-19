@@ -122,31 +122,31 @@
             </AnchorPane>
          </content>
       </Tab>
-      <Tab text="Inbox - 0">
+      <Tab text="Inbox">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label layoutX="293.0" layoutY="6.0" text="Messages" />
-                  <TextField fx:id="txtMessageTo" layoutX="280.0" layoutY="252.0" />
-                  <Label layoutX="252.0" layoutY="257.0" text="To:" />
-                  <TextArea fx:id="txtMessageBody" layoutX="248.0" layoutY="288.0" prefHeight="221.0" prefWidth="377.0" />
-                  <Button layoutX="89.0" layoutY="589.0" mnemonicParsing="false" text="Send" />
-                  <TableView fx:id="tvMessages" layoutX="17.0" layoutY="31.0" prefHeight="202.0" prefWidth="608.0">
-                     <columns>
-                        <TableColumn fx:id="colFrom" prefWidth="125.0" text="From" />
-                        <TableColumn fx:id="colPreview" editable="false" prefWidth="481.0" text="Preview" />
-                     </columns>
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
-                  <Button fx:id="btnSendMessage" layoutX="247.0" layoutY="517.0" mnemonicParsing="false" onAction="#actionSendMessage" text="Send" />
-                  <Button fx:id="btnDeleteMessage" layoutX="17.0" layoutY="239.0" mnemonicParsing="false" onAction="#actionDeleteMessage" text="Delete Message" />
-                  <ListView layoutX="14.0" layoutY="309.0" prefHeight="200.0" prefWidth="170.0" />
-                  <Button fx:id="btnSendMessage1" layoutX="194.0" layoutY="385.0" mnemonicParsing="false" onAction="#actionSendMessage" prefHeight="27.0" prefWidth="44.0" text="-&gt;" />
-                  <Label layoutX="79.0" layoutY="285.0" text="Friends" />
-                  <Label layoutX="160.0" layoutY="271.0" text="type username or press arrow to populate textbox" />
-                  <Button fx:id="btnSendMessage2" layoutX="14.0" layoutY="517.0" mnemonicParsing="false" onAction="#actionSendMessage" text="Remove Friend" />
+                  <ListView fx:id="listMessageList" layoutX="14.0" layoutY="46.0" prefHeight="302.0" prefWidth="170.0" />
+                  <Label layoutX="71.0" layoutY="29.0" text="Messages" />
+                  <ListView fx:id="listMessageConversation" layoutX="211.0" layoutY="46.0" prefHeight="302.0" prefWidth="417.0" />
+                  <Button fx:id="btnReply" layoutX="566.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionReply" prefHeight="27.0" prefWidth="62.0" text="Reply" />
+                  <TextField fx:id="txtReplyText" layoutX="211.0" layoutY="361.0" prefHeight="27.0" prefWidth="342.0" />
+                  <Button fx:id="btnDeleteMessage" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionDeleteMessage" prefHeight="27.0" prefWidth="120.0" text="Delete Message" />
+               </children>
+            </AnchorPane>
+        </content>
+      </Tab>
+      <Tab text="Friends">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ListView fx:id="listFriendsList" layoutX="54.0" layoutY="114.0" prefHeight="296.0" prefWidth="170.0" />
+                  <Button fx:id="btnRemoveFriend" layoutX="54.0" layoutY="418.0" mnemonicParsing="false" onAction="#actionRemoveFriend" text="Remove Friend" />
+                  <TextField fx:id="txtMessageTo" layoutX="301.0" layoutY="175.0" />
+                  <TextArea fx:id="txtMessageBody" layoutX="283.0" layoutY="210.0" prefHeight="200.0" prefWidth="306.0" />
+                  <Label layoutX="283.0" layoutY="180.0" text="To:" />
+                  <Button fx:id="btnSendMessage" layoutX="283.0" layoutY="418.0" mnemonicParsing="false" onAction="#actionSendMessage" prefHeight="27.0" prefWidth="69.0" text="Send" />
+                  <Label layoutX="119.0" layoutY="89.0" text="Friends" />
                </children>
             </AnchorPane>
         </content>

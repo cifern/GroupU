@@ -110,13 +110,15 @@ public class GroupController {
 
   public void setupMessageContextMenu() {
     ContextMenu cm = new ContextMenu();
-    MenuItem item = new MenuItem("Send Message");
-    cm.getItems().add(item);
+    MenuItem itemSendMessage = new MenuItem("Send Message");
+    MenuItem itemAddFriend = new MenuItem("Add Friend");
+    cm.getItems().add(itemSendMessage);
+    cm.getItems().add(itemAddFriend);
     listMemberListUser.setContextMenu(cm);
 
     User u = new User();
 
-    item.setOnAction(
+    itemSendMessage.setOnAction(
         event -> {
           String user;
           try {
@@ -148,6 +150,11 @@ public class GroupController {
             alert.setContentText("No user selected!");
             alert.show();
           }
+        });
+
+    itemAddFriend.setOnAction(
+        event -> {
+          System.out.println("add friend");
         });
   }
 
