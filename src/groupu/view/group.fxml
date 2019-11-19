@@ -52,8 +52,14 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="633.0">
                <children>
                   <Button fx:id="btnPost" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#actionPost" text="Post" />
-                  <TextArea fx:id="txtPostBody" layoutX="81.0" layoutY="14.0" prefHeight="44.0" prefWidth="508.0" wrapText="true" />
-                  <ListView fx:id="listPosts" layoutX="11.0" layoutY="76.0" prefHeight="277.0" prefWidth="578.0" />
+                  <TextArea fx:id="txtPostBody" layoutX="81.0" layoutY="14.0" prefHeight="44.0" prefWidth="320.0" wrapText="true" />
+                  <ListView fx:id="listPosts" layoutX="11.0" layoutY="76.0" prefHeight="277.0" prefWidth="390.0" />
+                  <ListView fx:id="listMemberListUser" layoutX="418.0" layoutY="76.0" prefHeight="277.0" prefWidth="168.0" />
+                  <Label fx:id="labelGroupName2" alignment="CENTER" layoutX="432.0" layoutY="34.0" prefHeight="31.0" prefWidth="141.0" text="Members" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="23.0" />
+                     </font>
+                  </Label>
                </children></AnchorPane>
       </content>
     </Tab>

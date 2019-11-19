@@ -32,6 +32,7 @@ public class GroupController {
   @FXML private Label labelGroupName;
   @FXML private Label labelGroupDescription;
   @FXML private ListView listMemberList;
+  @FXML private ListView listMemberListUser;
   @FXML private TextArea txtGroupDescription;
   @FXML private TextField txtGroupTags;
   @FXML private ListView listReportList;
@@ -48,11 +49,19 @@ public class GroupController {
   public void initialize() {
     groupName = HomeController.GroupSelect;
 
+    updateUserMemberList();
     updateTabsAndButtons();
     updateGroupInfo();
     updateListOfPosts();
     updateListOfUsers();
     updateListOfReports();
+  }
+
+  public void updateUserMemberList() {
+    setupMessageContextMenu();
+
+    ObservableList<String> userMemberList = g.getAllUsers(groupName);
+    listMemberListUser.setItems(userMemberList);
   }
 
   public void updateListOfReports() {
@@ -97,6 +106,49 @@ public class GroupController {
       posts.add(s);
     }
     listPosts.setItems(posts);
+  }
+
+  public void setupMessageContextMenu() {
+    ContextMenu cm = new ContextMenu();
+    MenuItem item = new MenuItem("Send Message");
+    cm.getItems().add(item);
+    listMemberListUser.setContextMenu(cm);
+
+    User u = new User();
+
+    item.setOnAction(
+        event -> {
+          String user;
+          try {
+            user = listMemberListUser.getSelectionModel().getSelectedItem().toString();
+          } catch (Exception e) {
+            user = null;
+          }
+
+          if (user != null) {
+            if (u.checkUserExists(user)) {
+              TextInputDialog dialog = new TextInputDialog("");
+              dialog.setTitle("Send Message");
+              dialog.setHeaderText("Message user " + user);
+              dialog.setContentText("Enter your message: ");
+
+              Optional<String> messageContent = dialog.showAndWait();
+              if (messageContent.isPresent()) {
+                if (!messageContent.get().isEmpty()) {
+                  System.out.println("XXXXX - CONTENT: " + messageContent.get());
+                } else {
+                  Alert alert = new Alert(AlertType.ERROR);
+                  alert.setContentText("Can't send an empty message!");
+                  alert.show();
+                }
+              }
+            }
+          } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("No user selected!");
+            alert.show();
+          }
+        });
   }
 
   public void setupPostContextMenu() {
@@ -183,6 +235,7 @@ public class GroupController {
 
     g.removeMember(username, groupName);
     updateListOfUsers();
+    updateUserMemberList();
   }
 
   public void actionRemoveReport(ActionEvent actionEvent) {

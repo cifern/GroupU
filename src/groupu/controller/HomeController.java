@@ -19,10 +19,18 @@ import javafx.util.Callback;
 public class HomeController{
 
     static String GroupSelect;
+
     @FXML private TextField searchGroupText;
     @FXML private Button btnInfo;
     @FXML private Button btnCreateGroup;
     @FXML private Button btnLogout;
+    @FXML private Button btnSendMessage;
+    @FXML private Button btnDeleteMessage;
+    @FXML private TableView tvMessages;
+    @FXML private TableColumn colFrom;
+    @FXML private TableColumn colPreview;
+    @FXML private TextField txtMessageTo;
+    @FXML private TextArea txtMessageBody;
     @FXML private TableView tableview;
     @FXML private TableColumn colName;
     @FXML private TableColumn colDescription;
@@ -200,5 +208,13 @@ public class HomeController{
   public void actionLogout() {
     Session.getInstance("").cleanUserSession();
     Utilities.nextScene(btnLogout, "login", "Login");
+  }
+
+  public void actionSendMessage() {
+    System.out.println("send message");
+  }
+
+  public void actionDeleteMessage() {
+    System.out.println("delete message");
   }
 }
