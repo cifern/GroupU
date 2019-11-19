@@ -245,16 +245,32 @@ public final class Group {
         return userList;
     }
 
-    public ResultSet getGroupsByTags(String tag){
+    public ResultSet getGroupsByTags(ObservableList<String> tags){
 
         ResultSet rs = null;
+        String SQL = "";
+
             try {
                 conn = dao.getConnection();
-                ps = conn.prepareStatement("SELECT GROUP_NAME FROM TAGS WHERE TAG=?");
-                ps.setString(1, tag);
 
-                rs = ps.executeQuery();
+                for(String s: tags) {
+                    if(s.equals(tags.get(tags.size()-1)))
+                    {
+                        SQL+= (" select groups.NAME, groups.DESCRIPTION\n" +
+                                "from  TAGS, GROUPS\n" +
+                                "where tags.TAG = " + "'"+ s + "'" + "AND groups.NAME = tags.GROUP_NAME ");
+                    }
+                    else {
+                        SQL+= (" select groups.NAME, groups.DESCRIPTION\n" +
+                                "from  TAGS, GROUPS\n" +
+                                "where tags.TAG = " + "'"+ s + "'" + " AND groups.NAME = tags.GROUP_NAME UNION ");
+                    }
+                }
 
+               ps = conn.prepareStatement(SQL);
+               ps.execute();
+
+               rs = ps.getResultSet();
 
             } catch (SQLException e) {
                 e.printStackTrace();

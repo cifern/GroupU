@@ -1,0 +1,16 @@
+.tag-bar {
+    -fx-border-color: lightgray;
+    -fx-spacing: 3;
+    -fx-padding: 3;
+    -fx-max-height: 30;
+    -fx-pref-columns: 10;
+}
+
+.tag-bar .tag {
+    -fx-background-color: lightblue;
+    -fx-alignment: center;
+}
+
+.tag-bar .tag .button {
+    -fx-background-color: transparent;
+}

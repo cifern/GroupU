@@ -55,8 +55,12 @@ public class GroupController {
     updateListOfPosts();
     updateListOfUsers();
     updateListOfReports();
+    updateMessageFriendButtons();
   }
 
+  public void updateMessageFriendButtons(){
+
+  }
   public void updateUserMemberList() {
     setupMessageContextMenu();
 

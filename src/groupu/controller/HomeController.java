@@ -2,6 +2,7 @@ package groupu.controller;
 
 import groupu.model.Group;
 import groupu.model.Session;
+import groupu.model.TagBar;
 import groupu.model.User;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -11,10 +12,17 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
+
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+
+import javax.xml.transform.Result;
 
 public class HomeController{
 
@@ -33,87 +41,138 @@ public class HomeController{
     @FXML private TableColumn colDescription;
     @FXML private ListView listviewAdmin;
     @FXML private ListView listviewJoined;
+    @FXML private HBox tagBox;
+    @FXML private ListView listFriendsList;
 
     private ObservableList<ObservableList> TableViewData;
     private Object select;
-    Group group = new Group();
+    private Group group = new Group();
+    private TagBar tagBar = new TagBar();
+    private boolean init = true;
 
     @FXML
     void initialize()
     {
-      buildData();
+     buildData();
+     updateTagBar();
+     updateSearchTable();
+     updateAdminTable();
+     updateJoinedGroupsTable();
 
-      /*** Tableview listener, Selects the entire row instead of 1 cell**/
-      ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
-      selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
-        if (selectedCells.size() > 0) {
-          TablePosition selectedCell = selectedCells.get(0);
-          int rowIndex = selectedCell.getRow();
-          select = colName.getCellObservableValue(rowIndex).getValue();
-        }
-      });
-
-      /*** owned groups listener**/
-      listviewAdmin.getSelectionModel().getSelectedItem();
-      listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-          if(newValue!=null) {
-            select = newValue;
-            listviewJoined.getSelectionModel().select(null);
-          }
-        }
-      });
-
-      /*** joined groups listener**/
-      listviewJoined.getSelectionModel().getSelectedItem() ;
-      listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-          if(newValue!=null) {
-            select = newValue;
-            listviewAdmin.getSelectionModel().clearSelection();
-          }
-        }
-      });
+     init=false;
     }
 
-    public void buildData(){
-      /** Populate group search tableview*/
-      TableViewData = FXCollections.observableArrayList();
+    private void updateTagBar() {
+        if(init){
+            tagBox.getChildren().addAll(tagBar);
+            tagBar.setPrefSize(500, 400);
+            tagBox.setFillHeight(true);
+            tagBox.setAlignment(Pos.CENTER);
 
-      User user = new User();
-      ResultSet rsGroups = group.getGroups();
+            tagBar.inputTextField.setOnKeyPressed(event -> {
+                if (event.getCode() == KeyCode.ENTER ) {
 
-      /*** Data table added to searchlist ***/
-      try {
-        colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-          public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-            return new SimpleStringProperty(param.getValue().get(0).toString());
-          }
-        });
-        colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-          public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-            return new SimpleStringProperty(param.getValue().get(1).toString());
-          }
-        });
-        while (rsGroups.next()) {
-          //Iterate Row
-          ObservableList<String> row = FXCollections.observableArrayList();
-          for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
-            //Iterate Column
-            row.add(rsGroups.getString(i));
-          }
-          TableViewData.add(row);
+                    System.out.println(tagBar.getTags().toString());
+
+                    ResultSet tagGroups = group.getGroupsByTags(tagBar.getTags());
+
+                    if(tagBar.getTags().size()>0)
+                        setGroupTable(tagGroups);
+
+                }
+            });
         }
-        //ADDED TO TableView
-        tableview.setItems(TableViewData);
-      } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println("Error on Building group table");
-      }
+    }
 
-      /** Data added to users group list **/
+    private void updateSearchTable() {
+        if(init){
+            /*** Tableview listener, Selects the entire row instead of 1 cell**/
+            ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
+            selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
+                if (selectedCells.size() > 0) {
+                    TablePosition selectedCell = selectedCells.get(0);
+                    int rowIndex = selectedCell.getRow();
+                    select = colName.getCellObservableValue(rowIndex).getValue();
+                }
+            });
+        }
+    }
+
+    private void updateAdminTable() {
+        if(init){
+            /*** owned groups listener**/
+            listviewAdmin.getSelectionModel().getSelectedItem();
+            listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+                @Override
+                public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                    if(newValue!=null) {
+                        select = newValue;
+                        listviewJoined.getSelectionModel().select(null);
+                    }
+                }
+            });
+        }
+    }
+
+    private void updateJoinedGroupsTable(){
+      /*** joined groups listener**/
+      if(init) {
+          listviewJoined.getSelectionModel().getSelectedItem();
+          listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+              @Override
+              public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                  if (newValue != null) {
+                      select = newValue;
+                      listviewAdmin.getSelectionModel().clearSelection();
+                  }
+              }
+          });
+      }
+  }
+
+  private void updateFriendsList(){
+
+  }
+
+  private void setGroupTable(ResultSet rsGroups) {
+    TableViewData = FXCollections.observableArrayList();
+       try {
+      colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+          return new SimpleStringProperty(param.getValue().get(0).toString());
+        }
+      });
+      colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+          return new SimpleStringProperty(param.getValue().get(1).toString());
+        }
+      });
+      while (rsGroups.next()) {
+        //Iterate Row
+        ObservableList<String> row = FXCollections.observableArrayList();
+        for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
+          //Iterate Column
+          row.add(rsGroups.getString(i));
+        }
+        TableViewData.add(row);
+      }
+      //ADDED TO TableView
+      tableview.setItems(TableViewData);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Error on Building group table");
+    }
+  }
+
+  public void buildData(){
+    /** Populate group search tableview*/
+    User user = new User();
+    ResultSet rsGroups = group.getGroups();
+
+    /*** Data table added to searchlist ***/
+    setGroupTable(rsGroups);
+
+    /** Data added to users group list **/
       try {
         ResultSet rsUserGroups = group.getUserGroups();
         while (rsUserGroups.next()) {
@@ -164,42 +223,12 @@ public class HomeController{
   }
 
   public void actionSearch(ActionEvent actionEvent) {
-    System.out.println("search pressed");
-
-
-    System.out.println("search pressed");
-    TableViewData = FXCollections.observableArrayList();
-
-    User user = new User();
     ResultSet rsGroups = group.getSearch(searchGroupText.getText());
-
+    tagBar = new TagBar();
+    tagBox.getChildren().clear();
+    tagBox.getChildren().add(tagBar);
     /*** Data table added to searchlist ***/
-    try {
-      colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-          return new SimpleStringProperty(param.getValue().get(0).toString());
-        }
-      });
-      colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-          return new SimpleStringProperty(param.getValue().get(1).toString());
-        }
-      });
-      while (rsGroups.next()) {
-        //Iterate Row
-        ObservableList<String> row = FXCollections.observableArrayList();
-        for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
-          //Iterate Column
-          row.add(rsGroups.getString(i));
-        }
-        TableViewData.add(row);
-      }
-      //ADDED TO TableView
-      tableview.setItems(TableViewData);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("Error on Building group table");
-    }
+    setGroupTable(rsGroups);
   }
 
   public void actionLogout() {
