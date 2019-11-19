@@ -1,8 +1,12 @@
 package groupu.controller;
 
 import groupu.model.Group;
+import groupu.model.Message;
 import groupu.model.Session;
 import groupu.model.User;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
+import javafx.scene.control.Alert.AlertType;
 import javafx.util.Callback;
 
 public class HomeController{
@@ -27,20 +32,26 @@ public class HomeController{
     @FXML private Button btnSendMessage;
     @FXML private Button btnDeleteMessage;
     @FXML private TextField txtMessageTo;
+    @FXML private TextField txtReplyText;
     @FXML private TextArea txtMessageBody;
     @FXML private TableView tableview;
     @FXML private TableColumn colName;
     @FXML private TableColumn colDescription;
     @FXML private ListView listviewAdmin;
     @FXML private ListView listviewJoined;
+    @FXML private ListView listMessageList;
+    @FXML private ListView listMessageConversation;
 
     private ObservableList<ObservableList> TableViewData;
+    private ObservableList<String> messageFromList;
+    private ObservableList<String> messageBodyList;
     private Object select;
     Group group = new Group();
 
     @FXML
     void initialize()
     {
+      updateMessageList();
       buildData();
 
       /*** Tableview listener, Selects the entire row instead of 1 cell**/
@@ -76,6 +87,31 @@ public class HomeController{
           }
         }
       });
+    }
+
+    public void updateMessageList() {
+      Message m = new Message();
+      messageFromList = FXCollections.observableArrayList();
+      Set<String> userSet = new LinkedHashSet<String>();
+      ArrayList<String> messages = m.getAllMessagesFromUsers();
+
+      userSet.addAll(messages);
+      messageFromList.addAll(userSet);
+
+      listMessageList.setItems(messageFromList);
+    }
+
+    public void actionMessagesClicked() {
+      Message m = new Message();
+      ArrayList<String> messages = new ArrayList<String>();
+      try {
+        String clickedUser = listMessageList.getSelectionModel().getSelectedItem().toString();
+        messageBodyList = m.getMessagesFromUser(clickedUser);
+
+        listMessageConversation.setItems(messageBodyList);
+      } catch (NullPointerException e) {
+        e.printStackTrace();
+      }
     }
 
     public void buildData(){
@@ -208,7 +244,31 @@ public class HomeController{
   }
 
   public void actionSendMessage() {
-    System.out.println("send message");
+    User u = new User();
+    String toUser = txtMessageTo.getText();
+    String messageBody = txtMessageBody.getText();
+
+    if (u.checkUserExists(toUser)) {
+      if (!Session.getInstance("").getUserName().equals(toUser)) {
+        Message m = new Message(toUser, messageBody);
+        m.sendPrivateMessage();
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setContentText("Message sent!");
+        alert.show();
+
+        txtMessageTo.clear();
+        txtMessageBody.clear();
+      } else {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("You can't send a message to yourself!");
+        alert.show();
+      }
+    } else {
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Username doesn't exist!");
+      alert.show();
+    }
   }
 
   public void actionDeleteMessage() {
@@ -216,7 +276,30 @@ public class HomeController{
   }
 
   public void actionReply() {
-    System.out.println("reply");
+    String toUser = listMessageList.getSelectionModel().getSelectedItem().toString();
+    String body = txtReplyText.getText();
+
+    if (!body.isEmpty()) {
+      if (body.length() > 0 && body.length() <= 300) {
+        Message m = new Message(toUser, body);
+        m.sendPrivateMessage();
+
+        txtReplyText.clear();
+
+        Alert a = new Alert(AlertType.INFORMATION);
+        a.setContentText("Reply sent!");
+        a.show();
+      } else {
+        Alert a = new Alert(AlertType.ERROR);
+        a.setContentText("Message must be between 1 and 300!");
+        a.show();
+      }
+    } else {
+      Alert a = new Alert(AlertType.ERROR);
+      a.setContentText("Empty message body!");
+      a.show();
+    }
+
   }
 
   public void actionRemoveFriend() {
