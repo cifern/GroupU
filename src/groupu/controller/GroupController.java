@@ -1,5 +1,7 @@
 package groupu.controller;
 
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import groupu.model.Friend;
 import groupu.model.Group;
 import groupu.model.Post;
 import groupu.model.Report;
@@ -154,7 +156,27 @@ public class GroupController {
 
     itemAddFriend.setOnAction(
         event -> {
-          System.out.println("add friend");
+          String userToAdd = null;
+          try {
+            userToAdd = listMemberListUser.getSelectionModel().getSelectedItem().toString();
+          } catch (Exception e) {
+            userToAdd = null;
+          }
+
+          if (userToAdd != null) {
+            if (u.checkUserExists(userToAdd)) {
+              Friend f = new Friend(userToAdd);
+              f.addFriend();
+            } else {
+              Alert alert = new Alert(AlertType.ERROR);
+              alert.setContentText("User does not exist!?");
+              alert.show();
+            }
+          } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("No user selected!");
+            alert.show();
+          }
         });
   }
 
