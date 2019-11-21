@@ -157,6 +157,8 @@ public class GroupController {
     itemAddFriend.setOnAction(
         event -> {
           String userToAdd = null;
+          Friend friend = new Friend();
+          ArrayList<String> friendsList = friend.getFriends();
           try {
             userToAdd = listMemberListUser.getSelectionModel().getSelectedItem().toString();
           } catch (Exception e) {
@@ -165,8 +167,21 @@ public class GroupController {
 
           if (userToAdd != null) {
             if (u.checkUserExists(userToAdd)) {
-              Friend f = new Friend(userToAdd);
-              f.addFriend();
+              if (!userToAdd.equals(Session.getInstance("").getUserName())) {
+                if (!friendsList.contains(userToAdd)) {
+                  Friend f = new Friend(userToAdd);
+                  f.addFriend();
+                  // something to confirm
+                } else {
+                  Alert alert = new Alert(AlertType.ERROR);
+                  alert.setContentText("That person is already on your friends list!");
+                  alert.show();
+                }
+              } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText("You can't add yourself as a friend!");
+                alert.show();
+              }
             } else {
               Alert alert = new Alert(AlertType.ERROR);
               alert.setContentText("User does not exist!?");

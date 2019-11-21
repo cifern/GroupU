@@ -52,7 +52,7 @@ public class Friend {
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        friends.add(rs.getString("FRIENDS"));
+        friends.add(rs.getString("FRIEND"));
       }
 
       ps.close();

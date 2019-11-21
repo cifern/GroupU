@@ -1,5 +1,6 @@
 package groupu.controller;
 
+import groupu.model.Friend;
 import groupu.model.Group;
 import groupu.model.Message;
 import groupu.model.Session;
@@ -41,6 +42,7 @@ public class HomeController{
     @FXML private ListView listviewJoined;
     @FXML private ListView listMessageList;
     @FXML private ListView listMessageConversation;
+    @FXML private ListView listFriendsList;
 
     private ObservableList<ObservableList> TableViewData;
     private ObservableList<String> messageFromList;
@@ -51,6 +53,7 @@ public class HomeController{
     @FXML
     void initialize()
     {
+      updateFriendsList();
       updateMessageList();
       buildData();
 
@@ -87,6 +90,16 @@ public class HomeController{
           }
         }
       });
+    }
+
+    public void updateFriendsList() {
+      Friend f = new Friend();
+      ObservableList<String> friends = FXCollections.observableArrayList();
+      ArrayList<String> friendsList = f.getFriends();
+
+      friends.addAll(friendsList);
+
+      listFriendsList.setItems(friends);
     }
 
     public void updateMessageList() {
