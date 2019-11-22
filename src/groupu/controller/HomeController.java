@@ -53,6 +53,7 @@ public class HomeController{
     @FXML
     void initialize()
     {
+      setupFriendsListContextMenu();
       updateFriendsList();
       updateMessageList();
       buildData();
@@ -316,6 +317,35 @@ public class HomeController{
   }
 
   public void actionRemoveFriend() {
-    System.out.println("remove friend");
+    String username = null;
+    try {
+      username = listFriendsList.getSelectionModel().getSelectedItem().toString();
+      System.out.println(username);
+    } catch (NullPointerException e) {
+      e.printStackTrace();
+    }
+
+    if (username != null) {
+      Friend f = new Friend(username);
+      f.removeFriend();
+
+      updateFriendsList();
+    } else {
+      Alert a = new Alert(AlertType.ERROR);
+      a.setContentText("You did not select a friend!");
+      a.show();
+    }
+  }
+
+  public void setupFriendsListContextMenu() {
+    ContextMenu cm = new ContextMenu();
+    MenuItem itemRemoveFriend = new MenuItem("Remove Friend");
+    cm.getItems().add(itemRemoveFriend);
+    listFriendsList.setContextMenu(cm);
+
+    itemRemoveFriend.setOnAction(
+        event -> {
+          actionRemoveFriend();
+    });
   }
 }

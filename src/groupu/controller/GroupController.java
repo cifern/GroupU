@@ -1,8 +1,8 @@
 package groupu.controller;
 
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
 import groupu.model.Friend;
 import groupu.model.Group;
+import groupu.model.Message;
 import groupu.model.Post;
 import groupu.model.Report;
 import groupu.model.Session;
@@ -18,6 +18,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.util.Duration;
+import org.controlsfx.control.Notifications;
 
 public class GroupController {
 
@@ -139,11 +141,22 @@ public class GroupController {
               Optional<String> messageContent = dialog.showAndWait();
               if (messageContent.isPresent()) {
                 if (!messageContent.get().isEmpty()) {
-                  System.out.println("XXXXX - CONTENT: " + messageContent.get());
+                  Message m = new Message(user, messageContent.get());
+                  m.sendPrivateMessage();
+                  Notifications.create()
+                      .darkStyle()
+                      .text("Message sent!")
+                      .hideAfter(Duration.seconds(2))
+                      .showConfirm();
                 } else {
-                  Alert alert = new Alert(AlertType.ERROR);
-                  alert.setContentText("Can't send an empty message!");
-                  alert.show();
+                  //Alert alert = new Alert(AlertType.ERROR);
+                  //alert.setContentText("Can't send an empty message!");
+                  //alert.show();
+                  Notifications.create()
+                      .darkStyle()
+                      .text("Can't send an empty message!")
+                      .hideAfter(Duration.seconds(2))
+                      .showError();
                 }
               }
             }
@@ -164,7 +177,6 @@ public class GroupController {
           } catch (Exception e) {
             userToAdd = null;
           }
-
           if (userToAdd != null) {
             if (u.checkUserExists(userToAdd)) {
               if (!userToAdd.equals(Session.getInstance("").getUserName())) {

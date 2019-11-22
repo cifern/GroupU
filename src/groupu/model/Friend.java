@@ -63,4 +63,20 @@ public class Friend {
     return friends;
   }
 
+  public void removeFriend() {
+    try {
+      conn = dao.getConnection();
+      ps = conn.prepareStatement("DELETE FROM FRIENDS WHERE USER=? AND FRIEND=?");
+      ps.setString(1, Session.getInstance("").getUserName());
+      ps.setString(2, this.username);
+
+      ps.execute();
+
+      conn.close();
+      ps.close();
+    } catch (ClassNotFoundException | SQLException e) {
+      e.printStackTrace();
+    }
+  }
+
 }
