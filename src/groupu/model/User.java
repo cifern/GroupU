@@ -137,6 +137,7 @@ final public class User {
 
         return null;
     }
+
     final public String getUser(){
         return username;
     }

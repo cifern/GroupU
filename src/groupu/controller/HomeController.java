@@ -1,8 +1,13 @@
 package groupu.controller;
 
+import groupu.model.Friend;
 import groupu.model.Group;
+import groupu.model.Message;
 import groupu.model.Session;
 import groupu.model.User;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -14,28 +19,43 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
+import javafx.scene.control.Alert.AlertType;
 import javafx.util.Callback;
 
 public class HomeController{
 
     static String GroupSelect;
+
     @FXML private TextField searchGroupText;
     @FXML private Button btnInfo;
     @FXML private Button btnCreateGroup;
     @FXML private Button btnLogout;
+    @FXML private Button btnSendMessage;
+    @FXML private Button btnDeleteMessage;
+    @FXML private TextField txtMessageTo;
+    @FXML private TextField txtReplyText;
+    @FXML private TextArea txtMessageBody;
     @FXML private TableView tableview;
     @FXML private TableColumn colName;
     @FXML private TableColumn colDescription;
     @FXML private ListView listviewAdmin;
     @FXML private ListView listviewJoined;
+    @FXML private ListView listMessageList;
+    @FXML private ListView listMessageConversation;
+    @FXML private ListView listFriendsList;
 
     private ObservableList<ObservableList> TableViewData;
+    private ObservableList<String> messageFromList;
+    private ObservableList<String> messageBodyList;
     private Object select;
     Group group = new Group();
 
     @FXML
     void initialize()
     {
+      setupFriendsListContextMenu();
+      updateFriendsList();
+      updateMessageList();
       buildData();
 
       /*** Tableview listener, Selects the entire row instead of 1 cell**/
@@ -71,6 +91,41 @@ public class HomeController{
           }
         }
       });
+    }
+
+    public void updateFriendsList() {
+      Friend f = new Friend();
+      ObservableList<String> friends = FXCollections.observableArrayList();
+      ArrayList<String> friendsList = f.getFriends();
+
+      friends.addAll(friendsList);
+
+      listFriendsList.setItems(friends);
+    }
+
+    public void updateMessageList() {
+      Message m = new Message();
+      messageFromList = FXCollections.observableArrayList();
+      Set<String> userSet = new LinkedHashSet<String>();
+      ArrayList<String> messages = m.getAllMessagesFromUsers();
+
+      userSet.addAll(messages);
+      messageFromList.addAll(userSet);
+
+      listMessageList.setItems(messageFromList);
+    }
+
+    public void actionMessagesClicked() {
+      Message m = new Message();
+      ArrayList<String> messages = new ArrayList<String>();
+      try {
+        String clickedUser = listMessageList.getSelectionModel().getSelectedItem().toString();
+        messageBodyList = m.getMessagesFromUser(clickedUser);
+
+        listMessageConversation.setItems(messageBodyList);
+      } catch (NullPointerException e) {
+        e.printStackTrace();
+      }
     }
 
     public void buildData(){
@@ -142,7 +197,6 @@ public class HomeController{
 
 
   public void actionOpenGroup(ActionEvent actionEvent) {
-
     if(select != null) {
       GroupSelect = select.toString();
       System.out.println("view group pressed" + GroupSelect);
@@ -200,5 +254,111 @@ public class HomeController{
   public void actionLogout() {
     Session.getInstance("").cleanUserSession();
     Utilities.nextScene(btnLogout, "login", "Login");
+  }
+
+  public void actionSendMessage() {
+    User u = new User();
+    String toUser = txtMessageTo.getText();
+    String messageBody = txtMessageBody.getText();
+
+    if (u.checkUserExists(toUser)) {
+      if (!Session.getInstance("").getUserName().equals(toUser)) {
+        Message m = new Message(toUser, messageBody);
+        m.sendPrivateMessage();
+
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setContentText("Message sent!");
+        alert.show();
+
+        txtMessageTo.clear();
+        txtMessageBody.clear();
+      } else {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setContentText("You can't send a message to yourself!");
+        alert.show();
+      }
+    } else {
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Username doesn't exist!");
+      alert.show();
+    }
+  }
+
+  public void actionDeleteMessage() {
+    String username = getSelectedFromConversationList();
+    Message m = new Message(username, null);
+    m.deleteAllMessages();
+
+    updateMessageList();
+    listMessageConversation.getItems().clear();
+  }
+
+  public void actionReply() {
+    String toUser = listMessageList.getSelectionModel().getSelectedItem().toString();
+    String body = txtReplyText.getText();
+
+    if (!body.isEmpty()) {
+      if (body.length() > 0 && body.length() <= 300) {
+        Message m = new Message(toUser, body);
+        m.sendPrivateMessage();
+
+        txtReplyText.clear();
+
+        Alert a = new Alert(AlertType.INFORMATION);
+        a.setContentText("Reply sent!");
+        a.show();
+      } else {
+        Alert a = new Alert(AlertType.ERROR);
+        a.setContentText("Message must be between 1 and 300!");
+        a.show();
+      }
+    } else {
+      Alert a = new Alert(AlertType.ERROR);
+      a.setContentText("Empty message body!");
+      a.show();
+    }
+
+  }
+
+  public void actionRemoveFriend() {
+    String username = getSelectedFromFriendsList();
+    if (username != null) {
+      Friend f = new Friend(username);
+      f.removeFriend();
+
+      updateFriendsList();
+    } else {
+      Alert a = new Alert(AlertType.ERROR);
+      a.setContentText("You did not select a friend!");
+      a.show();
+    }
+  }
+
+  public void setupFriendsListContextMenu() {
+    ContextMenu cm = new ContextMenu();
+    MenuItem itemRemoveFriend = new MenuItem("Remove Friend");
+    cm.getItems().add(itemRemoveFriend);
+    listFriendsList.setContextMenu(cm);
+
+    itemRemoveFriend.setOnAction(
+        event -> {
+          actionRemoveFriend();
+    });
+  }
+
+  public String getSelectedFromFriendsList() {
+    try {
+      return listFriendsList.getSelectionModel().getSelectedItem().toString();
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  public String getSelectedFromConversationList() {
+    try {
+      return listMessageList.getSelectionModel().getSelectedItem().toString();
+    } catch (Exception e) {
+      return null;
+    }
   }
 }

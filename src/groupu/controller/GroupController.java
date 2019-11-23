@@ -1,6 +1,8 @@
 package groupu.controller;
 
+import groupu.model.Friend;
 import groupu.model.Group;
+import groupu.model.Message;
 import groupu.model.Post;
 import groupu.model.Report;
 import groupu.model.Session;
@@ -32,6 +34,7 @@ public class GroupController {
   @FXML private Label labelGroupName;
   @FXML private Label labelGroupDescription;
   @FXML private ListView listMemberList;
+  @FXML private ListView listMemberListUser;
   @FXML private TextArea txtGroupDescription;
   @FXML private TextField txtGroupTags;
   @FXML private ListView listReportList;
@@ -48,11 +51,19 @@ public class GroupController {
   public void initialize() {
     groupName = HomeController.GroupSelect;
 
+    updateUserMemberList();
     updateTabsAndButtons();
     updateGroupInfo();
     updateListOfPosts();
     updateListOfUsers();
     updateListOfReports();
+  }
+
+  public void updateUserMemberList() {
+    setupMessageContextMenu();
+
+    ObservableList<String> userMemberList = g.getAllUsers(groupName);
+    listMemberListUser.setItems(userMemberList);
   }
 
   public void updateListOfReports() {
@@ -97,6 +108,92 @@ public class GroupController {
       posts.add(s);
     }
     listPosts.setItems(posts);
+  }
+
+  public void setupMessageContextMenu() {
+    ContextMenu cm = new ContextMenu();
+    MenuItem itemSendMessage = new MenuItem("Send Message");
+    MenuItem itemAddFriend = new MenuItem("Add Friend");
+    cm.getItems().add(itemSendMessage);
+    cm.getItems().add(itemAddFriend);
+    listMemberListUser.setContextMenu(cm);
+
+    User u = new User();
+
+    itemSendMessage.setOnAction(
+        event -> {
+          String user;
+          try {
+            user = listMemberListUser.getSelectionModel().getSelectedItem().toString();
+          } catch (Exception e) {
+            user = null;
+          }
+
+          if (user != null) {
+            if (u.checkUserExists(user)) {
+              TextInputDialog dialog = new TextInputDialog("");
+              dialog.setTitle("Send Message");
+              dialog.setHeaderText("Message user " + user);
+              dialog.setContentText("Enter your message: ");
+
+              Optional<String> messageContent = dialog.showAndWait();
+              if (messageContent.isPresent()) {
+                if (!messageContent.get().isEmpty()) {
+                  Message m = new Message(user, messageContent.get());
+                  m.sendPrivateMessage();
+                  // something to confirm
+                } else {
+                  Alert alert = new Alert(AlertType.ERROR);
+                  alert.setContentText("Can't send an empty message!");
+                  alert.show();
+                }
+              }
+            }
+          } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("No user selected!");
+            alert.show();
+          }
+        });
+
+    itemAddFriend.setOnAction(
+        event -> {
+          String userToAdd = null;
+          Friend friend = new Friend();
+          ArrayList<String> friendsList = friend.getFriends();
+          try {
+            userToAdd = listMemberListUser.getSelectionModel().getSelectedItem().toString();
+          } catch (Exception e) {
+            userToAdd = null;
+          }
+          if (userToAdd != null) {
+            if (u.checkUserExists(userToAdd)) {
+              if (!userToAdd.equals(Session.getInstance("").getUserName())) {
+                if (!friendsList.contains(userToAdd)) {
+                  Friend f = new Friend(userToAdd);
+                  f.addFriend();
+                  // something to confirm
+                } else {
+                  Alert alert = new Alert(AlertType.ERROR);
+                  alert.setContentText("That person is already on your friends list!");
+                  alert.show();
+                }
+              } else {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setContentText("You can't add yourself as a friend!");
+                alert.show();
+              }
+            } else {
+              Alert alert = new Alert(AlertType.ERROR);
+              alert.setContentText("User does not exist!?");
+              alert.show();
+            }
+          } else {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setContentText("No user selected!");
+            alert.show();
+          }
+        });
   }
 
   public void setupPostContextMenu() {
@@ -183,6 +280,7 @@ public class GroupController {
 
     g.removeMember(username, groupName);
     updateListOfUsers();
+    updateUserMemberList();
   }
 
   public void actionRemoveReport(ActionEvent actionEvent) {
