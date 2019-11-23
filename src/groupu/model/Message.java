@@ -86,4 +86,20 @@ public class Message {
         e.printStackTrace();
       }
     }
+
+    public void deleteAllMessages() {
+      try {
+        conn = dao.getConnection();
+        ps = conn.prepareStatement("DELETE FROM MESSAGES WHERE TO_USER=? AND FROM_USER=?");
+        ps.setString(1, Session.getInstance("").getUserName());
+        ps.setString(2, this.toUser);
+        
+        ps.execute();
+
+        conn.close();
+        ps.close();
+      } catch (ClassNotFoundException | SQLException e) {
+        e.printStackTrace();
+      }
+    }
 }

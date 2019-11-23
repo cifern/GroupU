@@ -197,7 +197,6 @@ public class HomeController{
 
 
   public void actionOpenGroup(ActionEvent actionEvent) {
-
     if(select != null) {
       GroupSelect = select.toString();
       System.out.println("view group pressed" + GroupSelect);
@@ -286,7 +285,12 @@ public class HomeController{
   }
 
   public void actionDeleteMessage() {
-    System.out.println("delete message");
+    String username = getSelectedFromConversationList();
+    Message m = new Message(username, null);
+    m.deleteAllMessages();
+
+    updateMessageList();
+    listMessageConversation.getItems().clear();
   }
 
   public void actionReply() {
@@ -317,14 +321,7 @@ public class HomeController{
   }
 
   public void actionRemoveFriend() {
-    String username = null;
-    try {
-      username = listFriendsList.getSelectionModel().getSelectedItem().toString();
-      System.out.println(username);
-    } catch (NullPointerException e) {
-      e.printStackTrace();
-    }
-
+    String username = getSelectedFromFriendsList();
     if (username != null) {
       Friend f = new Friend(username);
       f.removeFriend();
@@ -347,5 +344,21 @@ public class HomeController{
         event -> {
           actionRemoveFriend();
     });
+  }
+
+  public String getSelectedFromFriendsList() {
+    try {
+      return listFriendsList.getSelectionModel().getSelectedItem().toString();
+    } catch (Exception e) {
+      return null;
+    }
+  }
+
+  public String getSelectedFromConversationList() {
+    try {
+      return listMessageList.getSelectionModel().getSelectedItem().toString();
+    } catch (Exception e) {
+      return null;
+    }
   }
 }

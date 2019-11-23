@@ -127,11 +127,11 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <ListView fx:id="listMessageList" layoutX="14.0" layoutY="46.0" onMouseClicked="#actionMessagesClicked" prefHeight="302.0" prefWidth="170.0" />
-                  <Label layoutX="71.0" layoutY="29.0" text="Messages" />
+                  <Label layoutX="60.0" layoutY="29.0" text="Conversations" />
                   <ListView fx:id="listMessageConversation" layoutX="211.0" layoutY="46.0" prefHeight="302.0" prefWidth="417.0" />
                   <Button fx:id="btnReply" layoutX="566.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionReply" prefHeight="27.0" prefWidth="62.0" text="Reply" />
                   <TextField fx:id="txtReplyText" layoutX="211.0" layoutY="361.0" prefHeight="27.0" prefWidth="342.0" />
-                  <Button fx:id="btnDeleteMessage" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionDeleteMessage" prefHeight="27.0" prefWidth="120.0" text="Delete Message" />
+                  <Button fx:id="btnDeleteMessage" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionDeleteMessage" prefHeight="27.0" prefWidth="170.0" text="Delete Conversation" />
                </children>
             </AnchorPane>
         </content>

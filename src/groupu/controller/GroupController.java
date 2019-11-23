@@ -18,8 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
-import javafx.util.Duration;
-import org.controlsfx.control.Notifications;
 
 public class GroupController {
 
@@ -143,20 +141,11 @@ public class GroupController {
                 if (!messageContent.get().isEmpty()) {
                   Message m = new Message(user, messageContent.get());
                   m.sendPrivateMessage();
-                  Notifications.create()
-                      .darkStyle()
-                      .text("Message sent!")
-                      .hideAfter(Duration.seconds(2))
-                      .showConfirm();
+                  // something to confirm
                 } else {
-                  //Alert alert = new Alert(AlertType.ERROR);
-                  //alert.setContentText("Can't send an empty message!");
-                  //alert.show();
-                  Notifications.create()
-                      .darkStyle()
-                      .text("Can't send an empty message!")
-                      .hideAfter(Duration.seconds(2))
-                      .showError();
+                  Alert alert = new Alert(AlertType.ERROR);
+                  alert.setContentText("Can't send an empty message!");
+                  alert.show();
                 }
               }
             }
