@@ -43,6 +43,7 @@ public class HomeController{
     @FXML private ListView listMessageList;
     @FXML private ListView listMessageConversation;
     @FXML private ListView listFriendsList;
+    @FXML private TabPane homeTabPane;
 
     private ObservableList<ObservableList> TableViewData;
     private ObservableList<String> messageFromList;
@@ -53,6 +54,8 @@ public class HomeController{
     @FXML
     void initialize()
     {
+      setupPlaceholders();
+      //homeTabPane.getStyleClass().add("floating");
       setupFriendsListContextMenu();
       updateFriendsList();
       updateMessageList();
@@ -91,6 +94,14 @@ public class HomeController{
           }
         }
       });
+    }
+
+    public void setupPlaceholders() {
+      listviewJoined.setPlaceholder(new Label("No content"));
+      listviewAdmin.setPlaceholder(new Label("No content"));
+      listMessageConversation.setPlaceholder(new Label("No content"));
+      listMessageList.setPlaceholder(new Label("No content"));
+      listFriendsList.setPlaceholder(new Label("No content"));
     }
 
     public void updateFriendsList() {

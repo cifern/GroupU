@@ -51,12 +51,20 @@ public class GroupController {
   public void initialize() {
     groupName = HomeController.GroupSelect;
 
+    setupPlaceholders();
     updateUserMemberList();
     updateTabsAndButtons();
     updateGroupInfo();
     updateListOfPosts();
     updateListOfUsers();
     updateListOfReports();
+  }
+
+  public void setupPlaceholders() {
+    listMemberListUser.setPlaceholder(new Label("No content"));
+    listMemberList.setPlaceholder(new Label("No content"));
+    listPosts.setPlaceholder(new Label("No content"));
+    listReportList.setPlaceholder(new Label("No content"));
   }
 
   public void updateUserMemberList() {

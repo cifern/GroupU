@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import java.net.URL?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
@@ -25,9 +26,6 @@
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
-                  <Button fx:id="btnReportGroup" layoutX="485.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionReportGroup" text="Report Group" />
-                  <Button fx:id="btnJoinGroup" layoutX="211.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionJoinGroup" text="Join Group" />
-                  <Button fx:id="btnBack" layoutX="14.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionBack" text="Back To Results" />
                   <Label fx:id="labelGroupName1" alignment="CENTER" layoutX="206.0" layoutY="184.0" prefHeight="31.0" prefWidth="182.0" text="Current Event" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
@@ -43,7 +41,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnLeaveGroup" layoutX="302.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionLeaveGroup" text="Leave Group" />
+                  <JFXButton fx:id="btnBack" layoutX="14.0" layoutY="326.0" onAction="#actionBack" ripplerFill="#82b1ff" text="Back To Results" />
+                  <JFXButton fx:id="btnJoinGroup" layoutX="211.0" layoutY="326.0" onAction="#actionJoinGroup" ripplerFill="#82b1ff" text="Join Group" />
+                  <JFXButton fx:id="btnLeaveGroup" layoutX="302.0" layoutY="326.0" onAction="#actionLeaveGroup" ripplerFill="#82b1ff" text="Leave Group" />
+                  <JFXButton fx:id="btnReportGroup" layoutX="485.0" layoutY="326.0" onAction="#actionReportGroup" ripplerFill="#82b1ff" text="Report Group" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -51,15 +52,23 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="633.0">
                <children>
-                  <Button fx:id="btnPost" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" onAction="#actionPost" text="Post" />
                   <TextArea fx:id="txtPostBody" layoutX="81.0" layoutY="14.0" prefHeight="44.0" prefWidth="320.0" wrapText="true" />
-                  <ListView fx:id="listPosts" layoutX="11.0" layoutY="76.0" prefHeight="277.0" prefWidth="390.0" />
-                  <ListView fx:id="listMemberListUser" layoutX="418.0" layoutY="76.0" prefHeight="277.0" prefWidth="168.0" />
+                  <ScrollPane layoutX="11.0" layoutY="76.0">
+                     <content>
+                        <ListView fx:id="listPosts" prefHeight="277.0" prefWidth="390.0" />
+                     </content>
+                  </ScrollPane>
+                  <ScrollPane layoutX="418.0" layoutY="76.0">
+                     <content>
+                        <ListView fx:id="listMemberListUser" prefHeight="277.0" prefWidth="168.0" />
+                     </content>
+                  </ScrollPane>
                   <Label fx:id="labelGroupName2" alignment="CENTER" layoutX="432.0" layoutY="34.0" prefHeight="31.0" prefWidth="141.0" text="Members" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Label>
+                  <JFXButton fx:id="btnPost" layoutX="14.0" layoutY="22.0" onAction="#actionPost" ripplerFill="#82b1ff" text="Post" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -67,37 +76,45 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="listMemberList" layoutX="14.0" layoutY="44.0" prefHeight="269.0" prefWidth="146.0" />
+                  <ScrollPane layoutX="14.0" layoutY="44.0">
+                     <content>
+                        <ListView fx:id="listMemberList" prefHeight="269.0" prefWidth="146.0" />
+                     </content>
+                  </ScrollPane>
                   <Label alignment="CENTER" layoutX="19.0" layoutY="5.0" prefHeight="40.0" prefWidth="136.0" text="Member List" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <Button fx:id="btnKickMember" layoutX="42.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionKickMember" text="Kick Member" />
-                  <ListView fx:id="listReportList" layoutX="181.0" layoutY="44.0" prefHeight="269.0" prefWidth="168.0" />
+                  <ScrollPane layoutX="181.0" layoutY="44.0">
+                     <content>
+                        <ListView fx:id="listReportList" prefHeight="269.0" prefWidth="168.0" />
+                     </content>
+                  </ScrollPane>
                   <Label alignment="CENTER" layoutX="211.0" layoutY="5.0" prefHeight="39.0" prefWidth="99.0" text="Reports" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font></Label>
-                  <Button fx:id="btnRemoveReport" layoutX="214.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionRemoveReport" text="Remove Report" />
                   <Label alignment="CENTER" layoutX="363.0" layoutY="6.0" prefHeight="37.0" prefWidth="217.0" text="Edit Group Description" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
                   <TextArea fx:id="txtGroupDescription" layoutX="371.0" layoutY="44.0" prefHeight="89.0" prefWidth="200.0" wrapText="true" />
-                  <Button fx:id="btnSaveTags" layoutX="434.0" layoutY="286.0" mnemonicParsing="false" onAction="#actionSaveTags" text="Save Tags" />
-                  <Button fx:id="btnDeleteGroup" layoutX="495.0" layoutY="326.0" mnemonicParsing="false" onAction="#actionDeleteGroup" text="Delete Group" />
                   <Label alignment="CENTER" layoutX="378.0" layoutY="201.0" prefHeight="31.0" prefWidth="188.0" text="Edit Group Tags" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
                   <TextField fx:id="txtGroupTags" layoutX="372.0" layoutY="244.0" prefHeight="27.0" prefWidth="200.0" promptText="Enter tags separated by a comma" />
-                  <Button fx:id="btnUpdateDescription" layoutX="410.0" layoutY="152.0" mnemonicParsing="false" onAction="#actionUpdateDescription" text="Update Description" />
+                  <JFXButton fx:id="btnKickMember" layoutX="42.0" layoutY="326.0" onAction="#actionKickMember" ripplerFill="#82b1ff" text="Kick Member" />
+                  <JFXButton fx:id="btnRemoveReport" layoutX="214.0" layoutY="326.0" onAction="#actionRemoveReport" ripplerFill="#82b1ff" text="Remove Report" />
+                  <JFXButton fx:id="btnUpdateDescription" layoutX="410.0" layoutY="152.0" onAction="#actionUpdateDescription" ripplerFill="#82b1ff" text="Update Description" />
+                  <JFXButton fx:id="btnSaveTags" layoutX="434.0" layoutY="286.0" onAction="#actionSaveTags" ripplerFill="#82b1ff" text="Save Tags" />
+                  <JFXButton fx:id="btnDeleteGroup" layoutX="495.0" layoutY="326.0" onAction="#actionDeleteGroup" ripplerFill="#82b1ff" text="Delete Group" />
                </children>
             </AnchorPane>
         </content>
       </Tab>
   </tabs>
     <stylesheets>
-        <URL value="@Background.css" />
+        <URL value="@global.css" />
     </stylesheets>
 </TabPane>
