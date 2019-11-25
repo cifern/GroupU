@@ -118,6 +118,7 @@ public class GroupController {
     listPosts.setItems(posts);
   }
 
+
   public void setupMessageContextMenu() {
     ContextMenu cm = new ContextMenu();
     MenuItem itemSendMessage = new MenuItem("Send Message");
@@ -298,6 +299,7 @@ public class GroupController {
   }
 
   public void actionDeleteGroup(ActionEvent actionEvent) {
+    g.deletegroups(groupName);
   }
 
   public void actionUpdateDescription(ActionEvent actionEvent) {

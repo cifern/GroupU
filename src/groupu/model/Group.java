@@ -116,7 +116,21 @@ public final class Group {
             }
             return null;
     }
+    public void deletegroups(String groupname){
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("DELETE FROM GROUPS WHERE NAME=?");
+            ps.setString(1,groupname);
+            ps.execute();
 
+            conn.close();
+            ps.close();
+
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } ;
+
+    }
     public ResultSet getSearch(String search){
         try {
             conn = dao.getConnection();
