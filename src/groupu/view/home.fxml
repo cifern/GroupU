@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -19,7 +20,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="642.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
+<TabPane fx:id="homeTabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="591.0" prefWidth="642.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.HomeController">
   <tabs>
     <Tab text="Search">
       <content>
@@ -42,12 +43,6 @@
                               <Insets left="66.0" />
                            </GridPane.margin>
                         </TextField>
-                        <Button fx:id="btnInfo" mnemonicParsing="false" onAction="#actionOpenGroup" text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <GridPane.margin>
-                              <Insets />
-                           </GridPane.margin>
-                        </Button>
-                        <Button fx:id="btnSearch" alignment="CENTER_RIGHT" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionSearch" text="Search" />
                         <StackPane prefHeight="268.0" prefWidth="484.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                            <children>
                               <TableView fx:id="tableview" prefHeight="266.0" prefWidth="618.0">
@@ -71,11 +66,13 @@
                               <Insets bottom="10.0" top="40.0" />
                            </GridPane.margin>
                         </HBox>
-                        <Button fx:id="btnLogout" alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#actionLogout" prefHeight="27.0" prefWidth="85.0" text="Logout" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                        <JFXButton fx:id="btnSearch" onAction="#actionSearch" ripplerFill="#82b1ff" text="Search" GridPane.columnIndex="1" />
+                        <JFXButton fx:id="btnInfo" onAction="#actionOpenGroup" ripplerFill="#82b1ff" text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <JFXButton fx:id="btnLogout" onAction="#actionLogout" ripplerFill="#82b1ff" text="Logout" GridPane.columnIndex="1" GridPane.rowIndex="3">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
-                        </Button>
+                        </JFXButton>
                      </children>
                   </GridPane>
                   <Text fx:id="txtUser" layoutX="533.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" />
@@ -103,19 +100,15 @@
                               <ListView fx:id="listviewAdmin" prefHeight="329.0" prefWidth="292.0" />
                            </content>
                         </ScrollPane>
-                        <Button fx:id="btnCreateGroup" alignment="BASELINE_CENTER" contentDisplay="BOTTOM" mnemonicParsing="false" onAction="#actionCreateGroup" text="Create group" textAlignment="CENTER" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-                           <opaqueInsets>
-                              <Insets />
-                           </opaqueInsets>
-                        </Button>
-                        <Button fx:id="btnOpen" alignment="BOTTOM_CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#actionOpenUserGroups" text="Open" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                         <ScrollPane prefHeight="266.0" prefWidth="257.0" GridPane.columnIndex="3">
                            <content>
                               <ListView fx:id="listviewJoined" prefHeight="329.0" prefWidth="282.0" />
                            </content>
                         </ScrollPane>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Created Groups" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Joined Groups" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Label text="Created Groups" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <Label text="Joined Groups" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+                        <JFXButton fx:id="btnCreateGroup" onAction="#actionCreateGroup" ripplerFill="#82b1ff" text="Create Group" GridPane.rowIndex="1" />
+                        <JFXButton fx:id="btnOpen" onAction="#actionOpenUserGroups" ripplerFill="#82b1ff" text="Open" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -126,12 +119,20 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="listMessageList" layoutX="14.0" layoutY="46.0" onMouseClicked="#actionMessagesClicked" prefHeight="302.0" prefWidth="170.0" />
+                  <ScrollPane layoutX="14.0" layoutY="46.0">
+                     <content>
+                        <ListView fx:id="listMessageList" onMouseClicked="#actionMessagesClicked" prefHeight="302.0" prefWidth="170.0" />
+                     </content>
+                  </ScrollPane>
                   <Label layoutX="60.0" layoutY="29.0" text="Conversations" />
-                  <ListView fx:id="listMessageConversation" layoutX="211.0" layoutY="46.0" prefHeight="302.0" prefWidth="417.0" />
-                  <Button fx:id="btnReply" layoutX="566.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionReply" prefHeight="27.0" prefWidth="62.0" text="Reply" />
+                  <ScrollPane layoutX="211.0" layoutY="46.0">
+                     <content>
+                        <ListView fx:id="listMessageConversation" prefHeight="302.0" prefWidth="417.0" />
+                     </content>
+                  </ScrollPane>
                   <TextField fx:id="txtReplyText" layoutX="211.0" layoutY="361.0" prefHeight="27.0" prefWidth="342.0" />
-                  <Button fx:id="btnDeleteMessage" layoutX="14.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionDeleteMessage" prefHeight="27.0" prefWidth="170.0" text="Delete Conversation" />
+                  <JFXButton fx:id="btnDeleteMessage" layoutX="15.0" layoutY="361.0" onAction="#actionDeleteMessage" prefHeight="27.0" prefWidth="170.0" ripplerFill="#82b1ff" text="Delete Conversation" />
+                  <JFXButton fx:id="btnReply" layoutX="568.0" layoutY="361.0" onAction="#actionReply" prefHeight="27.0" prefWidth="62.0" ripplerFill="#82b1ff" text="Reply" />
                </children>
             </AnchorPane>
         </content>
@@ -140,19 +141,23 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ListView fx:id="listFriendsList" layoutX="54.0" layoutY="114.0" prefHeight="296.0" prefWidth="170.0" />
-                  <Button fx:id="btnRemoveFriend" layoutX="54.0" layoutY="418.0" mnemonicParsing="false" onAction="#actionRemoveFriend" text="Remove Friend" />
-                  <TextField fx:id="txtMessageTo" layoutX="301.0" layoutY="175.0" />
+                  <ScrollPane layoutX="54.0" layoutY="114.0">
+                     <content>
+                        <ListView fx:id="listFriendsList" prefHeight="296.0" prefWidth="170.0" />
+                     </content>
+                  </ScrollPane>
+                  <TextField fx:id="txtMessageTo" layoutX="311.0" layoutY="175.0" />
                   <TextArea fx:id="txtMessageBody" layoutX="283.0" layoutY="210.0" prefHeight="200.0" prefWidth="306.0" />
                   <Label layoutX="283.0" layoutY="180.0" text="To:" />
-                  <Button fx:id="btnSendMessage" layoutX="283.0" layoutY="418.0" mnemonicParsing="false" onAction="#actionSendMessage" prefHeight="27.0" prefWidth="69.0" text="Send" />
                   <Label layoutX="119.0" layoutY="89.0" text="Friends" />
+                  <JFXButton fx:id="btnSendMessage" layoutX="283.0" layoutY="418.0" onAction="#actionSendMessage" prefHeight="27.0" prefWidth="69.0" ripplerFill="#82b1ff" text="Send" />
+                  <JFXButton fx:id="btnRemoveFriend" layoutX="54.0" layoutY="418.0" onAction="#actionRemoveFriend" prefHeight="27.0" prefWidth="100.0" ripplerFill="#82b1ff" text="Remove Friend" />
                </children>
             </AnchorPane>
         </content>
       </Tab>
   </tabs>
     <stylesheets>
-
+      <URL value="@global.css" />
     </stylesheets>
 </TabPane>
