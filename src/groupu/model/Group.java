@@ -116,19 +116,28 @@ public final class Group {
             }
             return null;
     }
-    public void deletegroups(String groupname){
-        try {
+    public void deleteGroup(String groupName) {
+        if (checkGroupExists(groupName)) {
+          try {
             conn = dao.getConnection();
             ps = conn.prepareStatement("DELETE FROM GROUPS WHERE NAME=?");
-            ps.setString(1,groupname);
+            ps.setString(1, groupName);
+            ps.execute();
+
+            ps = conn.prepareStatement("DELETE FROM TAGS WHERE GROUP_NAME=?");
+            ps.setString(1, groupName);
             ps.execute();
 
             conn.close();
             ps.close();
-
-        } catch (SQLException | ClassNotFoundException e) {
+          } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
-        } ;
+          }
+          // delete posts, events (not yet), tags, reports
+            Post p = new Post();
+            p.deleteAllPostsFromGroup(groupName);
+            Report.removeAllReportsFromGroup(groupName);
+        }
 
     }
     public ResultSet getSearch(String search){

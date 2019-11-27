@@ -14,9 +14,9 @@ public final class Post {
   private String poster;
   private String group;
 
-  private DAO dao = new DAO();
-  private Connection conn = null;
-  private PreparedStatement ps = null;
+  private static DAO dao = new DAO();
+  private static Connection conn = null;
+  private static PreparedStatement ps = null;
 
   public Post() { }
 
@@ -91,5 +91,22 @@ public final class Post {
       e.printStackTrace();
     }
     return postList;
+  }
+
+  public static void deleteAllPostsFromGroup(String groupName) {
+    try {
+      conn = dao.getConnection();
+      ps = conn.prepareStatement("DELETE FROM POSTS WHERE GROUPNAME=?");
+      ps.setString(1, groupName);
+
+      ps.execute();
+
+      conn.close();
+      ps.close();
+    } catch (SQLException e) {
+      e.printStackTrace();
+    } catch (ClassNotFoundException e) {
+      e.printStackTrace();
+    }
   }
 }
