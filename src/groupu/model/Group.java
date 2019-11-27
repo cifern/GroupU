@@ -136,7 +136,11 @@ public final class Group {
           // delete posts, events (not yet), tags, reports
             Post p = new Post();
             p.deleteAllPostsFromGroup(groupName);
+
             Report.removeAllReportsFromGroup(groupName);
+
+            User u = new User();
+            u.deleteAllUsersFromGroup(groupName);
         }
 
     }
