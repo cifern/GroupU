@@ -296,6 +296,7 @@ public class HomeController{
 
         txtMessageTo.clear();
         txtMessageBody.clear();
+        updateMessageList();
       } else {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setContentText("You can't send a message to yourself!");
@@ -328,6 +329,7 @@ public class HomeController{
         m.sendPrivateMessage();
 
         txtReplyText.clear();
+        updateMessageList();
         actionMessagesClicked();
       } else {
         Alert a = new Alert(AlertType.ERROR);

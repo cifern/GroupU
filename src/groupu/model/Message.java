@@ -103,8 +103,19 @@ public class Message implements Comparable<Message> {
 
       ResultSet rs = ps.executeQuery();
 
+      // get all users you have a message from
       while (rs.next()) {
         users.add(rs.getString("FROM_USER"));
+      }
+
+      ps = conn.prepareStatement("SELECT * FROM MESSAGES WHERE FROM_USER=?");
+      ps.setString(1, Session.getInstance("").getUserName());
+
+      rs = ps.executeQuery();
+
+      // get all users you have sent a message to
+      while (rs.next()) {
+        users.add(rs.getString("TO_USER"));
       }
 
       conn.close();
