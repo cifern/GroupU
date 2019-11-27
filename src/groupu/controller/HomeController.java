@@ -5,6 +5,7 @@ import groupu.model.Group;
 import groupu.model.Message;
 import groupu.model.Session;
 import groupu.model.User;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -45,9 +46,9 @@ public class HomeController{
     @FXML private ListView listFriendsList;
     @FXML private TabPane homeTabPane;
 
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss");
     private ObservableList<ObservableList> TableViewData;
-    private ObservableList<String> messageFromList;
-    private ObservableList<String> messageBodyList;
+    private ObservableList<String> messageBodies;
     private Object select;
     Group group = new Group();
 
@@ -55,7 +56,6 @@ public class HomeController{
     void initialize()
     {
       setupPlaceholders();
-      //homeTabPane.getStyleClass().add("floating");
       setupFriendsListContextMenu();
       updateFriendsList();
       updateMessageList();
@@ -116,7 +116,8 @@ public class HomeController{
 
     public void updateMessageList() {
       Message m = new Message();
-      messageFromList = FXCollections.observableArrayList();
+      ObservableList<String> messageFromList = FXCollections.observableArrayList();
+
       Set<String> userSet = new LinkedHashSet<String>();
       ArrayList<String> messages = m.getAllMessagesFromUsers();
 
@@ -126,14 +127,25 @@ public class HomeController{
       listMessageList.setItems(messageFromList);
     }
 
-    public void actionMessagesClicked() {
+  /**
+   * I need ONE array that is populated with both TO AND FROM users.
+   * This array will then be sorted by the Timestamp
+   */
+  public void actionMessagesClicked() {
       Message m = new Message();
-      ArrayList<String> messages = new ArrayList<String>();
+      ObservableList<Message> messages;
       try {
         String clickedUser = listMessageList.getSelectionModel().getSelectedItem().toString();
-        messageBodyList = m.getMessagesFromUser(clickedUser);
+        messages = m.getAllMessagesBetweenUsers(clickedUser, Session.getInstance("").getUserName());
+        messageBodies = FXCollections.observableArrayList();
 
-        listMessageConversation.setItems(messageBodyList);
+        for (Message msg : messages) {
+          messageBodies.add(msg.getMessageBody());
+        }
+
+        listMessageConversation.setItems(messageBodies);
+
+        System.out.println(messages.toString());
       } catch (NullPointerException e) {
         e.printStackTrace();
       }
@@ -274,7 +286,8 @@ public class HomeController{
 
     if (u.checkUserExists(toUser)) {
       if (!Session.getInstance("").getUserName().equals(toUser)) {
-        Message m = new Message(toUser, messageBody);
+        Timestamp time = new Timestamp(System.currentTimeMillis());
+        Message m = new Message(toUser, messageBody, sdf.format(time));
         m.sendPrivateMessage();
 
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -307,17 +320,15 @@ public class HomeController{
   public void actionReply() {
     String toUser = listMessageList.getSelectionModel().getSelectedItem().toString();
     String body = txtReplyText.getText();
+    Timestamp time = new Timestamp(System.currentTimeMillis());
 
     if (!body.isEmpty()) {
       if (body.length() > 0 && body.length() <= 300) {
-        Message m = new Message(toUser, body);
+        Message m = new Message(toUser, body, sdf.format(time));
         m.sendPrivateMessage();
 
         txtReplyText.clear();
-
-        Alert a = new Alert(AlertType.INFORMATION);
-        a.setContentText("Reply sent!");
-        a.show();
+        actionMessagesClicked();
       } else {
         Alert a = new Alert(AlertType.ERROR);
         a.setContentText("Message must be between 1 and 300!");
