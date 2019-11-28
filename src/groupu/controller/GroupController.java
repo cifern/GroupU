@@ -25,6 +25,7 @@ public class GroupController {
   @FXML private Button btnPost;
   @FXML private Button btnLeaveGroup;
   @FXML private Button btnJoinGroup;
+  @FXML private Button btnDeleteGroup;
   @FXML private TextArea txtPostBody;
   @FXML private ListView listPosts;
   @FXML private TabPane tabPane;
@@ -117,6 +118,7 @@ public class GroupController {
     }
     listPosts.setItems(posts);
   }
+
 
   public void setupMessageContextMenu() {
     ContextMenu cm = new ContextMenu();
@@ -298,6 +300,20 @@ public class GroupController {
   }
 
   public void actionDeleteGroup(ActionEvent actionEvent) {
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setHeaderText("Delete Group");
+    alert.setContentText("Are you sure you want to delete this group?");
+
+    Optional<ButtonType> result = alert.showAndWait();
+    if (!result.isPresent()) {
+      System.out.println("XXXXX - user exited with X");
+    } else if (result.get() == ButtonType.OK) {
+      g.deleteGroup(groupName);
+      Utilities.nextScene(btnDeleteGroup, "home", "Home - "
+          + Session.getInstance("").getUserName());
+    } else if (result.get() == ButtonType.CANCEL) {
+      System.out.println("XXXXX - user canceled");
+    }
   }
 
   public void actionUpdateDescription(ActionEvent actionEvent) {

@@ -16,6 +16,8 @@ public class Report {
   private static Connection conn = null;
   private static PreparedStatement ps = null;
 
+  public Report() {}
+
   public Report(String groupName, String description) {
     this.groupName = groupName;
     this.description = description;
@@ -82,11 +84,19 @@ public class Report {
     }
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+  public static void removeAllReportsFromGroup(String groupName) {
+    try {
+      conn = dao.getConnection();
+      ps = conn.prepareStatement("DELETE FROM REPORTS WHERE GROUPNAME=?");
+      ps.setString(1, groupName);
 
-  public void setGroupName(String groupName) {
-    this.groupName = groupName;
+      ps.execute();
+
+      conn.close();
+      ps.close();
+
+    } catch (ClassNotFoundException | SQLException e) {
+      e.printStackTrace();
+    }
   }
 }

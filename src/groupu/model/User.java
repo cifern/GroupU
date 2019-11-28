@@ -138,6 +138,21 @@ final public class User {
         return null;
     }
 
+    public void deleteAllUsersFromGroup(String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("DELETE FROM USERS_GROUPS WHERE GROUP_ID=?");
+            ps.setString(1, groupName);
+
+            ps.execute();
+
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     final public String getUser(){
         return username;
     }
