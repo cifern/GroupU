@@ -13,13 +13,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 public class HomeController{
@@ -57,53 +54,17 @@ public class HomeController{
     void initialize()
     {
       ResultSet allGroups = group.getGroups();
-      setGroupTable(allGroups);
+      updateGroupTable(allGroups);
 
-      setupPlaceholders();
-      //homeTabPane.getStyleClass().add("floating");
-      setupFriendsListContextMenu();
+      updateMyGroupsTables();
       updateFriendsList();
       updateMessageList();
-      buildData();
+      updateMyGroupsTables();
 
+      setupPlaceholders();
+      setupFriendsListContextMenu();
 
-
-
-
-
-      /*** Tableview listener, Selects the entire row instead of 1 cell**/
-      ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
-      selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
-        if (selectedCells.size() > 0) {
-          TablePosition selectedCell = selectedCells.get(0);
-          int rowIndex = selectedCell.getRow();
-          select = colName.getCellObservableValue(rowIndex).getValue();
-        }
-      });
-
-      /*** owned groups listener**/
-      listviewAdmin.getSelectionModel().getSelectedItem();
-      listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-          if(newValue!=null) {
-            select = newValue;
-            listviewJoined.getSelectionModel().select(null);
-          }
-        }
-      });
-
-      /*** joined groups listener**/
-      listviewJoined.getSelectionModel().getSelectedItem() ;
-      listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-          if(newValue!=null) {
-            select = newValue;
-            listviewAdmin.getSelectionModel().clearSelection();
-          }
-        }
-      });
+      init = false;
     }
 
     public void setupPlaceholders() {
@@ -149,40 +110,76 @@ public class HomeController{
       }
     }
 
-
-
-
-    public void buildData(){
+    public void updateMyGroupsTables()
+    {
       User user = new User();
-
-      /** Data added to users group list **/
-      try {
-        ResultSet rsUserGroups = group.getUserGroups();
-        while (rsUserGroups.next()) {
-          String current = rsUserGroups.getString("name");
-          ObservableList<String> list = FXCollections.observableArrayList(current);
-          listviewAdmin.getItems().addAll(list);
+      if(init){
+        /*** owned groups listener**/
+        listviewAdmin.getSelectionModel().getSelectedItem();
+        listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+          @Override
+          public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            if(newValue!=null) {
+              select = newValue;
+              listviewJoined.getSelectionModel().select(null);
+            }
+          }
+        });
+        /*** joined groups listener**/
+        listviewJoined.getSelectionModel().getSelectedItem() ;
+        listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+          @Override
+          public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            if(newValue!=null) {
+              select = newValue;
+              listviewAdmin.getSelectionModel().clearSelection();
+            }
+          }
+        });
+      }
+        /** Data added to users group list **/
+        try {
+          ResultSet rsUserGroups = group.getUserGroups();
+          while (rsUserGroups.next()) {
+            String current = rsUserGroups.getString("name");
+            ObservableList<String> list = FXCollections.observableArrayList(current);
+            listviewAdmin.getItems().addAll(list);
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
+            System.out.println("Error on Building user groups table");
         }
-      } catch (SQLException e) {
-        e.printStackTrace();
+        /** Data added to joined group list **/
+        try {
+          ResultSet rUserGroups = user.getJoinedGroups();
+          while (rUserGroups.next()) {
+            String current2 = rUserGroups.getString("name");
+            ObservableList<String> list2 = FXCollections.observableArrayList(current2);
+            listviewJoined.getItems().addAll(list2);
+          }
+        } catch (SQLException e) {
+          e.printStackTrace();
           System.out.println("Error on Building user groups table");
-      }
-
-      /** Data added to joined group list **/
-      try {
-        ResultSet rUserGroups = user.getJoinedGroups();
-        while (rUserGroups.next()) {
-          String current2 = rUserGroups.getString("name");
-          ObservableList<String> list2 = FXCollections.observableArrayList(current2);
-          listviewJoined.getItems().addAll(list2);
         }
-      } catch (SQLException e) {
-        e.printStackTrace();
-        System.out.println("Error on Building user groups table");
-      }
     }
 
-  private void setGroupTable(ResultSet rsGroups) {
+    /** *********************************************************************************
+     * @Param ResultSet rsGroups
+     * Populates the group table from the given ResultSet, adds listener if initializing
+     * **********************************************************************************/
+  private void updateGroupTable(ResultSet rsGroups) {
+      if(init){
+        /*** Tableview listener, Selects the entire row instead of 1 cell**/
+        ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
+        selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
+          if (selectedCells.size() > 0) {
+            TablePosition selectedCell = selectedCells.get(0);
+            int rowIndex = selectedCell.getRow();
+            select = colName.getCellObservableValue(rowIndex).getValue();
+          }
+        });
+      }
+    /** Populating TableView from ResultSet @Param**/
     TableViewData = FXCollections.observableArrayList();
     try {
       colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
@@ -204,7 +201,6 @@ public class HomeController{
         }
         TableViewData.add(row);
       }
-      //ADDED TO TableView
       tableview.setItems(TableViewData);
     } catch (Exception e) {
       e.printStackTrace();
@@ -235,42 +231,9 @@ public class HomeController{
   }
 
   public void actionSearch(ActionEvent actionEvent) {
-    System.out.println("search pressed");
-
-
-    System.out.println("search pressed");
-    TableViewData = FXCollections.observableArrayList();
-
-    User user = new User();
     ResultSet rsGroups = group.getSearch(searchGroupText.getText());
+    updateGroupTable(rsGroups);
 
-    /*** Data table added to searchlist ***/
-    try {
-      colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-          return new SimpleStringProperty(param.getValue().get(0).toString());
-        }
-      });
-      colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-          return new SimpleStringProperty(param.getValue().get(1).toString());
-        }
-      });
-      while (rsGroups.next()) {
-        //Iterate Row
-        ObservableList<String> row = FXCollections.observableArrayList();
-        for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
-          //Iterate Column
-          row.add(rsGroups.getString(i));
-        }
-        TableViewData.add(row);
-      }
-      //ADDED TO TableView
-      tableview.setItems(TableViewData);
-    } catch (Exception e) {
-      e.printStackTrace();
-      System.out.println("Error on Building group table");
-    }
   }
 
   public void actionLogout() {

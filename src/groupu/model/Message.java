@@ -76,12 +76,6 @@ public class Message {
     } catch (ClassNotFoundException | SQLException e) {
       e.printStackTrace();
     }
-
-    /*for(int i = 0, j = messages.size()-1; i< j; i++){
-      messages.add(i, messages.remove(j));
-    }
-      */
-
     return messages;
   }
 
