@@ -1,10 +1,7 @@
 package groupu.controller;
 
-import groupu.model.Friend;
-import groupu.model.Group;
-import groupu.model.Message;
-import groupu.model.Session;
-import groupu.model.User;
+import groupu.model.*;
+
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -16,10 +13,13 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 public class HomeController{
@@ -45,21 +45,31 @@ public class HomeController{
     @FXML private ListView listFriendsList;
     @FXML private TabPane homeTabPane;
 
+    private boolean init = true;
     private ObservableList<ObservableList> TableViewData;
     private ObservableList<String> messageFromList;
     private ObservableList<String> messageBodyList;
     private Object select;
     Group group = new Group();
 
+
     @FXML
     void initialize()
     {
+      ResultSet allGroups = group.getGroups();
+      setGroupTable(allGroups);
+
       setupPlaceholders();
       //homeTabPane.getStyleClass().add("floating");
       setupFriendsListContextMenu();
       updateFriendsList();
       updateMessageList();
       buildData();
+
+
+
+
+
 
       /*** Tableview listener, Selects the entire row instead of 1 cell**/
       ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
@@ -139,40 +149,11 @@ public class HomeController{
       }
     }
 
+
+
+
     public void buildData(){
-      /** Populate group search tableview*/
-      TableViewData = FXCollections.observableArrayList();
-
       User user = new User();
-      ResultSet rsGroups = group.getGroups();
-
-      /*** Data table added to searchlist ***/
-      try {
-        colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-          public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-            return new SimpleStringProperty(param.getValue().get(0).toString());
-          }
-        });
-        colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
-          public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
-            return new SimpleStringProperty(param.getValue().get(1).toString());
-          }
-        });
-        while (rsGroups.next()) {
-          //Iterate Row
-          ObservableList<String> row = FXCollections.observableArrayList();
-          for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
-            //Iterate Column
-            row.add(rsGroups.getString(i));
-          }
-          TableViewData.add(row);
-        }
-        //ADDED TO TableView
-        tableview.setItems(TableViewData);
-      } catch (Exception e) {
-        e.printStackTrace();
-        System.out.println("Error on Building group table");
-      }
 
       /** Data added to users group list **/
       try {
@@ -201,7 +182,37 @@ public class HomeController{
       }
     }
 
-    /** open creategroup.fxml**/
+  private void setGroupTable(ResultSet rsGroups) {
+    TableViewData = FXCollections.observableArrayList();
+    try {
+      colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+          return new SimpleStringProperty(param.getValue().get(0).toString());
+        }
+      });
+      colDescription.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
+        public ObservableValue<String> call(TableColumn.CellDataFeatures<ObservableList, String> param) {
+          return new SimpleStringProperty(param.getValue().get(1).toString());
+        }
+      });
+      while (rsGroups.next()) {
+        //Iterate Row
+        ObservableList<String> row = FXCollections.observableArrayList();
+        for (int i = 1; i <= rsGroups.getMetaData().getColumnCount(); i++) {
+          //Iterate Column
+          row.add(rsGroups.getString(i));
+        }
+        TableViewData.add(row);
+      }
+      //ADDED TO TableView
+      tableview.setItems(TableViewData);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("Error on Building group table");
+    }
+  }
+
+  /** open creategroup.fxml**/
   public void actionCreateGroup(ActionEvent actionEvent) {
     Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }
@@ -293,6 +304,8 @@ public class HomeController{
       alert.setContentText("Username doesn't exist!");
       alert.show();
     }
+
+
   }
 
   public void actionDeleteMessage() {
@@ -314,10 +327,7 @@ public class HomeController{
         m.sendPrivateMessage();
 
         txtReplyText.clear();
-
-        Alert a = new Alert(AlertType.INFORMATION);
-        a.setContentText("Reply sent!");
-        a.show();
+        actionMessagesClicked();
       } else {
         Alert a = new Alert(AlertType.ERROR);
         a.setContentText("Message must be between 1 and 300!");
@@ -328,6 +338,7 @@ public class HomeController{
       a.setContentText("Empty message body!");
       a.show();
     }
+
 
   }
 

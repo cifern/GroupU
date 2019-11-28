@@ -1,10 +1,10 @@
 package groupu.model;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -28,13 +28,17 @@ public class Message {
     ArrayList<String> users  = new ArrayList<>();
     try {
       conn = dao.getConnection();
-      ps = conn.prepareStatement("SELECT * FROM MESSAGES WHERE TO_USER=?");
+      ps = conn.prepareStatement("SELECT * FROM MESSAGES WHERE TO_USER=? OR FROM_USER=?");
       ps.setString(1, Session.getInstance("").getUserName());
+      ps.setString(2, Session.getInstance("").getUserName());
 
       ResultSet rs = ps.executeQuery();
 
       while (rs.next()) {
-        users.add(rs.getString("FROM_USER"));
+        if(rs.getString("FROM_USER").equals(Session.getInstance("").getUserName()))
+          users.add(rs.getString("TO_USER"));
+        else
+          users.add(rs.getString("FROM_USER"));
       }
 
       conn.close();
@@ -51,13 +55,18 @@ public class Message {
     ObservableList<String> messages  = FXCollections.observableArrayList();
     try {
       conn = dao.getConnection();
-      ps = conn.prepareStatement("SELECT * FROM MESSAGES WHERE FROM_USER=?");
+      ps = conn.prepareStatement("(SELECT t.* FROM PUBLIC.MESSAGES t WHERE FROM_USER=? AND TO_USER=? " +
+                                      " UNION ALL SELECT t.* FROM PUBLIC.MESSAGES t WHERE FROM_USER=? AND TO_USER=?) Order by TIMESTAMP");
       ps.setString(1, username);
+      ps.setString(2, Session.getInstance("").getUserName());
+      ps.setString(3, Session.getInstance("").getUserName());
+      ps.setString(4, username);
 
       ResultSet rs = ps.executeQuery();
 
+      //label from user and to users
       while (rs.next()) {
-        messages.add(rs.getString("BODY"));
+          messages.add(rs.getString("FROM_USER") + ": " + rs.getString("BODY"));
       }
 
       conn.close();
@@ -67,17 +76,28 @@ public class Message {
     } catch (ClassNotFoundException | SQLException e) {
       e.printStackTrace();
     }
+
+    /*for(int i = 0, j = messages.size()-1; i< j; i++){
+      messages.add(i, messages.remove(j));
+    }
+      */
+
     return messages;
   }
 
     public void sendPrivateMessage() {
       try {
+
+        Calendar calendar = Calendar.getInstance();
+        java.sql.Timestamp ourJavaTimestampObject = new java.sql.Timestamp(calendar.getTime().getTime());
+
+
         conn = dao.getConnection();
-        ps = conn.prepareStatement("INSERT INTO MESSAGES(TO_USER, FROM_USER, BODY) VALUES(?, ?, ?)");
+        ps = conn.prepareStatement("INSERT INTO MESSAGES(TO_USER, FROM_USER, BODY, TIMESTAMP) VALUES(?, ?, ?, ?)");
         ps.setString(1, this.toUser);
         ps.setString(2, Session.getInstance("").getUserName());
         ps.setString(3, this.messageBody);
-
+        ps.setTimestamp(4, ourJavaTimestampObject);
         ps.execute();
 
         conn.close();
