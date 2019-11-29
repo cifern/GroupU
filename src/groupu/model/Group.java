@@ -274,23 +274,14 @@ public final class Group {
     }
 
     public ResultSet tagSearch(String[] tag){
-
             try {
                 conn = dao.getConnection();
-                ps = conn.prepareStatement("SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
-                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " );
+                String SQL = "SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG= '"+tag[0]+"' and t.GROUP_NAME = g.NAME ";
+                //concat not working for some reason
+                for(int j = 1; j<tag.length; j++)
+                    SQL+=("UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG= '" + tag[j] +"' and t.GROUP_NAME = g.NAME ");
 
-                for(int i = 1; i<=10; i++)
-                    ps.setString(i, tag[i-1]);
-
+                ps = conn.prepareStatement(SQL);
                 ResultSet rs = ps.executeQuery();
 
                 return rs;
