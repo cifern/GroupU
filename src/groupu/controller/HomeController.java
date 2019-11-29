@@ -50,7 +50,6 @@ public class HomeController{
     @FXML private TabPane homeTabPane;
     @FXML private HBox tagBox1;
 
-    private boolean init = true;
     private ObservableList<ObservableList> TableViewData;
     private ObservableList<String> messageFromList;
     private ObservableList<String> messageBodyList;
@@ -58,15 +57,13 @@ public class HomeController{
     private String[] tags = new String[10];
     private int tagCount = 0;
 
-    Group group = new Group();
-    ResultSet allGroups = group.getGroups();
+    private Group group = new Group();
+    private ResultSet allGroups = group.getGroups();
 
     @FXML
     void initialize()
     {
-
       updateGroupTable(allGroups);
-
       updateMyGroupsTables();
       updateFriendsList();
       updateMessageList();
@@ -75,19 +72,50 @@ public class HomeController{
       setupPlaceholders();
       setupFriendsListContextMenu();
       setupTextFieldListeners();
-
-      init = false;
+      setupGroupSelectListeners();
     }
 
-  private void setupTextFieldListeners() {
+  private void setupGroupSelectListeners() {
+      /*** owned groups listener**/
+      listviewAdmin.getSelectionModel().getSelectedItem();
+      listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+          if(newValue!=null) {
+            select = newValue;
+            listviewJoined.getSelectionModel().select(null);
+          }
+        }
+      });
+      /*** joined groups listener**/
+      listviewJoined.getSelectionModel().getSelectedItem() ;
+      listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+        @Override
+        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+          if(newValue!=null) {
+            select = newValue;
+            listviewAdmin.getSelectionModel().clearSelection();
+          }
+        }
+      });
+      /*** Tableview listener, Selects the entire row instead of 1 cell**/
+      ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
+      selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
+        if (selectedCells.size() > 0) {
+          TablePosition selectedCell = selectedCells.get(0);
+          int rowIndex = selectedCell.getRow();
+          select = colName.getCellObservableValue(rowIndex).getValue();
+        }
+      });
+  }
 
+  private void setupTextFieldListeners() {
       txtSearchGroups.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
         actionSearch(null);
         txtSearchGroups.clear();
       }
     });
-
       txtTag.setOnKeyPressed(event -> {
         if(event.getCode() == KeyCode.ENTER){
           actionTagSearch(null);
@@ -142,30 +170,7 @@ public class HomeController{
     public void updateMyGroupsTables()
     {
       User user = new User();
-      if(init){
-        /*** owned groups listener**/
-        listviewAdmin.getSelectionModel().getSelectedItem();
-        listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-          @Override
-          public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            if(newValue!=null) {
-              select = newValue;
-              listviewJoined.getSelectionModel().select(null);
-            }
-          }
-        });
-        /*** joined groups listener**/
-        listviewJoined.getSelectionModel().getSelectedItem() ;
-        listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-          @Override
-          public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            if(newValue!=null) {
-              select = newValue;
-              listviewAdmin.getSelectionModel().clearSelection();
-            }
-          }
-        });
-      }
+
         /** Data added to users group list **/
         try {
           ResultSet rsUserGroups = group.getUserGroups();
@@ -197,17 +202,6 @@ public class HomeController{
      * Populates the group table from the given ResultSet, adds listener if initializing
      * **********************************************************************************/
   private void updateGroupTable(ResultSet rsGroups) {
-      if(init){
-        /*** Tableview listener, Selects the entire row instead of 1 cell**/
-        ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
-        selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
-          if (selectedCells.size() > 0) {
-            TablePosition selectedCell = selectedCells.get(0);
-            int rowIndex = selectedCell.getRow();
-            select = colName.getCellObservableValue(rowIndex).getValue();
-          }
-        });
-      }
     /** Populating TableView from ResultSet @Param**/
     TableViewData = FXCollections.observableArrayList();
     try {
@@ -241,7 +235,6 @@ public class HomeController{
   public void actionCreateGroup(ActionEvent actionEvent) {
     Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }
-
 
   public void actionOpenGroup(ActionEvent actionEvent) {
     if(select != null) {
@@ -296,8 +289,6 @@ public class HomeController{
       alert.setContentText("Username doesn't exist!");
       alert.show();
     }
-
-
   }
 
   public void actionDeleteMessage() {
@@ -391,7 +382,6 @@ public class HomeController{
           ResultSet tagSearch = group.tagSearch(tags);
           if(tagSearch != null)
             updateGroupTable(tagSearch);
-
           if(tagCount == 0)
             updateGroupTable(group.getGroups());
         }

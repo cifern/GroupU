@@ -288,27 +288,20 @@ public final class Group {
                         "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
                         "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " );
 
-
                 for(int i = 1; i<=10; i++)
                     ps.setString(i, tag[i-1]);
-
 
                 ResultSet rs = ps.executeQuery();
 
                 return rs;
-
-
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-
             return null;
-
         }
 
-        
     public void removeMember(String username, String groupName) {
         try {
             conn = dao.getConnection();
