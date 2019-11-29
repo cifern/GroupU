@@ -64,7 +64,6 @@ public class HomeController{
     void initialize()
     {
       updateGroupTable(allGroups);
-      updateMyGroupsTables();
       updateFriendsList();
       updateMessageList();
       updateMyGroupsTables();
@@ -279,6 +278,7 @@ public class HomeController{
 
         txtMessageTo.clear();
         txtMessageBody.clear();
+        updateMessageList();
       } else {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setContentText("You can't send a message to yourself!");
