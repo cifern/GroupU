@@ -12,18 +12,25 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
 public class HomeController{
 
     static String GroupSelect;
 
-    @FXML private TextField searchGroupText;
+    @FXML private TextField txtSearchGroups;
+    @FXML private TextField txtTag;
     @FXML private Button btnInfo;
     @FXML private Button btnCreateGroup;
     @FXML private Button btnLogout;
@@ -41,19 +48,23 @@ public class HomeController{
     @FXML private ListView listMessageConversation;
     @FXML private ListView listFriendsList;
     @FXML private TabPane homeTabPane;
+    @FXML private HBox tagBox1;
 
     private boolean init = true;
     private ObservableList<ObservableList> TableViewData;
     private ObservableList<String> messageFromList;
     private ObservableList<String> messageBodyList;
     private Object select;
-    Group group = new Group();
+    private String[] tags = new String[10];
+    private int tagCount = 0;
 
+    Group group = new Group();
+    ResultSet allGroups = group.getGroups();
 
     @FXML
     void initialize()
     {
-      ResultSet allGroups = group.getGroups();
+
       updateGroupTable(allGroups);
 
       updateMyGroupsTables();
@@ -63,11 +74,29 @@ public class HomeController{
 
       setupPlaceholders();
       setupFriendsListContextMenu();
+      setupTextFieldListeners();
 
       init = false;
     }
 
-    public void setupPlaceholders() {
+  private void setupTextFieldListeners() {
+
+      txtSearchGroups.setOnKeyPressed(event -> {
+      if (event.getCode() == KeyCode.ENTER) {
+        actionSearch(null);
+        txtSearchGroups.clear();
+      }
+    });
+
+      txtTag.setOnKeyPressed(event -> {
+        if(event.getCode() == KeyCode.ENTER){
+          actionTagSearch(null);
+          txtTag.clear();
+        }
+      });
+  }
+
+  public void setupPlaceholders() {
       listviewJoined.setPlaceholder(new Label("No content"));
       listviewAdmin.setPlaceholder(new Label("No content"));
       listMessageConversation.setPlaceholder(new Label("No content"));
@@ -231,7 +260,7 @@ public class HomeController{
   }
 
   public void actionSearch(ActionEvent actionEvent) {
-    ResultSet rsGroups = group.getSearch(searchGroupText.getText());
+    ResultSet rsGroups = group.getSearch(txtSearchGroups.getText());
     updateGroupTable(rsGroups);
 
   }
@@ -301,8 +330,6 @@ public class HomeController{
       a.setContentText("Empty message body!");
       a.show();
     }
-
-
   }
 
   public void actionRemoveFriend() {
@@ -344,6 +371,40 @@ public class HomeController{
       return listMessageList.getSelectionModel().getSelectedItem().toString();
     } catch (Exception e) {
       return null;
+    }
+  }
+
+  public void actionTagSearch(ActionEvent actionEvent) {
+    if(tagCount<10) {
+      tags[tagCount] = txtTag.getText();
+
+      Button btn = new Button(txtTag.getText());
+      btn.setBackground(Background.EMPTY);
+      btn.setOpacity(tagCount + 1);
+      btn.setOnMouseClicked(new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent t) {
+          tags[(int)btn.getOpacity() - 1] = "null";
+          tagBox1.getChildren().remove(btn);
+          tagCount--;
+          System.out.println(tagCount);
+          ResultSet tagSearch = group.tagSearch(tags);
+          if(tagSearch != null)
+            updateGroupTable(tagSearch);
+
+          if(tagCount == 0)
+            updateGroupTable(group.getGroups());
+        }
+      });
+
+      tagBox1.getChildren().add(btn);
+
+      ResultSet tagSearch = group.tagSearch(tags);
+        if(tagSearch != null)
+        updateGroupTable(tagSearch);
+
+      tagCount++;
+      txtTag.clear();
     }
   }
 }

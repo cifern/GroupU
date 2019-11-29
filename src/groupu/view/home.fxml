@@ -47,7 +47,7 @@
                         <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TextField fx:id="searchGroupText" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" promptText="Search by group name" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.valignment="CENTER">
+                        <TextField fx:id="txtSearchGroups" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="385.0" promptText="Search by group name" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets left="66.0" />
                            </GridPane.margin>
@@ -65,39 +65,20 @@
                               </TableView>
                            </children>
                         </StackPane>
-                        <TextField maxWidth="-Infinity" minWidth="-Infinity" prefWidth="300.0" promptText="Add search tags" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP">
+                        <TextField fx:id="txtTag" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="387.0" promptText="Add up to 10 search tags (click to remove)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
                            <GridPane.margin>
                               <Insets left="66.0" />
                            </GridPane.margin>
                         </TextField>
-                        <HBox fx:id="tagBox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="33.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <GridPane.margin>
-                              <Insets bottom="10.0" top="40.0" />
-                           </GridPane.margin>
-                           <children>
-                              <JFXButton prefHeight="31.0" prefWidth="121.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                           </children>
-                        </HBox>
                         <JFXButton fx:id="btnSearch" onAction="#actionSearch" ripplerFill="#82b1ff" text="Search" GridPane.columnIndex="1" />
                         <JFXButton fx:id="btnInfo" onAction="#actionOpenGroup" ripplerFill="#82b1ff" text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <JFXButton fx:id="btnLogout" onAction="#actionLogout" ripplerFill="#82b1ff" text="Logout" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                        <JFXButton fx:id="btnLogout" alignment="CENTER_RIGHT" onAction="#actionLogout" ripplerFill="#82b1ff" text="Logout" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </JFXButton>
-                        <HBox fx:id="tagBox1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <children>
-                              <JFXButton  prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton  prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton  prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton  prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                              <JFXButton  prefHeight="31.0" prefWidth="128.0" ripplerFill="#82b1ff" text="Search" />
-                           </children>
-                        </HBox>
+                        <HBox fx:id="tagBox1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <JFXButton fx:id="btnTag" onAction="#actionTagSearch" ripplerFill="#82b1ff" text="Add Tag" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                      </children>
                   </GridPane>
                   <Text fx:id="txtUser" layoutX="533.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" />

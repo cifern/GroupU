@@ -91,6 +91,7 @@ public final class Group {
             String SQL = "SELECT NAME , DESCRIPTION from GROUPS";
             ps= conn.prepareStatement(SQL);
             ResultSet rs = ps.executeQuery();
+
             return rs;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -272,15 +273,29 @@ public final class Group {
         return userList;
     }
 
-    public ResultSet getGroupsByTags(String tag){
+    public ResultSet tagSearch(String[] tag){
 
-        ResultSet rs = null;
             try {
                 conn = dao.getConnection();
-                ps = conn.prepareStatement("SELECT GROUP_NAME FROM TAGS WHERE TAG=?");
-                ps.setString(1, tag);
+                ps = conn.prepareStatement("SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " +
+                        "UNION SELECT g.name, g.DESCRIPTION FROM GROUPS g, TAGS t WHERE t.TAG=? and t.GROUP_NAME = g.NAME " );
 
-                rs = ps.executeQuery();
+
+                for(int i = 1; i<=10; i++)
+                    ps.setString(i, tag[i-1]);
+
+
+                ResultSet rs = ps.executeQuery();
+
+                return rs;
 
 
             } catch (SQLException e) {
@@ -289,7 +304,7 @@ public final class Group {
                 e.printStackTrace();
             }
 
-            return rs;
+            return null;
 
         }
 
@@ -375,4 +390,5 @@ public final class Group {
     public String toString() {
         return name;
     }
+
 }
