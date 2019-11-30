@@ -69,7 +69,6 @@ public class HomeController{
     void initialize()
     {
       updateGroupTable(allGroups);
-      updateMyGroupsTables();
       updateFriendsList();
       updateMessageList();
       updateMyGroupsTables();
@@ -78,7 +77,27 @@ public class HomeController{
       setupFriendsListContextMenu();
       setupTextFieldListeners();
       setupGroupSelectListeners();
+      setupGroupContextMenu();
     }
+
+    public void setupGroupContextMenu() {
+      ContextMenu cmUser = new ContextMenu();
+      MenuItem itemLeaveGroup = new MenuItem("Leave Group");
+      cmUser.getItems().add(itemLeaveGroup);
+      listviewJoined.setContextMenu(cmUser);
+
+      itemLeaveGroup.setOnAction(
+          event -> {
+            String selectedGroup = null;
+            try {
+              selectedGroup = listviewJoined.getSelectionModel().getSelectedItem().toString();
+            } catch (NullPointerException e) {
+              System.out.println("no group selected");
+            }
+            group.removeMember(Session.getInstance("").getUserName(), selectedGroup);
+            updateMyGroupsTables();
+          });
+      }
 
   private void setupGroupSelectListeners() {
       /*** owned groups listener**/
@@ -182,6 +201,7 @@ public class HomeController{
         /** Data added to users group list **/
         try {
           ResultSet rsUserGroups = group.getUserGroups();
+          listviewAdmin.getItems().clear();
           while (rsUserGroups.next()) {
             String current = rsUserGroups.getString("name");
             ObservableList<String> list = FXCollections.observableArrayList(current);
@@ -194,6 +214,7 @@ public class HomeController{
         /** Data added to joined group list **/
         try {
           ResultSet rUserGroups = user.getJoinedGroups();
+          listviewJoined.getItems().clear();
           while (rUserGroups.next()) {
             String current2 = rUserGroups.getString("name");
             ObservableList<String> list2 = FXCollections.observableArrayList(current2);
@@ -287,6 +308,7 @@ public class HomeController{
 
         txtMessageTo.clear();
         txtMessageBody.clear();
+        updateMessageList();
       } else {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setContentText("You can't send a message to yourself!");
@@ -338,10 +360,6 @@ public class HomeController{
       f.removeFriend();
 
       updateFriendsList();
-    } else {
-      Alert a = new Alert(AlertType.ERROR);
-      a.setContentText("You did not select a friend!");
-      a.show();
     }
   }
 
