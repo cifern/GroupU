@@ -101,22 +101,6 @@ public final class Group {
         return null;
     }
 
-    public ResultSet getUsers(String groupName){
-            try {
-                conn = dao.getConnection();
-                String SQL = "select users.USERNAME, groups.name\n" +
-                        "from USERS_GROUPS, USERS, GROUPS\n" +
-                        "where users.USERNAME=users_groups.USER_ID AND groups.NAME = users_groups.group_ID";
-                ps= conn.prepareStatement(SQL);
-                ResultSet rs = ps.executeQuery();
-                return rs;
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return null;
-    }
     public void deleteGroup(String groupName) {
         if (checkGroupExists(groupName)) {
           try {
@@ -143,8 +127,8 @@ public final class Group {
             User u = new User();
             u.deleteAllUsersFromGroup(groupName);
         }
-
     }
+
     public ResultSet getSearch(String search){
         try {
             conn = dao.getConnection();
@@ -161,7 +145,6 @@ public final class Group {
         }
         return null;
     }
-
 
     private boolean checkGroupExists(String group) {
         boolean exists = false;
@@ -197,15 +180,6 @@ public final class Group {
             e.printStackTrace();
         }
         return null;
-    }
-
-    // how you're supposed to implement equals
-    public boolean equals(Object other) {
-        if (other == this) return true;
-        if (other == null) return false;
-        if (other.getClass() != this.getClass()) return false;
-        Group that = (Group) other;
-        return (this.name.equals(that.name)) && (this.description == that.description);
     }
 
     public String getGroupAdmin(String name) {
@@ -292,6 +266,32 @@ public final class Group {
             }
             return null;
         }
+
+    public ObservableList<String> wildCardTagSearch(String tag){
+            if(tag.equals(""))
+                return null;
+        try {
+            conn = dao.getConnection();
+            String SQL = "SELECT TAG FROM  TAGS  WHERE TAG LIKE ?";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, tag.concat("%"));
+
+
+            ResultSet rs = ps.executeQuery();
+            ObservableList<String> tags = FXCollections.observableArrayList();
+
+            while(rs.next())
+            tags.add(rs.getString(1));
+
+            return tags;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     public void removeMember(String username, String groupName) {
         try {

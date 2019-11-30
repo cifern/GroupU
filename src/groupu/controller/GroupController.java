@@ -375,6 +375,7 @@ public class GroupController {
     }
   }
 
+
   public void actionLeaveGroup(ActionEvent actionEvent) {
     String username = Session.getInstance("").getUserName();
     if (g.isUserInGroup(username, groupName)) {

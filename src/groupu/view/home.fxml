@@ -40,9 +40,10 @@
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints maxHeight="224.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="224.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="224.0" minHeight="0.0" prefHeight="3.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="224.0" minHeight="0.0" prefHeight="83.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="224.0" minHeight="0.0" prefHeight="39.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="224.0" minHeight="0.0" prefHeight="51.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="224.0" minHeight="0.0" prefHeight="53.0" vgrow="SOMETIMES" />
                       <RowConstraints maxHeight="367.0" minHeight="10.0" prefHeight="288.0" vgrow="SOMETIMES" />
                         <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
                     </rowConstraints>
@@ -52,7 +53,7 @@
                               <Insets left="66.0" />
                            </GridPane.margin>
                         </TextField>
-                        <StackPane prefHeight="268.0" prefWidth="484.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                        <StackPane prefHeight="268.0" prefWidth="484.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                            <children>
                               <TableView fx:id="tableview" prefHeight="266.0" prefWidth="618.0">
                                 <columns>
@@ -65,20 +66,21 @@
                               </TableView>
                            </children>
                         </StackPane>
-                        <TextField fx:id="txtTag" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="387.0" promptText="Add up to 10 search tags (click to remove)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="TOP">
-                           <GridPane.margin>
-                              <Insets left="66.0" />
-                           </GridPane.margin>
-                        </TextField>
                         <JFXButton fx:id="btnSearch" onAction="#actionSearch" ripplerFill="#82b1ff" text="Search" GridPane.columnIndex="1" />
-                        <JFXButton fx:id="btnInfo" onAction="#actionOpenGroup" ripplerFill="#82b1ff" text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                        <JFXButton fx:id="btnLogout" alignment="CENTER_RIGHT" onAction="#actionLogout" ripplerFill="#82b1ff" text="Logout" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5">
+                        <JFXButton fx:id="btnInfo" onAction="#actionOpenGroup" ripplerFill="#82b1ff" text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <JFXButton fx:id="btnLogout" alignment="CENTER_RIGHT" onAction="#actionLogout" ripplerFill="#82b1ff" text="Logout" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
                         </JFXButton>
-                        <HBox fx:id="tagBox1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <JFXButton fx:id="btnTag" onAction="#actionTagSearch" ripplerFill="#82b1ff" text="Add Tag" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                        <HBox fx:id="tagBoxSuggest" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <HBox fx:id="tagBox1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <JFXButton fx:id="btnTag" onAction="#actionTagSearch" ripplerFill="#82b1ff" text="Add Tag" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="txtTag" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="387.0" promptText="Add up to 10 search tags (click to remove)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                           <GridPane.margin>
+                              <Insets left="66.0" />
+                           </GridPane.margin>
+                        </TextField>
                      </children>
                   </GridPane>
                   <Text fx:id="txtUser" layoutX="533.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" />

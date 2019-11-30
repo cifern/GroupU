@@ -17,11 +17,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.sql.*;
 import java.sql.ResultSet;
+import java.util.concurrent.atomic.AtomicReference;
+
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
@@ -49,8 +50,10 @@ public class HomeController{
     @FXML private ListView listFriendsList;
     @FXML private TabPane homeTabPane;
     @FXML private HBox tagBox1;
+    @FXML private HBox tagBoxSuggest;
 
-    private ObservableList<ObservableList> TableViewData;
+
+  private ObservableList<ObservableList> TableViewData;
     private ObservableList<String> messageFromList;
     private ObservableList<String> messageBodyList;
     private Object select;
@@ -59,8 +62,10 @@ public class HomeController{
 
     private Group group = new Group();
     private ResultSet allGroups = group.getGroups();
+  private Object ObservableList;
+  private Object String;
 
-    @FXML
+  @FXML
     void initialize()
     {
       updateGroupTable(allGroups);
@@ -110,12 +115,15 @@ public class HomeController{
   }
 
   private void setupTextFieldListeners() {
+
+    String[] tags = new String[20];
       txtSearchGroups.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
         actionSearch(null);
         txtSearchGroups.clear();
       }
     });
+
       txtTag.setOnKeyPressed(event -> {
         if(event.getCode() == KeyCode.ENTER){
           actionTagSearch(null);
