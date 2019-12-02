@@ -81,6 +81,11 @@
                               <Insets left="66.0" />
                            </GridPane.margin>
                         </TextField>
+                        <Text fill="#74dd43" strokeType="OUTSIDE" strokeWidth="0.0" text="Group Finder" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="Sitka Text Bold Italic" size="18.0" />
+                           </font>
+                        </Text>
                      </children>
                   </GridPane>
                   <Text fx:id="txtUser" layoutX="533.0" layoutY="511.0" strokeType="OUTSIDE" strokeWidth="0.0" />
