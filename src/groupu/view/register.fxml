@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<!--<?import com.jfoenix.controls.*?>-->
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.JFXButton?>
+<!--<?import com.jfoenix.controls.JFXButton?>-->
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -31,8 +31,8 @@
             <Label text="Username:" textFill="WHITE" />
             <Label text="Password:" textFill="WHITE" GridPane.rowIndex="1" />
             <TextField fx:id="txtPassword" prefHeight="27.0" prefWidth="164.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <JFXButton fx:id="btnBack" onAction="#actionBack" prefHeight="27.0" prefWidth="85.0" ripplerFill="#82b1ff" text="Back" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <JFXButton fx:id="btnRegister" onAction="#actionRegister" prefHeight="27.0" prefWidth="85.0" ripplerFill="#82b1ff" text="Register" translateX="109.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="btnBack" onAction="#actionBack" prefHeight="27.0" prefWidth="85.0"  text="Back" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="btnRegister" onAction="#actionRegister" prefHeight="27.0" prefWidth="85.0"  text="Register" translateX="109.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
       </GridPane>
    </children>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
+<!--<?import com.jfoenix.controls.JFXButton?>-->
 <?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.Button?>
 <TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.GroupController">
   <tabs>
       <Tab fx:id="tabGroupInfo" text="Group Info">
@@ -41,10 +42,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnBack" layoutX="14.0" layoutY="326.0" onAction="#actionBack" ripplerFill="#82b1ff" text="Back To Results" />
-                  <JFXButton fx:id="btnJoinGroup" layoutX="211.0" layoutY="326.0" onAction="#actionJoinGroup" ripplerFill="#82b1ff" text="Join Group" />
-                  <JFXButton fx:id="btnLeaveGroup" layoutX="302.0" layoutY="326.0" onAction="#actionLeaveGroup" ripplerFill="#82b1ff" text="Leave Group" />
-                  <JFXButton fx:id="btnReportGroup" layoutX="485.0" layoutY="326.0" onAction="#actionReportGroup" ripplerFill="#82b1ff" text="Report Group" />
+                  <Button fx:id="btnBack" layoutX="14.0" layoutY="326.0" onAction="#actionBack"  text="Back To Results" />
+                  <Button fx:id="btnJoinGroup" layoutX="211.0" layoutY="326.0" onAction="#actionJoinGroup"  text="Join Group" />
+                  <Button fx:id="btnLeaveGroup" layoutX="302.0" layoutY="326.0" onAction="#actionLeaveGroup"  text="Leave Group" />
+                  <Button fx:id="btnReportGroup" layoutX="485.0" layoutY="326.0" onAction="#actionReportGroup"  text="Report Group" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -68,7 +69,7 @@
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Label>
-                  <JFXButton fx:id="btnPost" layoutX="14.0" layoutY="22.0" onAction="#actionPost" ripplerFill="#82b1ff" text="Post" />
+                  <Button fx:id="btnPost" layoutX="14.0" layoutY="22.0" onAction="#actionPost"  text="Post" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -104,11 +105,11 @@
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
                   <TextField fx:id="txtGroupTags" layoutX="372.0" layoutY="244.0" prefHeight="27.0" prefWidth="200.0" promptText="Enter tags separated by a comma" />
-                  <JFXButton fx:id="btnKickMember" layoutX="42.0" layoutY="326.0" onAction="#actionKickMember" ripplerFill="#82b1ff" text="Kick Member" />
-                  <JFXButton fx:id="btnRemoveReport" layoutX="214.0" layoutY="326.0" onAction="#actionRemoveReport" ripplerFill="#82b1ff" text="Remove Report" />
-                  <JFXButton fx:id="btnUpdateDescription" layoutX="410.0" layoutY="152.0" onAction="#actionUpdateDescription" ripplerFill="#82b1ff" text="Update Description" />
-                  <JFXButton fx:id="btnSaveTags" layoutX="434.0" layoutY="286.0" onAction="#actionSaveTags" ripplerFill="#82b1ff" text="Save Tags" />
-                  <JFXButton fx:id="btnDeleteGroup" layoutX="495.0" layoutY="326.0" onAction="#actionDeleteGroup" ripplerFill="#82b1ff" text="Delete Group" />
+                  <Button fx:id="btnKickMember" layoutX="42.0" layoutY="326.0" onAction="#actionKickMember"  text="Kick Member" />
+                  <Button fx:id="btnRemoveReport" layoutX="214.0" layoutY="326.0" onAction="#actionRemoveReport"  text="Remove Report" />
+                  <Button fx:id="btnUpdateDescription" layoutX="410.0" layoutY="152.0" onAction="#actionUpdateDescription" text="Update Description" />
+                  <Button fx:id="btnSaveTags" layoutX="434.0" layoutY="286.0" onAction="#actionSaveTags"  text="Save Tags" />
+                  <Button fx:id="btnDeleteGroup" layoutX="495.0" layoutY="326.0" onAction="#actionDeleteGroup"  text="Delete Group" />
                </children>
             </AnchorPane>
         </content>

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<!--<?import com.jfoenix.controls.*?>-->
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<?import com.jfoenix.controls.JFXButton?>
+<!--<?import com.jfoenix.controls.JFXButton?>-->
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
@@ -66,16 +66,16 @@
                               </TableView>
                            </children>
                         </StackPane>
-                        <JFXButton fx:id="btnSearch" onAction="#actionSearch" ripplerFill="#82b1ff" text="Search" GridPane.columnIndex="1" />
-                        <JFXButton fx:id="btnInfo" onAction="#actionOpenGroup" ripplerFill="#82b1ff" text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                        <JFXButton fx:id="btnLogout" alignment="CENTER_RIGHT" onAction="#actionLogout" ripplerFill="#82b1ff" text="Logout" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
+                        <Button fx:id="btnSearch" onAction="#actionSearch"  text="Search" GridPane.columnIndex="1" />
+                        <Button fx:id="btnInfo" onAction="#actionOpenGroup"  text="Open Group" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Button fx:id="btnLogout" alignment="CENTER_RIGHT" onAction="#actionLogout"  text="Logout" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6">
                            <GridPane.margin>
                               <Insets left="100.0" />
                            </GridPane.margin>
-                        </JFXButton>
+                        </Button>
                         <HBox fx:id="tagBoxSuggest" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <HBox fx:id="tagBox1" minHeight="-Infinity" minWidth="-Infinity" prefHeight="8.0" prefWidth="605.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <JFXButton fx:id="btnTag" onAction="#actionTagSearch" ripplerFill="#82b1ff" text="Add Tag" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="btnTag" onAction="#actionTagSearch"  text="Add Tag" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="txtTag" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="31.0" prefWidth="387.0" promptText="Add up to 10 search tags (click to remove)" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
                            <GridPane.margin>
                               <Insets left="66.0" />
@@ -120,8 +120,8 @@
                         </ScrollPane>
                         <Label text="Created Groups" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
                         <Label text="Joined Groups" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-                        <JFXButton fx:id="btnCreateGroup" onAction="#actionCreateGroup" ripplerFill="#82b1ff" text="Create Group" GridPane.rowIndex="1" />
-                        <JFXButton fx:id="btnOpen" onAction="#actionOpenUserGroups" ripplerFill="#82b1ff" text="Open" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                        <Button fx:id="btnCreateGroup" onAction="#actionCreateGroup"  text="Create Group" GridPane.rowIndex="1" />
+                        <Button fx:id="btnOpen" onAction="#actionOpenUserGroups"  text="Open" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
                </children>
@@ -144,8 +144,8 @@
                      </content>
                   </ScrollPane>
                   <TextField fx:id="txtReplyText" layoutX="211.0" layoutY="361.0" prefHeight="27.0" prefWidth="342.0" />
-                  <JFXButton fx:id="btnDeleteMessage" layoutX="15.0" layoutY="361.0" onAction="#actionDeleteMessage" prefHeight="27.0" prefWidth="170.0" ripplerFill="#82b1ff" text="Delete Conversation" />
-                  <JFXButton fx:id="btnReply" layoutX="568.0" layoutY="361.0" onAction="#actionReply" prefHeight="27.0" prefWidth="62.0" ripplerFill="#82b1ff" text="Reply" />
+                  <Button fx:id="btnDeleteMessage" layoutX="15.0" layoutY="361.0" onAction="#actionDeleteMessage" prefHeight="27.0" prefWidth="170.0"  text="Delete Conversation" />
+                  <Button fx:id="btnReply" layoutX="568.0" layoutY="361.0" onAction="#actionReply" prefHeight="27.0" prefWidth="62.0"  text="Reply" />
                </children>
             </AnchorPane>
         </content>
@@ -163,8 +163,8 @@
                   <TextArea fx:id="txtMessageBody" layoutX="283.0" layoutY="210.0" prefHeight="200.0" prefWidth="306.0" />
                   <Label layoutX="283.0" layoutY="180.0" text="To:" />
                   <Label layoutX="119.0" layoutY="89.0" text="Friends" />
-                  <JFXButton fx:id="btnSendMessage" layoutX="283.0" layoutY="418.0" onAction="#actionSendMessage" prefHeight="27.0" prefWidth="69.0" ripplerFill="#82b1ff" text="Send" />
-                  <JFXButton fx:id="btnRemoveFriend" layoutX="54.0" layoutY="418.0" onAction="#actionRemoveFriend" prefHeight="27.0" prefWidth="100.0" ripplerFill="#82b1ff" text="Remove Friend" />
+                  <Button fx:id="btnSendMessage" layoutX="283.0" layoutY="418.0" onAction="#actionSendMessage" prefHeight="27.0" prefWidth="69.0"  text="Send" />
+                  <Button fx:id="btnRemoveFriend" layoutX="54.0" layoutY="418.0" onAction="#actionRemoveFriend" prefHeight="27.0" prefWidth="100.0"  text="Remove Friend" />
                </children>
             </AnchorPane>
         </content>
