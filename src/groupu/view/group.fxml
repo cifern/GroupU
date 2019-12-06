@@ -106,11 +106,11 @@
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
                   <TextField fx:id="txtGroupTags" layoutX="370.0" layoutY="201.0" prefHeight="27.0" prefWidth="200.0" promptText="Enter tags separated by a comma" />
-                  <Button fx:id="btnKickMember" layoutX="42.0" layoutY="326.0" onAction="#actionKickMember" text="Kick Member" />
-                  <Button fx:id="btnRemoveReport" layoutX="214.0" layoutY="326.0" onAction="#actionRemoveReport" text="Remove Report" />
+                  <Button fx:id="btnKickMember" layoutX="14.0" layoutY="320.0" onAction="#actionKickMember" text="Kick Member" />
+                  <Button fx:id="btnRemoveReport" layoutX="181.0" layoutY="320.0" onAction="#actionRemoveReport" text="Remove Report" />
                   <Button fx:id="btnUpdateDescription" layoutX="397.0" layoutY="127.0" onAction="#actionUpdateDescription" text="Update Description" />
                   <Button fx:id="btnSaveTags" layoutX="422.0" layoutY="235.0" onAction="#actionSaveTags" text="Save Tags" />
-                  <Button fx:id="btnDeleteGroup" layoutX="495.0" layoutY="326.0" onAction="#actionDeleteGroup" text="Delete Group" />
+                  <Button fx:id="btnDeleteGroup" layoutX="491.0" layoutY="320.0" onAction="#actionDeleteGroup" text="Delete Group" />
                </children>
             </AnchorPane>
         </content>
@@ -119,32 +119,32 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextArea layoutX="41.0" layoutY="92.0" prefHeight="134.0" prefWidth="237.0" />
-                  <Button layoutX="85.0" layoutY="234.0" mnemonicParsing="false" text="Update Event Discription" />
-                  <Label layoutX="211.0" layoutY="9.0" prefHeight="31.0" prefWidth="136.0" text="Update Event " textFill="WHITE">
+                  <TextArea layoutX="41.0" layoutY="92.0" prefHeight="175.0" prefWidth="277.0" />
+                  <Button layoutX="98.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Discription" />
+                  <Label layoutX="232.0" layoutY="14.0" prefHeight="35.0" prefWidth="165.0" text="Update Event " textFill="#3246dc">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="376.0" layoutY="185.0" text="Edit Event Date" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="340.0" layoutY="185.0" text="Edit Event Date" textFill="WHITE">
+                  <TextArea layoutX="360.0" layoutY="227.0" prefHeight="40.0" prefWidth="180.0" />
+                  <Label layoutX="78.0" layoutY="51.0" text="Edit Event Discription">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <TextArea layoutX="340.0" layoutY="227.0" prefHeight="40.0" prefWidth="180.0" />
-                  <Label layoutX="58.0" layoutY="51.0" text="Edit Event Discription">
+                  <Label layoutX="375.0" layoutY="51.0" text="Edit Event Name" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="340.0" layoutY="66.0" text="Edit Event Name" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <TextArea layoutX="340.0" layoutY="100.0" prefHeight="40.0" prefWidth="180.0" />
-                  <Button layoutX="369.0" layoutY="147.0" mnemonicParsing="false" text="Update Event Name" />
-                  <Button layoutX="372.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Date" />
+                  <TextArea layoutX="360.0" layoutY="92.0" prefHeight="40.0" prefWidth="180.0" />
+                  <Button layoutX="390.0" layoutY="141.0" mnemonicParsing="false" text="Update Event Name" />
+                  <Button layoutX="390.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Date" />
                </children>
             </AnchorPane>
         </content>
