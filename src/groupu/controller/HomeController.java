@@ -128,7 +128,7 @@ public class HomeController{
       listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
         /***
-         *
+         *admin usage only
          */
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
           if(newValue!=null) {
@@ -301,13 +301,17 @@ public class HomeController{
   // open creategroup.fxml
 
   /***
-   *
+   *Action of creating the group
    * @param actionEvent
    */
   public void actionCreateGroup(ActionEvent actionEvent) {
     Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }
 
+  /***open group
+   *
+   * @param actionEvent
+   */
   public void actionOpenGroup(ActionEvent actionEvent) {
     if(select != null) {
       GroupSelect = select.toString();
@@ -430,7 +434,7 @@ public class HomeController{
   }
 
   /***
-   * friends list
+   * setter friends list
    */
   public void setupFriendsListContextMenu() {
     ContextMenu cm = new ContextMenu();
@@ -445,7 +449,7 @@ public class HomeController{
   }
 
   /***
-   *
+   * getter for friends list
    * @return null
    */
   public String getSelectedFromFriendsList() {
@@ -457,8 +461,8 @@ public class HomeController{
   }
 
   /***
-   *
-   * @return
+   *getter for conversation list
+   * @return null
    */
   public String getSelectedFromConversationList() {
     try {
