@@ -8,7 +8,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-
+/***
+ *facilitates the gui for the Register page
+ *
+ * @author ds-91
+ * **/
 
 public class RegisterController {
 
@@ -22,15 +26,15 @@ public class RegisterController {
   @FXML private TextField txtPassword;
 
   /***
-   *
+   *Register a user and check for valid information
    * @param actionEvent
    */
   public void actionRegister(ActionEvent actionEvent) {
     User u = new User();
     Alert alert;
-/***
- * when you set up your user name
- */
+    /*
+     * when you set up your user name
+     */
     boolean exists = u.checkUserExists(txtUsername.getText());
 
     if (!exists) {
@@ -69,7 +73,7 @@ public class RegisterController {
   }
 
   /***
-   *
+   * bring user back to login screen
    * @param actionEvent
    */
   public void actionBack(ActionEvent actionEvent) {
