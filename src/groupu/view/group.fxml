@@ -4,6 +4,7 @@
 
 <?import java.net.URL?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -14,39 +15,45 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.GroupController">
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="groupu.controller.GroupController">
   <tabs>
       <Tab fx:id="tabGroupInfo" text="Group Info">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Label fx:id="labelGroupName" alignment="CENTER" layoutX="29.0" layoutY="14.0" prefHeight="31.0" prefWidth="536.0" text="Group Name" textFill="WHITE">
+                  <Label fx:id="labelGroupName" alignment="CENTER" layoutX="62.0" layoutY="14.0" prefHeight="31.0" prefWidth="325.0" text="Group Name" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <Label fx:id="labelGroupDescription" alignment="TOP_LEFT" layoutX="47.0" layoutY="62.0" prefHeight="116.0" prefWidth="506.0" text="" textAlignment="LEFT" textFill="WHITE" wrapText="true">
+                  <Label fx:id="labelGroupDescription" alignment="TOP_CENTER" contentDisplay="CENTER" layoutX="14.0" layoutY="68.0" prefHeight="116.0" prefWidth="420.0" text="dsagdgasdgsd" textAlignment="LEFT" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
-                  <Label fx:id="labelEventName" alignment="CENTER" layoutX="206.0" layoutY="184.0" prefHeight="31.0" prefWidth="182.0" text="" textFill="WHITE">
+                  <Button fx:id="btnBack" layoutX="14.0" layoutY="526.0" onAction="#actionBack" text="Back To Results" />
+                  <Button fx:id="btnJoinGroup" layoutX="205.0" layoutY="526.0" onAction="#actionJoinGroup" text="Join Group" />
+                  <Button fx:id="btnLeaveGroup" layoutX="296.0" layoutY="526.0" onAction="#actionLeaveGroup" text="Leave Group" />
+                  <Button fx:id="btnReportGroup" layoutX="479.0" layoutY="526.0" onAction="#actionReportGroup" text="Report Group" />
+                  <CheckBox layoutX="538.0" layoutY="157.0" mnemonicParsing="false" text="RSVP" />
+                  <ScrollPane layoutX="538.0" layoutY="184.0">
+                     <content>
+                        <ListView prefHeight="250.0" prefWidth="175.0" />
+                     </content>
+                  </ScrollPane>
+                  <Label fx:id="labelEventName" alignment="CENTER" layoutX="535.0" layoutY="14.0" prefHeight="31.0" prefWidth="182.0" text="event title" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelEventDescription" alignment="CENTER" layoutX="53.0" layoutY="215.0" prefHeight="31.0" prefWidth="495.0" text="" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="labelEventDescription" alignment="CENTER" layoutX="465.0" layoutY="53.0" prefHeight="73.0" prefWidth="321.0" text="event description dsaljgsldjgalkjsdgjlasdjglksajdglkjasdklgjsagdkl" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelEventDate" alignment="CENTER" layoutX="159.0" layoutY="246.0" prefHeight="31.0" prefWidth="277.0" text="" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="labelEventDate" alignment="CENTER" layoutX="488.0" layoutY="126.0" prefHeight="31.0" prefWidth="277.0" text="event date aaaa" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnBack" layoutX="14.0" layoutY="326.0" onAction="#actionBack" text="Back To Results" />
-                  <Button fx:id="btnJoinGroup" layoutX="211.0" layoutY="326.0" onAction="#actionJoinGroup" text="Join Group" />
-                  <Button fx:id="btnLeaveGroup" layoutX="302.0" layoutY="326.0" onAction="#actionLeaveGroup" text="Leave Group" />
-                  <Button fx:id="btnReportGroup" layoutX="485.0" layoutY="326.0" onAction="#actionReportGroup" text="Report Group" />
                </children></AnchorPane>
         </content>
       </Tab>
@@ -54,23 +61,23 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="633.0">
                <children>
-                  <TextArea fx:id="txtPostBody" layoutX="81.0" layoutY="14.0" prefHeight="44.0" prefWidth="320.0" wrapText="true" />
-                  <ScrollPane layoutX="11.0" layoutY="76.0">
+                  <TextArea fx:id="txtPostBody" layoutX="182.0" layoutY="113.0" prefHeight="44.0" prefWidth="320.0" wrapText="true" />
+                  <ScrollPane layoutX="112.0" layoutY="175.0">
                      <content>
                         <ListView fx:id="listPosts" prefHeight="277.0" prefWidth="390.0" />
                      </content>
                   </ScrollPane>
-                  <ScrollPane layoutX="418.0" layoutY="76.0">
+                  <ScrollPane layoutX="519.0" layoutY="175.0">
                      <content>
                         <ListView fx:id="listMemberListUser" prefHeight="277.0" prefWidth="168.0" />
                      </content>
                   </ScrollPane>
-                  <Label fx:id="labelGroupName2" alignment="CENTER" layoutX="432.0" layoutY="34.0" prefHeight="31.0" prefWidth="141.0" text="Members" textFill="WHITE">
+                  <Label fx:id="labelGroupName2" alignment="CENTER" layoutX="533.0" layoutY="133.0" prefHeight="31.0" prefWidth="141.0" text="Members" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnPost" layoutX="14.0" layoutY="22.0" onAction="#actionPost" text="Post" />
+                  <Button fx:id="btnPost" layoutX="115.0" layoutY="121.0" onAction="#actionPost" text="Post" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -78,39 +85,39 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <ScrollPane layoutX="14.0" layoutY="44.0">
+                  <ScrollPane layoutX="116.0" layoutY="152.0">
                      <content>
                         <ListView fx:id="listMemberList" prefHeight="265.0" prefWidth="145.0" />
                      </content>
                   </ScrollPane>
-                  <Label alignment="CENTER" layoutX="19.0" layoutY="5.0" prefHeight="40.0" prefWidth="136.0" text="Member List" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="121.0" layoutY="113.0" prefHeight="40.0" prefWidth="136.0" text="Member List" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <ScrollPane layoutX="181.0" layoutY="44.0">
+                  <ScrollPane layoutX="283.0" layoutY="152.0">
                      <content>
                         <ListView fx:id="listReportList" prefHeight="265.0" prefWidth="145.0" />
                      </content>
                   </ScrollPane>
-                  <Label alignment="CENTER" layoutX="181.0" layoutY="5.0" prefHeight="39.0" prefWidth="99.0" text="Reports" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="307.0" layoutY="114.0" prefHeight="39.0" prefWidth="99.0" text="Reports" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="26.0" />
                      </font></Label>
-                  <Label alignment="CENTER" layoutX="361.0" layoutY="32.0" prefHeight="37.0" prefWidth="217.0" text="Edit Group Description" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="463.0" layoutY="140.0" prefHeight="37.0" prefWidth="217.0" text="Edit Group Description" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font></Label>
-                  <TextArea fx:id="txtGroupDescription" layoutX="366.0" layoutY="70.0" prefHeight="50.0" prefWidth="208.0" wrapText="true" />
-                  <Label alignment="CENTER" layoutX="362.0" layoutY="167.0" prefHeight="31.0" prefWidth="188.0" text="Edit Group Tags" textFill="WHITE">
+                  <TextArea fx:id="txtGroupDescription" layoutX="468.0" layoutY="178.0" prefHeight="50.0" prefWidth="208.0" wrapText="true" />
+                  <Label alignment="CENTER" layoutX="478.0" layoutY="276.0" prefHeight="31.0" prefWidth="188.0" text="Edit Group Tags" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <TextField fx:id="txtGroupTags" layoutX="370.0" layoutY="201.0" prefHeight="27.0" prefWidth="200.0" promptText="Enter tags separated by a comma" />
-                  <Button fx:id="btnKickMember" layoutX="14.0" layoutY="320.0" onAction="#actionKickMember" text="Kick Member" />
-                  <Button fx:id="btnRemoveReport" layoutX="181.0" layoutY="320.0" onAction="#actionRemoveReport" text="Remove Report" />
-                  <Button fx:id="btnUpdateDescription" layoutX="397.0" layoutY="127.0" onAction="#actionUpdateDescription" text="Update Description" />
-                  <Button fx:id="btnSaveTags" layoutX="422.0" layoutY="235.0" onAction="#actionSaveTags" text="Save Tags" />
-                  <Button fx:id="btnDeleteGroup" layoutX="491.0" layoutY="320.0" onAction="#actionDeleteGroup" text="Delete Group" />
+                  <TextField fx:id="txtGroupTags" layoutX="472.0" layoutY="309.0" prefHeight="27.0" prefWidth="200.0" promptText="Enter tags separated by a comma" />
+                  <Button fx:id="btnKickMember" layoutX="116.0" layoutY="428.0" onAction="#actionKickMember" text="Kick Member" />
+                  <Button fx:id="btnRemoveReport" layoutX="283.0" layoutY="428.0" onAction="#actionRemoveReport" text="Remove Report" />
+                  <Button fx:id="btnUpdateDescription" layoutX="510.0" layoutY="235.0" onAction="#actionUpdateDescription" text="Update Description" />
+                  <Button fx:id="btnSaveTags" layoutX="534.0" layoutY="343.0" onAction="#actionSaveTags" text="Save Tags" />
+                  <Button fx:id="btnDeleteGroup" layoutX="593.0" layoutY="428.0" onAction="#actionDeleteGroup" text="Delete Group" />
                </children>
             </AnchorPane>
         </content>
@@ -119,12 +126,12 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextArea fx:id="txtEventDesc" promptText="Edit event description" layoutX="41.0" layoutY="92.0" prefHeight="175.0" prefWidth="277.0" />
-                  <TextArea fx:id="txtEventDate" promptText="Edit event date" layoutX="360.0" layoutY="227.0" prefHeight="40.0" prefWidth="180.0" />
-                  <TextArea fx:id="txtEventTitle" promptText="Edit current event title" layoutX="360.0" layoutY="92.0" prefHeight="40.0" prefWidth="180.0" />
-                  <Button fx:id="btnEventDesc" onAction="#actionEventDesc" layoutX="98.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Discription" />
-                  <Button fx:id="btnEventName" onAction="#actionNameEvent" layoutX="390.0" layoutY="141.0" mnemonicParsing="false" text="Update Event Name" />
-                  <Button fx:id="btnEventDate" onAction="#actionEventDate" layoutX="390.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Date" />
+                  <TextArea fx:id="txtEventDesc" layoutX="151.0" layoutY="179.0" prefHeight="175.0" prefWidth="277.0" promptText="Edit event description" />
+                  <TextArea fx:id="txtEventDate" layoutX="470.0" layoutY="314.0" prefHeight="40.0" prefWidth="180.0" promptText="Edit event date" />
+                  <TextArea fx:id="txtEventTitle" layoutX="470.0" layoutY="179.0" prefHeight="40.0" prefWidth="180.0" promptText="Edit current event title" />
+                  <Button fx:id="btnEventDesc" layoutX="208.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionEventDesc" text="Update Event Discription" />
+                  <Button fx:id="btnEventName" layoutX="500.0" layoutY="228.0" mnemonicParsing="false" onAction="#actionNameEvent" text="Update Event Name" />
+                  <Button fx:id="btnEventDate" layoutX="500.0" layoutY="361.0" mnemonicParsing="false" onAction="#actionEventDate" text="Update Event Date" />
                </children>
             </AnchorPane>
         </content>
