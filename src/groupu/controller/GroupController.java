@@ -52,11 +52,7 @@ public class GroupController {
   @FXML private TextArea txtGroupDescription;
   @FXML private TextField txtGroupTags;
   @FXML private ListView listReportList;
-  /***
-   *
-   *@author
-   * @version
-   */
+
   private String groupName;
   private ArrayList<String> postList;
   private ObservableList<String> posts;
@@ -469,6 +465,10 @@ public class GroupController {
     }
   }
 
+    /***
+     *
+     * @param actionEvent
+     */
   public void actionEventDesc(ActionEvent actionEvent) {
     Alert alert;
 
@@ -489,6 +489,10 @@ public class GroupController {
 
   }
 
+    /***
+     *
+     * @param actionEvent
+     */
   public void actionNameEvent(ActionEvent actionEvent) {
     Alert alert;
 
@@ -508,6 +512,10 @@ public class GroupController {
     }
   }
 
+    /***
+     *
+     * @param actionEvent
+     */
   public void actionEventDate(ActionEvent actionEvent) {
     Alert alert;
 
