@@ -91,6 +91,7 @@ public class CreateGroupController {
                 alert.setContentText("Group description must be between 1 and " + maxDescriptionLength + "!");
                 alert.show();
             }
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Group name must be between 1 and " + maxNameLength + "!");
