@@ -104,6 +104,7 @@ public class CreateGroupController {
 
     /***
      * @param actionEvent
+     * to cancel event
      */
     public void actionCancel(ActionEvent actionEvent) {
         Utilities.nextScene(btnCancel, "home", "Home");

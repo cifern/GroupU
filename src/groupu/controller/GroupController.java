@@ -25,7 +25,7 @@ import javafx.scene.control.Alert.AlertType;
 /***
  *
  * @author
- *
+ * all java fx stuff for GUI
  */
 public class GroupController {
 
@@ -111,7 +111,7 @@ public class GroupController {
 
   /***
    *
-   *
+   *Updates the report list
    */
   public void updateListOfReports() {
     ObservableList<String> reportList = Report.getAllGroupReports(groupName);
@@ -283,6 +283,7 @@ public class GroupController {
 
   /***
    * @param actionEvent
+   * sets up event in gui
    *
    */
   public void actionPost(ActionEvent actionEvent) {
@@ -299,7 +300,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *sets up join group in gui
    * @param actionEvent
    */
   public void actionJoinGroup(ActionEvent actionEvent) {
@@ -314,7 +315,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *event part in group gui
    * @param actionEvent
    */
   public void actionReportGroup(ActionEvent actionEvent) {
@@ -347,7 +348,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *sets up event
    * @param actionEvent
    */
   public void actionBack(ActionEvent actionEvent) {
@@ -355,6 +356,8 @@ public class GroupController {
   }
 
   /***
+   *
+   * allows admin to kick member
    * @param actionEvent
    */
   public void actionKickMember(ActionEvent actionEvent) {
@@ -366,6 +369,7 @@ public class GroupController {
   }
 
   /***
+   *allows admin to remove report
    * @param actionEvent
    */
   public void actionRemoveReport(ActionEvent actionEvent) {
@@ -523,9 +527,7 @@ public class GroupController {
   }
 
     /***
-     *
      * @param actionEvent
-     *
      * creates the event date in group menu
      */
   public void actionEventDate(ActionEvent actionEvent) {
