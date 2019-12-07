@@ -11,7 +11,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-
+/**
+ *
+ * @author ds-91
+ * @author markopetrovic239
+ *
+ */
 public class CreateGroupController {
 
     private static final int maxNameLength = 50;
@@ -51,6 +56,7 @@ public class CreateGroupController {
                 }
         );
     }
+    /*** creates group with tag's, description and group name***/
     public void actionCreateGroup(ActionEvent actionEvent) {
         if (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength) {
             if (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength) {
@@ -92,7 +98,7 @@ public class CreateGroupController {
         Utilities.nextScene(btnCancel, "home", "Home");
     }
 
-
+/*** If tag is already made **/
     public void actionAddTag(ActionEvent actionEvent) {
         for(int i = 0; i < tagCount; i++)
             if(tags[i].equals(txtTag.getText())){

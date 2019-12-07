@@ -10,7 +10,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-
+/***
+ *
+ */
 public class LoginController {
 
   private User userStore;
@@ -32,6 +34,10 @@ public class LoginController {
     });
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionLogin(ActionEvent actionEvent) {
     Alert alert;
 
@@ -39,7 +45,9 @@ public class LoginController {
     String pass = txtPassword.getText();
 
     userStore = new User();
-
+/***
+ *
+ */
     boolean exists = userStore.checkUserExists(username);
     boolean passMatches = userStore.comparePassword(username, pass);
 
@@ -56,6 +64,10 @@ public class LoginController {
 
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionRegister(ActionEvent actionEvent) {
     Utilities.nextScene(btnRegister, "register", "Register");
   }

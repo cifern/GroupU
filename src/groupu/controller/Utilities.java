@@ -6,6 +6,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
+/***
+ *
+ */
 public class Utilities {
     public static void nextScene(Button btn, String fxmlName, String title) {
         try {

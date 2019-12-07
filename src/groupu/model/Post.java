@@ -1,12 +1,12 @@
 package groupu.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/** Class that represents a text post in the group discussion tab. */
 public final class Post {
 
   private int id;
@@ -18,14 +18,29 @@ public final class Post {
   private static Connection conn = null;
   private static PreparedStatement ps = null;
 
-  public Post() { }
+  /** No argument constructor */
+  public Post() {}
 
+  /**
+   * Constructor to create a new post object.
+   *
+   * @param data The text of the post.
+   * @param poster The user who creates the post.
+   * @param group The group the post belongs to.
+   */
   public Post(String data, String poster, String group) {
     this.data = data;
     this.poster = poster;
     this.group = group;
   }
 
+  /**
+   * Method to create a new post and insert it into the database.
+   *
+   * @param data The text of the post.
+   * @param poster The user who creates the post.
+   * @param group The group the post belongs to.
+   */
   public void createPost(String data, String poster, String group) {
     try {
       conn = dao.getConnection();
@@ -45,6 +60,7 @@ public final class Post {
     }
   }
 
+  /** Method that takes a Post object and deletes it from the database. */
   public void deletePost() {
     try {
       conn = dao.getConnection();
@@ -64,6 +80,12 @@ public final class Post {
     }
   }
 
+  /**
+   * Method to retrieve all posts from a specified group.
+   *
+   * @param groupname The group name to get posts from.
+   * @return An ArrayList containing all posts
+   */
   public ArrayList<String> getPostsByGroupName(String groupname) {
 
     ArrayList<String> postList = new ArrayList<>();
@@ -93,6 +115,11 @@ public final class Post {
     return postList;
   }
 
+  /**
+   * Method to delete all posts from a specified group.
+   *
+   * @param groupName The group to delete posts from.
+   */
   public static void deleteAllPostsFromGroup(String groupName) {
     try {
       conn = dao.getConnection();
