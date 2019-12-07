@@ -174,13 +174,8 @@ public class HomeController{
       listFriendsList.setPlaceholder(new Label("No content"));
     }
 
-  /*** asdfghjasdfgh
-   *
-   *
-   *
-   *
-   * @version %I%, %G%
-   * @since
+  /***
+   * Updates friend list
    **/
 
     public void updateFriendsList() {
@@ -193,6 +188,9 @@ public class HomeController{
       listFriendsList.setItems(friends);
     }
 
+  /***
+   * update messages
+   */
     public void updateMessageList() {
       Message m = new Message();
       messageFromList = FXCollections.observableArrayList();
@@ -218,6 +216,9 @@ public class HomeController{
       }
     }
 
+  /***
+   * updates group tables
+   */
     public void updateMyGroupsTables()
     {
       User user = new User();
@@ -297,6 +298,10 @@ public class HomeController{
     }
   }
 
+  /***
+   * opens groups
+   * @param actionEvent
+   */
   public void actionOpenUserGroups(ActionEvent actionEvent) {
     System.out.println("view group pressed");
     if(select != null) {
@@ -305,17 +310,27 @@ public class HomeController{
     }
   }
 
+  /***
+   * allows you to searh for groups
+   * @param actionEvent
+   */
   public void actionSearch(ActionEvent actionEvent) {
     ResultSet rsGroups = group.getSearch(txtSearchGroups.getText());
     updateGroupTable(rsGroups);
 
   }
 
+  /***
+   * lets you log out of your account
+   */
   public void actionLogout() {
     Session.getInstance("").cleanUserSession();
     Utilities.nextScene(btnLogout, "login", "Login");
   }
 
+  /***
+   * ability to send messages
+   */
   public void actionSendMessage() {
     User u = new User();
     String toUser = txtMessageTo.getText();
@@ -345,6 +360,9 @@ public class HomeController{
     }
   }
 
+  /***
+   * so you can delete messages
+   */
   public void actionDeleteMessage() {
     String username = getSelectedFromConversationList();
     Message m = new Message(username, null);
@@ -354,6 +372,9 @@ public class HomeController{
     listMessageConversation.getItems().clear();
   }
 
+  /***
+   * For replying to messages
+   */
   public void actionReply() {
     String toUser = listMessageList.getSelectionModel().getSelectedItem().toString();
     String body = txtReplyText.getText();
@@ -377,6 +398,9 @@ public class HomeController{
     }
   }
 
+  /***
+   * removing friends
+   */
   public void actionRemoveFriend() {
     String username = getSelectedFromFriendsList();
     if (username != null) {
@@ -387,6 +411,9 @@ public class HomeController{
     }
   }
 
+  /***
+   * friends list
+   */
   public void setupFriendsListContextMenu() {
     ContextMenu cm = new ContextMenu();
     MenuItem itemRemoveFriend = new MenuItem("Remove Friend");
@@ -399,6 +426,10 @@ public class HomeController{
     });
   }
 
+  /***
+   *
+   * @return null
+   */
   public String getSelectedFromFriendsList() {
     try {
       return listFriendsList.getSelectionModel().getSelectedItem().toString();
@@ -407,6 +438,10 @@ public class HomeController{
     }
   }
 
+  /***
+   *
+   * @return
+   */
   public String getSelectedFromConversationList() {
     try {
       return listMessageList.getSelectionModel().getSelectedItem().toString();
@@ -415,6 +450,10 @@ public class HomeController{
     }
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionTagSearch(ActionEvent actionEvent) {
     if(tagCount<10) {
       tags[tagCount] = txtTag.getText();

@@ -35,7 +35,7 @@ public class LoginController {
   }
 
   /***
-   *
+   *lets you log in
    * @param actionEvent
    */
   public void actionLogin(ActionEvent actionEvent) {
@@ -46,7 +46,7 @@ public class LoginController {
 
     userStore = new User();
 /***
- *
+ *checks if user exists
  */
     boolean exists = userStore.checkUserExists(username);
     boolean passMatches = userStore.comparePassword(username, pass);

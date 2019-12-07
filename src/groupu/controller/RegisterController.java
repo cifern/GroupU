@@ -28,7 +28,9 @@ public class RegisterController {
   public void actionRegister(ActionEvent actionEvent) {
     User u = new User();
     Alert alert;
-
+/***
+ * when you set up your user name
+ */
     boolean exists = u.checkUserExists(txtUsername.getText());
 
     if (!exists) {

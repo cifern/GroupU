@@ -29,7 +29,7 @@ import javafx.scene.layout.AnchorPane;
 /***
  *
  * @author
- *
+ * all java fx stuff for GUI
  */
 public class GroupController {
 
@@ -142,7 +142,7 @@ public class GroupController {
 
   /***
    *
-   *
+   *Updates the report list
    */
   public void updateListOfReports() {
     ObservableList<String> reportList = Report.getAllGroupReports(groupName);
@@ -285,7 +285,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *creates menu for the group posts
    */
   public void setupPostContextMenu() {
     if (Session.getInstance("").getUserName().equals(g.getGroupAdmin(groupName))) {
@@ -313,8 +313,9 @@ public class GroupController {
   }
 
   /***
-   *
    * @param actionEvent
+   * sets up event in gui
+   *
    */
   public void actionPost(ActionEvent actionEvent) {
     if (txtPostBody.getText().length() > 0 && txtPostBody.getText().length() <= 300) {
@@ -330,7 +331,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *sets up join group in gui
    * @param actionEvent
    */
   public void actionJoinGroup(ActionEvent actionEvent) {
@@ -347,13 +348,15 @@ public class GroupController {
   }
 
   /***
-   *
+   *event part in group gui
    * @param actionEvent
    */
   public void actionReportGroup(ActionEvent actionEvent) {
     Alert alert;
     Report r;
-
+/***
+ * sets up the reporting message for the user
+ */
     TextInputDialog input = new TextInputDialog();
     input.setTitle("Report Group");
     input.setHeaderText("Please enter your report");
@@ -378,7 +381,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *sets up event
    * @param actionEvent
    */
   public void actionBack(ActionEvent actionEvent) {
@@ -387,6 +390,7 @@ public class GroupController {
 
   /***
    *
+   * allows admin to kick member
    * @param actionEvent
    */
   public void actionKickMember(ActionEvent actionEvent) {
@@ -398,7 +402,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *allows admin to remove report
    * @param actionEvent
    */
   public void actionRemoveReport(ActionEvent actionEvent) {
@@ -408,7 +412,7 @@ public class GroupController {
   }
 
   /***
-   *
+   * Deletes group button
    * @param actionEvent
    */
   public void actionDeleteGroup(ActionEvent actionEvent) {
@@ -429,7 +433,7 @@ public class GroupController {
   }
 
   /***
-   *
+   * shows the group info i=on the group home screen
    * @param actionEvent
    */
   public void actionUpdateDescription(ActionEvent actionEvent) {
@@ -458,7 +462,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *admin setting up the tags for the group
    * @param actionEvent
    */
   public void actionSaveTags(ActionEvent actionEvent) {
@@ -496,7 +500,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *lets user leave group
    * @param actionEvent
    */
   public void actionLeaveGroup(ActionEvent actionEvent) {
@@ -508,7 +512,7 @@ public class GroupController {
   }
 
     /***
-     *
+     *shows Event description
      * @param actionEvent
      */
   public void actionEventDesc(ActionEvent actionEvent) {
@@ -534,6 +538,7 @@ public class GroupController {
     /***
      *
      * @param actionEvent
+     * shows event title
      */
   public void actionNameEvent(ActionEvent actionEvent) {
     Alert alert;
@@ -555,8 +560,8 @@ public class GroupController {
   }
 
     /***
-     *
      * @param actionEvent
+     * creates the event date in group menu
      */
   public void actionEventDate(ActionEvent actionEvent) {
     Alert alert;
