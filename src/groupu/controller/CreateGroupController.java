@@ -12,7 +12,8 @@ import javafx.scene.input.KeyCode;
 
 /**
  *
- * @author
+ * @author ds-91
+ * @author markopetrovic239
  *
  */
 public class CreateGroupController {
@@ -96,7 +97,7 @@ public class CreateGroupController {
         Utilities.nextScene(btnCancel, "home", "Home");
     }
 
-
+/*** If tag is already made **/
     public void actionAddTag(ActionEvent actionEvent) {
         for(int i = 0; i < tagCount; i++)
             if(tags[i].equals(txtTag.getText())){
