@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -72,9 +73,16 @@ public final class Group {
                 ps.setString(2, tags[i]);
                 ps.execute();
             }
-            /** add admin to group**/
+            /* add admin to group**/
             User user = new User();
             user.joinGroup(this);
+
+            ps = conn.prepareStatement("INSERT INTO EVENTS(NAME, DESCRIPTION, GROUP_NAME, DATE) VALUES(?,?,?,?)");
+            ps.setString(1, "");
+            ps.setString(2, "");
+            ps.setString(3, name);
+            ps.setString(4, "");
+            ps.execute();
 
             ps.close();
             conn.close();
@@ -265,7 +273,7 @@ public final class Group {
                 e.printStackTrace();
             }
             return null;
-        }
+    }
 
     public ObservableList<String> wildCardTagSearch(String tag){
             if(tag.equals(""))
@@ -334,7 +342,7 @@ public final class Group {
         return false;
     }
 
-  public void updateGroupTags(String groupName, List<String> tags) {
+    public void updateGroupTags(String groupName, List<String> tags) {
       // remove all tags before adding new ones
       this.removeAllTags(groupName);
 
@@ -353,7 +361,7 @@ public final class Group {
               e.printStackTrace();
           }
       }
-  }
+    }
 
     public void removeAllTags(String groupName) {
         try {
@@ -370,6 +378,122 @@ public final class Group {
         }
     }
 
+    public void setEventDescription(String description, String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("UPDATE EVENTS SET DESCRIPTION=? WHERE GROUP_NAME=?");
+            ps.setString(1, description);
+            ps.setString(2, groupName);
+
+            ps.execute();
+
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setEventTitle(String title, String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("UPDATE EVENTS SET NAME=? WHERE GROUP_NAME=?");
+            ps.setString(1, title);
+            ps.setString(2, groupName);
+
+            ps.execute();
+
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setEventDate(String date, String groupName) {
+        try {
+            conn = dao.getConnection();
+            ps = conn.prepareStatement("UPDATE EVENTS SET DATE=? WHERE GROUP_NAME=?");
+            ps.setString(1, date);
+            ps.setString(2, groupName);
+
+            ps.execute();
+
+            ps.close();
+            conn.close();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String getEventTitle(String groupName){
+       String title = "";
+        try {
+            conn = dao.getConnection();
+            String SQL = "SELECT NAME FROM EVENTS  WHERE GROUP_NAME=?";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, groupName);
+            ResultSet rs = ps.executeQuery();
+
+
+            while (rs.next()) {
+            System.out.println(rs.getString(1));
+            title = rs.getString(1);
+                }
+            return title;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return title;
+    }
+
+    public String getEventDescription(String groupName){
+        String desc = "";
+        try {
+            conn = dao.getConnection();
+            String SQL = "SELECT DESCRIPTION FROM EVENTS  WHERE GROUP_NAME=?";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, groupName);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next())
+            desc = rs.getString(1);
+            return desc;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return desc;
+    }
+
+    public String getEventDate(String groupName){
+        String date = "";
+        try {
+            conn = dao.getConnection();
+            String SQL = "SELECT DATE FROM EVENTS  WHERE GROUP_NAME=?";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, groupName);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next())
+            date = rs.getString(1);
+            return date;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
     @Override
     public String toString() {
         return name;

@@ -48,12 +48,11 @@ public class HomeController{
     @FXML private ListView listMessageList;
     @FXML private ListView listMessageConversation;
     @FXML private ListView listFriendsList;
-    @FXML private TabPane homeTabPane;
     @FXML private HBox tagBox1;
-    @FXML private HBox tagBoxSuggest;
 
 
-  private ObservableList<ObservableList> TableViewData;
+
+    private ObservableList<ObservableList> TableViewData;
     private ObservableList<String> messageFromList;
     private ObservableList<String> messageBodyList;
     private Object select;
@@ -62,8 +61,7 @@ public class HomeController{
 
     private Group group = new Group();
     private ResultSet allGroups = group.getGroups();
-  private Object ObservableList;
-  private Object String;
+
 
   @FXML
     void initialize()
@@ -78,6 +76,7 @@ public class HomeController{
       setupTextFieldListeners();
       setupGroupSelectListeners();
       setupGroupContextMenu();
+
     }
 
     public void setupGroupContextMenu() {
@@ -100,7 +99,7 @@ public class HomeController{
       }
 
   private void setupGroupSelectListeners() {
-      /*** owned groups listener**/
+      /* owned groups listener**/
       listviewAdmin.getSelectionModel().getSelectedItem();
       listviewAdmin.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
@@ -111,7 +110,7 @@ public class HomeController{
           }
         }
       });
-      /*** joined groups listener**/
+      /* joined groups listener**/
       listviewJoined.getSelectionModel().getSelectedItem() ;
       listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
@@ -122,7 +121,7 @@ public class HomeController{
           }
         }
       });
-      /*** Tableview listener, Selects the entire row instead of 1 cell**/
+      // Tableview listener, Selects the entire row instead of 1 cell**/
       ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
       selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
         if (selectedCells.size() > 0) {
@@ -198,7 +197,7 @@ public class HomeController{
     {
       User user = new User();
 
-        /** Data added to users group list **/
+        // Data added to users group list **/
         try {
           ResultSet rsUserGroups = group.getUserGroups();
           listviewAdmin.getItems().clear();
@@ -211,7 +210,7 @@ public class HomeController{
           e.printStackTrace();
             System.out.println("Error on Building user groups table");
         }
-        /** Data added to joined group list **/
+        // Data added to joined group list **/
         try {
           ResultSet rUserGroups = user.getJoinedGroups();
           listviewJoined.getItems().clear();
@@ -231,7 +230,7 @@ public class HomeController{
      * Populates the group table from the given ResultSet, adds listener if initializing
      * **********************************************************************************/
   private void updateGroupTable(ResultSet rsGroups) {
-    /** Populating TableView from ResultSet @Param**/
+    // Populating TableView from ResultSet
     TableViewData = FXCollections.observableArrayList();
     try {
       colName.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<ObservableList, String>, ObservableValue<String>>() {
@@ -260,7 +259,7 @@ public class HomeController{
     }
   }
 
-  /** open creategroup.fxml**/
+  // open creategroup.fxml
   public void actionCreateGroup(ActionEvent actionEvent) {
     Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }

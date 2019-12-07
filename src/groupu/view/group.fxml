@@ -24,21 +24,21 @@
                      <font>
                         <Font name="System Bold" size="23.0" />
                      </font></Label>
-                  <Label fx:id="labelGroupDescription" alignment="TOP_CENTER" layoutX="47.0" layoutY="62.0" prefHeight="116.0" prefWidth="506.0" text="Group Description" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label fx:id="labelGroupDescription" alignment="TOP_LEFT" layoutX="47.0" layoutY="62.0" prefHeight="116.0" prefWidth="506.0" text="" textAlignment="LEFT" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
-                  <Label fx:id="labelGroupName1" alignment="CENTER" layoutX="206.0" layoutY="184.0" prefHeight="31.0" prefWidth="182.0" text="Current Event" textFill="WHITE">
+                  <Label fx:id="labelEventName" alignment="CENTER" layoutX="206.0" layoutY="184.0" prefHeight="31.0" prefWidth="182.0" text="" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelGroupName11" alignment="CENTER" layoutX="53.0" layoutY="215.0" prefHeight="31.0" prefWidth="495.0" text="Event Name" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="labelEventDescription" alignment="CENTER" layoutX="53.0" layoutY="215.0" prefHeight="31.0" prefWidth="495.0" text="" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelGroupName111" alignment="CENTER" layoutX="159.0" layoutY="246.0" prefHeight="31.0" prefWidth="277.0" text="Date" textAlignment="CENTER" textFill="WHITE">
+                  <Label fx:id="labelEventDate" alignment="CENTER" layoutX="159.0" layoutY="246.0" prefHeight="31.0" prefWidth="277.0" text="" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -74,7 +74,7 @@
                </children></AnchorPane>
       </content>
     </Tab>
-      <Tab fx:id="tabAdmin" text="Admin 1">
+      <Tab fx:id="tabAdmin" text="Admin Actions">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -115,36 +115,16 @@
             </AnchorPane>
         </content>
       </Tab>
-      <Tab text="Admin 2">
+      <Tab fx:id="tabEvent" text="Event">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <TextArea layoutX="41.0" layoutY="92.0" prefHeight="175.0" prefWidth="277.0" />
-                  <Button layoutX="98.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Discription" />
-                  <Label layoutX="232.0" layoutY="14.0" prefHeight="35.0" prefWidth="165.0" text="Update Event " textFill="#3246dc">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="376.0" layoutY="185.0" text="Edit Event Date" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <TextArea layoutX="360.0" layoutY="227.0" prefHeight="40.0" prefWidth="180.0" />
-                  <Label layoutX="78.0" layoutY="51.0" text="Edit Event Discription">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="375.0" layoutY="51.0" text="Edit Event Name" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="20.0" />
-                     </font>
-                  </Label>
-                  <TextArea layoutX="360.0" layoutY="92.0" prefHeight="40.0" prefWidth="180.0" />
-                  <Button layoutX="390.0" layoutY="141.0" mnemonicParsing="false" text="Update Event Name" />
-                  <Button layoutX="390.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Date" />
+                  <TextArea fx:id="txtEventDesc" promptText="Edit event description" layoutX="41.0" layoutY="92.0" prefHeight="175.0" prefWidth="277.0" />
+                  <TextArea fx:id="txtEventDate" promptText="Edit event date" layoutX="360.0" layoutY="227.0" prefHeight="40.0" prefWidth="180.0" />
+                  <TextArea fx:id="txtEventTitle" promptText="Edit current event title" layoutX="360.0" layoutY="92.0" prefHeight="40.0" prefWidth="180.0" />
+                  <Button fx:id="btnEventDesc" onAction="#actionEventDesc" layoutX="98.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Discription" />
+                  <Button fx:id="btnEventName" onAction="#actionNameEvent" layoutX="390.0" layoutY="141.0" mnemonicParsing="false" text="Update Event Name" />
+                  <Button fx:id="btnEventDate" onAction="#actionEventDate" layoutX="390.0" layoutY="274.0" mnemonicParsing="false" text="Update Event Date" />
                </children>
             </AnchorPane>
         </content>
