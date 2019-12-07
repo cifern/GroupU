@@ -8,9 +8,15 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-/*** ***/
-public class RegisterController {
 
+/***
+ *
+ *
+ */
+public class RegisterController {
+  /***
+   *
+   */
   private static final int minUsernameSize = 3;
   private static final int maxUsernameSize = 20;
   private static final int minPassSize = 6;
@@ -20,7 +26,10 @@ public class RegisterController {
   @FXML private TextField txtUsername;
   @FXML private TextField txtPassword;
 
-
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionRegister(ActionEvent actionEvent) {
     User u = new User();
     Alert alert;
@@ -62,6 +71,10 @@ public class RegisterController {
     }
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionBack(ActionEvent actionEvent) {
     Utilities.nextScene(btnBack, "login", "Login");
   }
