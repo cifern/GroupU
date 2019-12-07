@@ -496,7 +496,8 @@ public final class Group {
     /**
      * Method to set a groups event description.
      *
-     * @return void.
+     * @param groupName The group name to edit event for.
+     * @param description event description.
      */
     public void setEventDescription(String description, String groupName) {
         try {
@@ -519,7 +520,8 @@ public final class Group {
     /**
      * Method to set a groups event title.
      *
-     * @return void.
+     * @param groupName The group name to edit event for.
+     * @param title event title.
      */
     public void setEventTitle(String title, String groupName) {
         try {
@@ -542,7 +544,8 @@ public final class Group {
     /**
      * Method to set a groups event date.
      *
-     * @return void.
+     * @param groupName The group name to edit event for.
+     * @param date event date.
      */
     public void setEventDate(String date, String groupName) {
         try {
@@ -565,6 +568,7 @@ public final class Group {
     /**
      * Method to return a groups event title.
      *
+     * @param groupName The group name to get data from.
      * @return A string of the groups event title.
      */
     public String getEventTitle(String groupName){
@@ -593,6 +597,7 @@ public final class Group {
     /**
      * Method to return a groups event Description.
      *
+     * @param groupName The group name to get data from.
      * @return A string of the groups event description.
      */
     public String getEventDescription(String groupName){
@@ -618,6 +623,7 @@ public final class Group {
     /**
      * Method to return a groups event Date.
      *
+     * @param groupName The group name to get data from.
      * @return A string of the groups event date.
      */
     public String getEventDate(String groupName){
@@ -641,6 +647,75 @@ public final class Group {
     }
 
     /**
+     * Method to RSVP a user to an event.
+     *
+     * @param group The group name to rsvp to
+     */
+    public void setRSVP(String group){
+        try {
+            conn = dao.getConnection();
+            String SQL = "INSERT INTO USER_EVENTS(USERNAME, GROUPNAME) VALUES(?, ?)";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, Session.getInstance("").getUserName());
+            ps.setString(2, group);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Method to check if a user is RSVP to an event.
+     *
+     * @param group The group name to check rsvp to
+     * @param user The user to check rsvp for
+     */
+    public boolean isRSVP(String group, String user){
+        try {
+            conn = dao.getConnection();
+            String SQL = "SELECT * from USER_EVENTS where GROUPNAME = ? and USERNAME = ?";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, group);
+            ps.setString(2, user);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+                return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Method to remove a users RSVP froma n event.
+     *
+     * @param groupName The group name to rsvp to
+     */
+    public void removeRSVP(String groupName) {
+        try {
+            conn = dao.getConnection();
+            String SQL = "DELETE FROM USER_EVENTS Where USERNAME = ? and GROUPNAME = ?";
+            ps = conn.prepareStatement(SQL);
+            ps.setString(1, Session.getInstance("").getUserName());
+            ps.setString(2, groupName);
+
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Method to return the name of the group.
      *
      * @return A string of the group name.
@@ -649,5 +724,4 @@ public final class Group {
     public String toString() {
         return name;
     }
-
 }

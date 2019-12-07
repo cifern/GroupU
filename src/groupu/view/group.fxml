@@ -19,7 +19,7 @@
   <tabs>
       <Tab fx:id="tabGroupInfo" text="Group Info">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+          <AnchorPane fx:id="anchorpaneInfo" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Label fx:id="labelGroupName" alignment="CENTER" layoutX="62.0" layoutY="14.0" prefHeight="31.0" prefWidth="325.0" text="Group Name" textFill="WHITE">
                      <font>
@@ -33,10 +33,10 @@
                   <Button fx:id="btnJoinGroup" layoutX="205.0" layoutY="526.0" onAction="#actionJoinGroup" text="Join Group" />
                   <Button fx:id="btnLeaveGroup" layoutX="296.0" layoutY="526.0" onAction="#actionLeaveGroup" text="Leave Group" />
                   <Button fx:id="btnReportGroup" layoutX="479.0" layoutY="526.0" onAction="#actionReportGroup" text="Report Group" />
-                  <CheckBox layoutX="538.0" layoutY="157.0" mnemonicParsing="false" text="RSVP" />
+                  <CheckBox fx:id="chkRSVP" onAction="#actionRSVP" layoutX="538.0" layoutY="157.0" mnemonicParsing="false" text="RSVP" />
                   <ScrollPane layoutX="538.0" layoutY="184.0">
                      <content>
-                        <ListView prefHeight="250.0" prefWidth="175.0" />
+                        <ListView fx:id="listRSVP" prefHeight="250.0" prefWidth="175.0" />
                      </content>
                   </ScrollPane>
                   <Label fx:id="labelEventName" alignment="CENTER" layoutX="535.0" layoutY="14.0" prefHeight="31.0" prefWidth="182.0" text="event title" textFill="WHITE">

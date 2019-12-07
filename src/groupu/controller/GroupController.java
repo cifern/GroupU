@@ -15,12 +15,16 @@ import groupu.model.User;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.layout.AnchorPane;
 
 /***
  *
@@ -52,6 +56,9 @@ public class GroupController {
   @FXML private TextArea txtGroupDescription;
   @FXML private TextField txtGroupTags;
   @FXML private ListView listReportList;
+  @FXML private ListView listRSVP;
+  @FXML private CheckBox chkRSVP;
+  @FXML private AnchorPane anchorpaneInfo;
 
   private String groupName;
   private ArrayList<String> postList;
@@ -70,6 +77,7 @@ public class GroupController {
     groupName = HomeController.GroupSelect;
 
     setupPlaceholders();
+    setupRSVPList();
     updateUserMemberList();
     updateTabsAndButtons();
     updateGroupInfo();
@@ -79,14 +87,27 @@ public class GroupController {
     updateEventInfo();
   }
 
-  /***
-   * Updates Event info
+  /**
+   *initialize the RSVP list and checkbox
    */
-  public void updateEventInfo() {
-      labelEventName.setText(g.getEventTitle(HomeController.GroupSelect));
-      labelEventDescription.setText(g.getEventDescription(HomeController.GroupSelect));
-      labelEventDate.setText(g.getEventDate(HomeController.GroupSelect));
+  public void setupRSVPList(){
+    if(!g.isUserInGroup(Session.getInstance("").getUserName(), groupName)){
+      chkRSVP.setDisable(true);
     }
+    if(g.isRSVP(groupName, Session.getInstance("").getUserName())){
+      chkRSVP.setSelected(true);
+    }
+
+    ObservableList<String> RSVPlist = FXCollections.observableArrayList();
+    ObservableList<String> userList = g.getAllUsers(groupName);
+
+    for(int i= 0; i<userList.size(); i++){
+      if(g.isRSVP(groupName, userList.get(i)))
+        RSVPlist.add(userList.get(i));
+    }
+
+    listRSVP.setItems(RSVPlist);
+  }
 
   /***
    * Holds placeholders for
@@ -97,6 +118,16 @@ public class GroupController {
     listMemberList.setPlaceholder(new Label("No content"));
     listPosts.setPlaceholder(new Label("No content"));
     listReportList.setPlaceholder(new Label("No content"));
+    listRSVP.setPlaceholder(new Label("No content"));
+  }
+
+  /***
+   * Updates Event info
+   */
+  public void updateEventInfo() {
+    labelEventName.setText(g.getEventTitle(HomeController.GroupSelect));
+    labelEventDescription.setText(g.getEventDescription(HomeController.GroupSelect));
+    labelEventDate.setText(g.getEventDate(HomeController.GroupSelect));
   }
 
   /***
@@ -309,7 +340,9 @@ public class GroupController {
     /**admin cannot join group**/
     if (!group.getGroupAdmin(group.toString()).equals(Session.getInstance("").getUserName())) {
       user.joinGroup(group);
+
     }
+    chkRSVP.setDisable(false);
     updateTabsAndButtons();
   }
 
@@ -541,6 +574,19 @@ public class GroupController {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Event date can be no longer than 50 char!");
       alert.show();
+    }
+  }
+
+  public void actionRSVP(ActionEvent actionEvent) {
+    System.out.println("check");
+    if(!g.isRSVP(groupName,Session.getInstance("").getUserName())) {
+      g.setRSVP(groupName);
+      setupRSVPList();
+    }
+
+    if(!chkRSVP.isSelected()){
+      g.removeRSVP(groupName);
+      setupRSVPList();
     }
   }
 }
