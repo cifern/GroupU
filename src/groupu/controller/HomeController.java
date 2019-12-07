@@ -83,6 +83,10 @@ public class HomeController{
 
     }
 
+  /***
+   *
+   *
+   */
     public void setupGroupContextMenu() {
       ContextMenu cmUser = new ContextMenu();
       MenuItem itemLeaveGroup = new MenuItem("Leave Group");
@@ -121,6 +125,9 @@ public class HomeController{
       listviewJoined.getSelectionModel().getSelectedItem() ;
       listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
+        /***
+         *
+         */
         public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
           if(newValue!=null) {
             select = newValue;

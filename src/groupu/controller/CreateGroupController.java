@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
 /**
+ * class that represents the group controller
  *
  * @author ds-91
  * @author markopetrovic239
@@ -36,6 +37,9 @@ public class CreateGroupController {
     Alert alert;
 
     @FXML
+    /***
+     * method to initialize promt text for group name and group description
+     */
         void initialize() {
         txtGroupName.setPromptText("Group Name");
         txtDescription.setPromptText("200 character description of your group");
@@ -58,8 +62,6 @@ public class CreateGroupController {
     }
     /***
      * creates group with tag's, description and group name
-     *
-     *
      * @param actionEvent
      ***/
     public void actionCreateGroup(ActionEvent actionEvent) {
@@ -100,7 +102,6 @@ public class CreateGroupController {
     }
 
     /***
-     *
      * @param actionEvent
      */
     public void actionCancel(ActionEvent actionEvent) {
@@ -108,7 +109,6 @@ public class CreateGroupController {
     }
 
 /***
- *
  * @param actionEvent
  * If tag is already made
  *

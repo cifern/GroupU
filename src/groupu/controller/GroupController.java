@@ -62,7 +62,8 @@ public class GroupController {
   private Post p = new Post();
 
   /**
-   *
+   *sets the group with all place holders
+   * and "updates"
    */
   @FXML
   public void initialize() {
@@ -78,12 +79,19 @@ public class GroupController {
     updateEventInfo();
   }
 
+  /***
+   * Updates Event info
+   */
   public void updateEventInfo() {
       labelEventName.setText(g.getEventTitle(HomeController.GroupSelect));
       labelEventDescription.setText(g.getEventDescription(HomeController.GroupSelect));
       labelEventDate.setText(g.getEventDate(HomeController.GroupSelect));
     }
 
+  /***
+   * Holds placeholders for
+   * member list,posts and the reports
+   */
   public void setupPlaceholders() {
     listMemberListUser.setPlaceholder(new Label("No content"));
     listMemberList.setPlaceholder(new Label("No content"));
@@ -92,7 +100,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *updates memeber list for users in groups
    */
   public void updateUserMemberList() {
     setupMessageContextMenu();
@@ -135,7 +143,7 @@ public class GroupController {
   }
 
   /***
-   *
+   * label for group name
    */
   public void updateGroupInfo() {
     labelGroupName.setText(groupName);
@@ -143,7 +151,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *updates posts
    */
   public void updateListOfPosts() {
     setupPostContextMenu();
@@ -157,7 +165,7 @@ public class GroupController {
   }
 
   /***
-   *
+   *sets up messaging to members
    */
   public void setupMessageContextMenu() {
     ContextMenu cm = new ContextMenu();
@@ -262,6 +270,7 @@ public class GroupController {
                 listPosts.getSelectionModel().getSelectedItem().toString().split("\\: ");
             String poster = selectionText[0];
             String data = selectionText[1];
+
 
             Post post = new Post(data, poster, groupName);
             post.deletePost();
