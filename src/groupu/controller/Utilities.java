@@ -7,14 +7,14 @@ import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /***
- *
+ * Class for helper methods.
  */
 public class Utilities {
     /***
-     *
-     * @param btn
-     * @param fxmlName
-     * @param title
+     * Method to transition from one scene to another.
+     * @param btn The button that calls this method.
+     * @param fxmlName The string name of the fxml file to transition to.
+     * @param title The title of the scene transitioning to.
      */
     public static void nextScene(Button btn, String fxmlName, String title) {
         try {

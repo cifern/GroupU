@@ -10,32 +10,31 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
-/***
- *
- */
+/** * Class for the Login view. */
 public class LoginController {
 
   private User userStore;
-
 
   @FXML private Button btnRegister;
   @FXML private Button btnLogin;
   @FXML private TextField txtUsername;
   @FXML private TextField txtPassword;
 
+  /** Method called when the scene loads. */
   @FXML
-  void initialize(){
-    txtPassword.setOnKeyPressed(event -> {
-      if (event.getCode() == KeyCode.ENTER) {
-        ActionEvent a = null;
-        actionLogin(a);
-        txtPassword.clear();
-      }
-    });
+  void initialize() {
+    txtPassword.setOnKeyPressed(
+        event -> {
+          if (event.getCode() == KeyCode.ENTER) {
+            actionLogin(null);
+            txtPassword.clear();
+          }
+        });
   }
 
-  /***
-   *lets you log in
+  /**
+   * * Method when login button is pressed.
+   *
    * @param actionEvent
    */
   public void actionLogin(ActionEvent actionEvent) {
@@ -45,9 +44,7 @@ public class LoginController {
     String pass = txtPassword.getText();
 
     userStore = new User();
-/***
- *checks if user exists
- */
+
     boolean exists = userStore.checkUserExists(username);
     boolean passMatches = userStore.comparePassword(username, pass);
 
@@ -55,20 +52,15 @@ public class LoginController {
       Session.getInstance("").cleanUserSession();
       Session session = Session.getInstance(username);
       Utilities.nextScene(btnLogin, "home", "Home - " + username);
-    }
-    else {
+    } else {
       alert = new Alert(AlertType.ERROR);
       alert.setContentText("Invalid login!");
       alert.show();
     }
-
   }
 
-  /***
-   *
-   * @param actionEvent
-   */
-  public void actionRegister(ActionEvent actionEvent) {
+  /** * Method to transition to the register view. */
+  public void actionRegister() {
     Utilities.nextScene(btnRegister, "register", "Register");
   }
 }
