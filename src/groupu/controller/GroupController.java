@@ -27,8 +27,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.AnchorPane;
 
 /***
- *
- * @author
+ *  @author markopetrovic239
+  * @author ds-91
  * all java fx stuff for GUI
  */
 public class GroupController {
