@@ -36,7 +36,7 @@ public class CreateGroupController {
     Alert alert;
 
     @FXML
-    void initialize() {
+        void initialize() {
         txtGroupName.setPromptText("Group Name");
         txtDescription.setPromptText("200 character description of your group");
 
@@ -56,7 +56,12 @@ public class CreateGroupController {
                 }
         );
     }
-    /*** creates group with tag's, description and group name***/
+    /***
+     * creates group with tag's, description and group name
+     *
+     *
+     * @param actionEvent
+     ***/
     public void actionCreateGroup(ActionEvent actionEvent) {
         if (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength) {
             if (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength) {
@@ -94,11 +99,20 @@ public class CreateGroupController {
 
     }
 
+    /***
+     *
+     * @param actionEvent
+     */
     public void actionCancel(ActionEvent actionEvent) {
         Utilities.nextScene(btnCancel, "home", "Home");
     }
 
-/*** If tag is already made **/
+/***
+ *
+ * @param actionEvent
+ * If tag is already made
+ *
+ **/
     public void actionAddTag(ActionEvent actionEvent) {
         for(int i = 0; i < tagCount; i++)
             if(tags[i].equals(txtTag.getText())){

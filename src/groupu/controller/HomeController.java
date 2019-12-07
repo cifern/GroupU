@@ -114,7 +114,10 @@ public class HomeController{
           }
         }
       });
-      /* joined groups listener**/
+      /***
+       *
+       * joined groups listener
+       **/
       listviewJoined.getSelectionModel().getSelectedItem() ;
       listviewJoined.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
         @Override
@@ -125,7 +128,9 @@ public class HomeController{
           }
         }
       });
-      // Tableview listener, Selects the entire row instead of 1 cell**/
+      /***
+       *  Tableview listener, Selects the entire row instead of 1 cell
+       *  **/
       ObservableList<TablePosition> selectedCells = tableview.getSelectionModel().getSelectedCells() ;
       selectedCells.addListener((ListChangeListener.Change<? extends TablePosition> change) -> {
         if (selectedCells.size() > 0) {

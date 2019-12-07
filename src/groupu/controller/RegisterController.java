@@ -9,14 +9,9 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-/***
- *
- *
- */
+
 public class RegisterController {
-  /***
-   *
-   */
+
   private static final int minUsernameSize = 3;
   private static final int maxUsernameSize = 20;
   private static final int minPassSize = 6;

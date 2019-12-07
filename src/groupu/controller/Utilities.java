@@ -10,6 +10,12 @@ import javafx.stage.Stage;
  *
  */
 public class Utilities {
+    /***
+     *
+     * @param btn
+     * @param fxmlName
+     * @param title
+     */
     public static void nextScene(Button btn, String fxmlName, String title) {
         try {
             FXMLLoader loader = new FXMLLoader(Utilities.class.getResource("../view/" + fxmlName + ".fxml"));
