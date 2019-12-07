@@ -25,7 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-
+/*** **/
 public class HomeController{
 
     static String GroupSelect;
@@ -158,6 +158,15 @@ public class HomeController{
       listMessageList.setPlaceholder(new Label("No content"));
       listFriendsList.setPlaceholder(new Label("No content"));
     }
+
+  /*** asdfghjasdfgh
+   *
+   *
+   *
+   *
+   * @version %I%, %G%
+   * @since
+   **/
 
     public void updateFriendsList() {
       Friend f = new Friend();

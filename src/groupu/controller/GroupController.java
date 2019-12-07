@@ -19,6 +19,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 
+/***
+ *
+ * @author
+ *
+ */
 public class GroupController {
 
   @FXML private Button btnBack;
@@ -39,7 +44,11 @@ public class GroupController {
   @FXML private TextArea txtGroupDescription;
   @FXML private TextField txtGroupTags;
   @FXML private ListView listReportList;
-
+  /***
+   *
+   *@author
+   * @version
+   */
   private String groupName;
   private ArrayList<String> postList;
   private ObservableList<String> posts;
