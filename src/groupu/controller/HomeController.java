@@ -26,7 +26,7 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 /***
- *
+ *THis produces the gui for the home screen
  * @author markopetrovic239
  * @author ds-91
  * **/
@@ -84,8 +84,7 @@ public class HomeController{
     }
 
   /***
-   *
-   *
+   *creates menu for setup group
    */
     public void setupGroupContextMenu() {
       ContextMenu cmUser = new ContextMenu();
@@ -106,6 +105,9 @@ public class HomeController{
           });
       }
 
+  /***
+   * admin use of group
+   */
   private void setupGroupSelectListeners() {
       /* owned groups listener**/
       listviewAdmin.getSelectionModel().getSelectedItem();
@@ -148,6 +150,10 @@ public class HomeController{
       });
   }
 
+  /***
+   *
+   * setup text field for searching groups
+   */
   private void setupTextFieldListeners() {
 
     String[] tags = new String[20];
@@ -158,6 +164,7 @@ public class HomeController{
       }
     });
 
+
       txtTag.setOnKeyPressed(event -> {
         if(event.getCode() == KeyCode.ENTER){
           actionTagSearch(null);
@@ -166,6 +173,10 @@ public class HomeController{
       });
   }
 
+  /***
+   *
+   * place holders for member ,admin ,messages and list
+   */
   public void setupPlaceholders() {
       listviewJoined.setPlaceholder(new Label("No content"));
       listviewAdmin.setPlaceholder(new Label("No content"));
@@ -177,7 +188,6 @@ public class HomeController{
   /***
    * Updates friend list
    **/
-
     public void updateFriendsList() {
       Friend f = new Friend();
       ObservableList<String> friends = FXCollections.observableArrayList();
@@ -203,6 +213,9 @@ public class HomeController{
       listMessageList.setItems(messageFromList);
     }
 
+  /***
+   * creates the messages array
+   */
     public void actionMessagesClicked() {
       Message m = new Message();
       ArrayList<String> messages = new ArrayList<String>();
@@ -286,6 +299,11 @@ public class HomeController{
   }
 
   // open creategroup.fxml
+
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionCreateGroup(ActionEvent actionEvent) {
     Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }
