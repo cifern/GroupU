@@ -62,9 +62,8 @@ public class CreateGroupController {
     }
     /***
      * creates group with tag's, description and group name
-     * @param actionEvent
      ***/
-    public void actionCreateGroup(ActionEvent actionEvent) {
+    public void actionCreateGroup() {
         if (txtGroupName.getLength() > 0 && txtGroupName.getLength() < maxNameLength) {
             if (txtDescription.getLength() > 0 && txtDescription.getLength() < maxDescriptionLength) {
                 if (!(txtGroupName.getText().startsWith(" ") || txtGroupName.getText().endsWith(" "))) {

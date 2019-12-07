@@ -11,8 +11,8 @@ public class DAO {
    * Method to create a new connection to the database.
    *
    * @return A connection to the UserDB database.
-   * @throws SQLException
-   * @throws ClassNotFoundException
+   * @throws SQLException Throws exception if cannot connect to database.
+   * @throws ClassNotFoundException Throws exception if H2 driver is not found.
    */
   public Connection getConnection() throws SQLException, ClassNotFoundException {
     Class.forName("org.h2.Driver");

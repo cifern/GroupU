@@ -159,7 +159,7 @@ public class HomeController{
     String[] tags = new String[20];
       txtSearchGroups.setOnKeyPressed(event -> {
       if (event.getCode() == KeyCode.ENTER) {
-        actionSearch(null);
+        actionSearch();
         txtSearchGroups.clear();
       }
     });
@@ -167,7 +167,7 @@ public class HomeController{
 
       txtTag.setOnKeyPressed(event -> {
         if(event.getCode() == KeyCode.ENTER){
-          actionTagSearch(null);
+          actionTagSearch();
           txtTag.clear();
         }
       });
@@ -265,7 +265,7 @@ public class HomeController{
     }
 
     /** *********************************************************************************
-     * @Param ResultSet rsGroups
+     * @param rsGroups ResultSet of groups.
      * Populates the group table from the given ResultSet, adds listener if initializing
      * **********************************************************************************/
   private void updateGroupTable(ResultSet rsGroups) {
@@ -302,17 +302,15 @@ public class HomeController{
 
   /***
    *Action of creating the group
-   * @param actionEvent
    */
-  public void actionCreateGroup(ActionEvent actionEvent) {
+  public void actionCreateGroup() {
     Utilities.nextScene(btnCreateGroup, "creategroup", "Create New Group");
   }
 
   /***open group
    *
-   * @param actionEvent
    */
-  public void actionOpenGroup(ActionEvent actionEvent) {
+  public void actionOpenGroup() {
     if(select != null) {
       GroupSelect = select.toString();
       System.out.println("view group pressed" + GroupSelect);
@@ -322,9 +320,8 @@ public class HomeController{
 
   /***
    * opens groups
-   * @param actionEvent
    */
-  public void actionOpenUserGroups(ActionEvent actionEvent) {
+  public void actionOpenUserGroups() {
     System.out.println("view group pressed");
     if(select != null) {
       GroupSelect = select.toString();
@@ -334,9 +331,8 @@ public class HomeController{
 
   /***
    * allows you to searh for groups
-   * @param actionEvent
    */
-  public void actionSearch(ActionEvent actionEvent) {
+  public void actionSearch() {
     ResultSet rsGroups = group.getSearch(txtSearchGroups.getText());
     updateGroupTable(rsGroups);
 
@@ -450,7 +446,7 @@ public class HomeController{
 
   /***
    * getter for friends list
-   * @return null
+   * @return List of friends
    */
   public String getSelectedFromFriendsList() {
     try {
@@ -462,7 +458,7 @@ public class HomeController{
 
   /***
    *getter for conversation list
-   * @return null
+   * @return List of messages
    */
   public String getSelectedFromConversationList() {
     try {
@@ -473,10 +469,9 @@ public class HomeController{
   }
 
   /***
-   *
-   * @param actionEvent
+   * Method to search for groups by tag.
    */
-  public void actionTagSearch(ActionEvent actionEvent) {
+  public void actionTagSearch() {
     if(tagCount<10) {
       tags[tagCount] = txtTag.getText();
 

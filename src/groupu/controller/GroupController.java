@@ -332,9 +332,8 @@ public class GroupController {
 
   /***
    *sets up join group in gui
-   * @param actionEvent
    */
-  public void actionJoinGroup(ActionEvent actionEvent) {
+  public void actionJoinGroup() {
     User user = new User();
     Group group = new Group(groupName);
 
@@ -349,9 +348,8 @@ public class GroupController {
 
   /***
    *event part in group gui
-   * @param actionEvent
    */
-  public void actionReportGroup(ActionEvent actionEvent) {
+  public void actionReportGroup() {
     Alert alert;
     Report r;
 /***
@@ -382,18 +380,16 @@ public class GroupController {
 
   /***
    *sets up event
-   * @param actionEvent
    */
-  public void actionBack(ActionEvent actionEvent) {
+  public void actionBack() {
     Utilities.nextScene(btnBack, "home", "Home - " + Session.getInstance("").getUserName());
   }
 
   /***
    *
    * allows admin to kick member
-   * @param actionEvent
    */
-  public void actionKickMember(ActionEvent actionEvent) {
+  public void actionKickMember() {
     String username = listMemberList.getSelectionModel().getSelectedItem().toString();
 
     g.removeMember(username, groupName);
@@ -403,9 +399,8 @@ public class GroupController {
 
   /***
    *allows admin to remove report
-   * @param actionEvent
    */
-  public void actionRemoveReport(ActionEvent actionEvent) {
+  public void actionRemoveReport() {
     Report.removeReport(groupName, listReportList.getSelectionModel().getSelectedItem().toString());
 
     updateListOfReports();
@@ -413,9 +408,8 @@ public class GroupController {
 
   /***
    * Deletes group button
-   * @param actionEvent
    */
-  public void actionDeleteGroup(ActionEvent actionEvent) {
+  public void actionDeleteGroup() {
     Alert alert = new Alert(AlertType.CONFIRMATION);
     alert.setHeaderText("Delete Group");
     alert.setContentText("Are you sure you want to delete this group?");
@@ -434,9 +428,8 @@ public class GroupController {
 
   /***
    * shows the group info i=on the group home screen
-   * @param actionEvent
    */
-  public void actionUpdateDescription(ActionEvent actionEvent) {
+  public void actionUpdateDescription() {
     Alert alert;
 
     if (txtGroupDescription.getLength() > 0 && txtGroupDescription.getLength() <= 200) {
@@ -463,9 +456,8 @@ public class GroupController {
 
   /***
    *admin setting up the tags for the group
-   * @param actionEvent
    */
-  public void actionSaveTags(ActionEvent actionEvent) {
+  public void actionSaveTags() {
     Alert alert;
 
     // Each tag is up to 30 characters, up to maybe 5? at a time? Minus commas
@@ -501,9 +493,8 @@ public class GroupController {
 
   /***
    *lets user leave group
-   * @param actionEvent
    */
-  public void actionLeaveGroup(ActionEvent actionEvent) {
+  public void actionLeaveGroup() {
     String username = Session.getInstance("").getUserName();
     if (g.isUserInGroup(username, groupName)) {
       g.removeMember(username, groupName);
@@ -513,9 +504,8 @@ public class GroupController {
 
     /***
      *shows Event description
-     * @param actionEvent
      */
-  public void actionEventDesc(ActionEvent actionEvent) {
+  public void actionEventDesc() {
     Alert alert;
 
     if(txtEventDesc.getText().length()<100) {
@@ -537,10 +527,9 @@ public class GroupController {
 
     /***
      *
-     * @param actionEvent
      * shows event title
      */
-  public void actionNameEvent(ActionEvent actionEvent) {
+  public void actionNameEvent() {
     Alert alert;
 
     if(txtEventTitle.getText().length()<80) {
@@ -560,10 +549,9 @@ public class GroupController {
   }
 
     /***
-     * @param actionEvent
      * creates the event date in group menu
      */
-  public void actionEventDate(ActionEvent actionEvent) {
+  public void actionEventDate() {
     Alert alert;
 
     if(txtEventDate.getText().length()<50) {
@@ -582,7 +570,10 @@ public class GroupController {
     }
   }
 
-  public void actionRSVP(ActionEvent actionEvent) {
+  /**
+   * Method to RSVP for group events.
+   */
+  public void actionRSVP() {
     System.out.println("check");
     if(!g.isRSVP(groupName,Session.getInstance("").getUserName())) {
       g.setRSVP(groupName);

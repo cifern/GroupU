@@ -27,9 +27,8 @@ public class RegisterController {
 
   /***
    *Register a user and check for valid information
-   * @param actionEvent
    */
-  public void actionRegister(ActionEvent actionEvent) {
+  public void actionRegister() {
     User u = new User();
     Alert alert;
     /*
@@ -44,7 +43,7 @@ public class RegisterController {
             if (!txtPassword.getText().contains(" ")) {
               User user = new User(txtUsername.getText(), txtPassword.getText());
               user.createUser();
-              actionBack(actionEvent);
+              actionBack();
             } else {
               alert = new Alert(AlertType.ERROR);
               alert.setContentText("Password cannot have spaces!");
@@ -74,9 +73,8 @@ public class RegisterController {
 
   /***
    * bring user back to login screen
-   * @param actionEvent
    */
-  public void actionBack(ActionEvent actionEvent) {
+  public void actionBack() {
     Utilities.nextScene(btnBack, "login", "Login");
   }
 }

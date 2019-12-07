@@ -26,7 +26,7 @@ public class LoginController {
     txtPassword.setOnKeyPressed(
         event -> {
           if (event.getCode() == KeyCode.ENTER) {
-            actionLogin(null);
+            actionLogin();
             txtPassword.clear();
           }
         });
@@ -35,9 +35,8 @@ public class LoginController {
   /**
    * * Method when login button is pressed.
    *
-   * @param actionEvent
    */
-  public void actionLogin(ActionEvent actionEvent) {
+  public void actionLogin() {
     Alert alert;
 
     String username = txtUsername.getText();

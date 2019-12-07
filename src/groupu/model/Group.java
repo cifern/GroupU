@@ -672,6 +672,7 @@ public final class Group {
      *
      * @param group The group name to check rsvp to
      * @param user The user to check rsvp for
+     * @return A boolean if a user is RSVP'd
      */
     public boolean isRSVP(String group, String user){
         try {
