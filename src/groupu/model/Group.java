@@ -493,12 +493,11 @@ public final class Group {
         }
     }
 
-  /**
-   * Method to return the name of the group.
-   *
-   * @return A string of the group name.
-   */
-
+    /**
+     * Method to set a groups event description.
+     *
+     * @return void.
+     */
     public void setEventDescription(String description, String groupName) {
         try {
             conn = dao.getConnection();
@@ -517,6 +516,11 @@ public final class Group {
         }
     }
 
+    /**
+     * Method to set a groups event title.
+     *
+     * @return void.
+     */
     public void setEventTitle(String title, String groupName) {
         try {
             conn = dao.getConnection();
@@ -535,6 +539,11 @@ public final class Group {
         }
     }
 
+    /**
+     * Method to set a groups event date.
+     *
+     * @return void.
+     */
     public void setEventDate(String date, String groupName) {
         try {
             conn = dao.getConnection();
@@ -553,6 +562,11 @@ public final class Group {
         }
     }
 
+    /**
+     * Method to return a groups event title.
+     *
+     * @return A string of the groups event title.
+     */
     public String getEventTitle(String groupName){
        String title = "";
         try {
@@ -576,6 +590,11 @@ public final class Group {
         return title;
     }
 
+    /**
+     * Method to return a groups event Description.
+     *
+     * @return A string of the groups event description.
+     */
     public String getEventDescription(String groupName){
         String desc = "";
         try {
@@ -596,6 +615,11 @@ public final class Group {
         return desc;
     }
 
+    /**
+     * Method to return a groups event Date.
+     *
+     * @return A string of the groups event date.
+     */
     public String getEventDate(String groupName){
         String date = "";
         try {
@@ -615,6 +639,12 @@ public final class Group {
         }
         return date;
     }
+
+    /**
+     * Method to return the name of the group.
+     *
+     * @return A string of the group name.
+     */
     @Override
     public String toString() {
         return name;
