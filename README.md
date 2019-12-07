@@ -1,10 +1,7 @@
 # GroupU
 group finder application
 ## Software Fundamentals group project
-This program is for 
-This program is software for an animal shelter.
-As a group project for software fundamentals (Michael Gough, Bernard Georges, Trevor Johnson, and Carlos Martinez) are coding 
-this together. 
+This project is for students who want to find groups and events going on.
 
 ## Getting Started
 
