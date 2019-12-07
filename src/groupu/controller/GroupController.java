@@ -6,6 +6,9 @@ import groupu.model.Message;
 import groupu.model.Post;
 import groupu.model.Report;
 import groupu.model.Session;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import groupu.model.User;
@@ -35,8 +38,13 @@ public class GroupController {
   @FXML private ListView listPosts;
   @FXML private TabPane tabPane;
   @FXML private Tab tabAdmin;
-  @FXML private Tab tabGroupInfo;
-  @FXML private Tab tabPosts;
+  @FXML private Tab tabEvent;
+  @FXML private Label labelEventName;
+  @FXML private Label labelEventDescription;
+  @FXML private Label labelEventDate;
+  @FXML private TextArea txtEventDesc;
+  @FXML private TextArea txtEventDate;
+  @FXML private TextArea txtEventTitle;
   @FXML private Label labelGroupName;
   @FXML private Label labelGroupDescription;
   @FXML private ListView listMemberList;
@@ -57,6 +65,9 @@ public class GroupController {
   private Group g = new Group();
   private Post p = new Post();
 
+  /**
+   *
+   */
   @FXML
   public void initialize() {
     groupName = HomeController.GroupSelect;
@@ -68,7 +79,14 @@ public class GroupController {
     updateListOfPosts();
     updateListOfUsers();
     updateListOfReports();
+    updateEventInfo();
   }
+
+  public void updateEventInfo() {
+      labelEventName.setText(g.getEventTitle(HomeController.GroupSelect));
+      labelEventDescription.setText(g.getEventDescription(HomeController.GroupSelect));
+      labelEventDate.setText(g.getEventDate(HomeController.GroupSelect));
+    }
 
   public void setupPlaceholders() {
     listMemberListUser.setPlaceholder(new Label("No content"));
@@ -99,6 +117,7 @@ public class GroupController {
   public void updateTabsAndButtons() {
     if (!Session.getInstance("").getUserName().equals(g.getGroupAdmin(groupName))) {
       tabPane.getTabs().remove(tabAdmin);
+      tabPane.getTabs().remove(tabEvent);
     }
 
     if (!g.isUserInGroup(Session.getInstance("").getUserName(), groupName)) {
@@ -447,6 +466,64 @@ public class GroupController {
     if (g.isUserInGroup(username, groupName)) {
       g.removeMember(username, groupName);
       Utilities.nextScene(btnLeaveGroup, "home", "Home - " + username);
+    }
+  }
+
+  public void actionEventDesc(ActionEvent actionEvent) {
+    Alert alert;
+
+    if(txtEventDesc.getText().length()<100) {
+      g.setEventDescription(txtEventDesc.getText(), HomeController.GroupSelect);
+      labelEventDescription.setText(txtEventDesc.getText());
+      txtEventDesc.clear();
+      alert = new Alert(AlertType.CONFIRMATION);
+      alert.setContentText("Event description modified!");
+      alert.show();
+    }
+    else
+    {
+      alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Event description can be no longer than 100 char!");
+      alert.show();
+    }
+
+  }
+
+  public void actionNameEvent(ActionEvent actionEvent) {
+    Alert alert;
+
+    if(txtEventTitle.getText().length()<80) {
+      g.setEventTitle(txtEventTitle.getText(), HomeController.GroupSelect);
+      labelEventName.setText(txtEventTitle.getText());
+      txtEventTitle.clear();
+      alert = new Alert(AlertType.CONFIRMATION);
+      alert.setContentText("Event Title modified!");
+      alert.show();
+    }
+    else
+    {
+      alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Event title can be no longer than 80 char!");
+      alert.show();
+    }
+  }
+
+  public void actionEventDate(ActionEvent actionEvent) {
+    Alert alert;
+
+    if(txtEventDate.getText().length()<50) {
+      g.setEventDate(txtEventDate.getText(), HomeController.GroupSelect);
+      labelEventDate.setText(txtEventDate.getText());
+      txtEventDate.clear();
+      alert = new Alert(AlertType.CONFIRMATION);
+      alert.setContentText("Event meeting times/date modified!");
+      alert.show();
+    }
+    else
+    {
+      alert = new Alert(AlertType.ERROR);
+      alert.setContentText("Event date can be no longer than 50 char!");
+      alert.show();
     }
   }
 }

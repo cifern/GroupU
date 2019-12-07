@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
@@ -28,7 +29,7 @@ public class CreateGroupController {
 
     @FXML private Button btnCancel;
     @FXML private TextField txtGroupName;
-    @FXML private TextField txtDescription;
+    @FXML private TextArea txtDescription;
     @FXML private TextField txtTag;
 
 
