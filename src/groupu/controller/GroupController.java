@@ -77,6 +77,9 @@ public class GroupController {
     listReportList.setPlaceholder(new Label("No content"));
   }
 
+  /***
+   *
+   */
   public void updateUserMemberList() {
     setupMessageContextMenu();
 
@@ -84,6 +87,10 @@ public class GroupController {
     listMemberListUser.setItems(userMemberList);
   }
 
+  /***
+   *
+   *
+   */
   public void updateListOfReports() {
     ObservableList<String> reportList = Report.getAllGroupReports(groupName);
     listReportList.setItems(reportList);
@@ -112,11 +119,17 @@ public class GroupController {
     listMemberList.setItems(userList);
   }
 
+  /***
+   *
+   */
   public void updateGroupInfo() {
     labelGroupName.setText(groupName);
     labelGroupDescription.setText(g.getGroupDescription(groupName));
   }
 
+  /***
+   *
+   */
   public void updateListOfPosts() {
     setupPostContextMenu();
 
@@ -128,7 +141,9 @@ public class GroupController {
     listPosts.setItems(posts);
   }
 
-
+  /***
+   *
+   */
   public void setupMessageContextMenu() {
     ContextMenu cm = new ContextMenu();
     MenuItem itemSendMessage = new MenuItem("Send Message");
@@ -215,6 +230,9 @@ public class GroupController {
         });
   }
 
+  /***
+   *
+   */
   public void setupPostContextMenu() {
     if (Session.getInstance("").getUserName().equals(g.getGroupAdmin(groupName))) {
       ContextMenu cm = new ContextMenu();
@@ -239,6 +257,10 @@ public class GroupController {
     }
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionPost(ActionEvent actionEvent) {
     if (txtPostBody.getText().length() > 0 && txtPostBody.getText().length() <= 300) {
       String poster = Session.getInstance("").getUserName();
@@ -252,6 +274,10 @@ public class GroupController {
     }
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionJoinGroup(ActionEvent actionEvent) {
     User user = new User();
     Group group = new Group(groupName);
@@ -263,6 +289,10 @@ public class GroupController {
     updateTabsAndButtons();
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionReportGroup(ActionEvent actionEvent) {
     Alert alert;
     Report r;
@@ -290,10 +320,18 @@ public class GroupController {
     }
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionBack(ActionEvent actionEvent) {
     Utilities.nextScene(btnBack, "home", "Home - " + Session.getInstance("").getUserName());
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionKickMember(ActionEvent actionEvent) {
     String username = listMemberList.getSelectionModel().getSelectedItem().toString();
 
@@ -302,12 +340,20 @@ public class GroupController {
     updateUserMemberList();
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionRemoveReport(ActionEvent actionEvent) {
     Report.removeReport(groupName, listReportList.getSelectionModel().getSelectedItem().toString());
 
     updateListOfReports();
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionDeleteGroup(ActionEvent actionEvent) {
     Alert alert = new Alert(AlertType.CONFIRMATION);
     alert.setHeaderText("Delete Group");
@@ -325,6 +371,10 @@ public class GroupController {
     }
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionUpdateDescription(ActionEvent actionEvent) {
     Alert alert;
 
@@ -350,6 +400,10 @@ public class GroupController {
     }
   }
 
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionSaveTags(ActionEvent actionEvent) {
     Alert alert;
 
@@ -384,7 +438,10 @@ public class GroupController {
     }
   }
 
-
+  /***
+   *
+   * @param actionEvent
+   */
   public void actionLeaveGroup(ActionEvent actionEvent) {
     String username = Session.getInstance("").getUserName();
     if (g.isUserInGroup(username, groupName)) {
