@@ -30,10 +30,10 @@
                         <Font name="System Bold" size="18.0" />
                      </font></Label>
                   <Button fx:id="btnBack" layoutX="14.0" layoutY="526.0" onAction="#actionBack" text="Back To Results" />
-                  <Button fx:id="btnJoinGroup" layoutX="205.0" layoutY="526.0" onAction="#actionJoinGroup" text="Join Group" />
-                  <Button fx:id="btnLeaveGroup" layoutX="296.0" layoutY="526.0" onAction="#actionLeaveGroup" text="Leave Group" />
-                  <Button fx:id="btnReportGroup" layoutX="479.0" layoutY="526.0" onAction="#actionReportGroup" text="Report Group" />
-                  <CheckBox fx:id="chkRSVP" onAction="#actionRSVP" layoutX="538.0" layoutY="157.0" mnemonicParsing="false" text="RSVP" />
+                  <Button fx:id="btnJoinGroup" layoutX="298.0" layoutY="526.0" onAction="#actionJoinGroup" text="Join Group" />
+                  <Button fx:id="btnLeaveGroup" layoutX="389.0" layoutY="526.0" onAction="#actionLeaveGroup" text="Leave Group" />
+                  <Button fx:id="btnReportGroup" layoutX="694.0" layoutY="526.0" onAction="#actionReportGroup" text="Report Group" />
+                  <CheckBox fx:id="chkRSVP" layoutX="538.0" layoutY="442.0" mnemonicParsing="false" onAction="#actionRSVP" text="RSVP" />
                   <ScrollPane layoutX="538.0" layoutY="184.0">
                      <content>
                         <ListView fx:id="listRSVP" prefHeight="250.0" prefWidth="175.0" />

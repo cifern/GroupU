@@ -174,3 +174,7 @@
   -fx-background-insets : 2.0, 0.0, 0.0;
   -fx-background-radius : 2.0em;
 }
+
+.check-box {
+  -fx-text-fill:  #9E9E9E;
+}
